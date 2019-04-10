@@ -1,2 +1,8 @@
+^\.github$
+^codecov\.yml$
+^\.travis\.yml$
+^appveyor\.yml$
+^LICENSE\.md$
+^README\.Rmd$
 ^equationer\.Rproj$
 ^\.Rproj\.user$

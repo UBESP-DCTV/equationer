@@ -1,0 +1,23 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+sudo: false
+cache: packages
+
+os:
+  - linux
+  - osx
+
+r:
+  - 3.4
+  - oldrel
+  - release
+
+# osx for devel have issues to install devtools
+matrix:
+  include:
+  - r: devel
+    os: linux
+
+after_success:
+  - Rscript -e 'covr::codecov()'
