@@ -42,6 +42,10 @@ eq <- function(..., name, outcome, stratum = NA_character_) {
         ui_stop("{ui_code('stratum')} must be a single string")
     }
 
+    if (!is.na(stratum) && !is_named(stratum)) {
+        ui_stop("{ui_code('stratum')} must be named")
+    }
+
     nxs <- names(xs)
 
     res <- list(eq = as.matrix(xs),

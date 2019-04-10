@@ -10,7 +10,7 @@ get_outcome <- function(x) {
     UseMethod("get_outcome", x)
 }
 
-#' @describeIn get_outcome Extract the otucome of the given
+#' @describeIn get_outcome Extract the outcome of the given
 #'     \code{eq}uation object.
 #' @export
 #'

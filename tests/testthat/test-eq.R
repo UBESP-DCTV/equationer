@@ -1,6 +1,10 @@
 context("test-eq")
 
-eq_x1y2 <- eq(x = 1, y = 2, name = "test", outcome = "z")
+eq_x1y2 <- eq(x = 1, y = 2,
+    name = "test",
+    outcome = "z",
+    stratum = c(sex = "female")
+)
 
 test_that("correct classes", {
     expect_is(eq_x1y2, "eq")
@@ -17,7 +21,11 @@ test_that("type of objects", {
     expect_is(eq_x1y2[["eq"]], "matrix")
     expect_is(eq_x1y2[["eq_name"]], "character")
     expect_is(eq_x1y2[["outcome"]], "character")
+
     expect_is(eq_x1y2[["stratum"]], "character")
+    expect_named(eq_x1y2[["stratum"]])
+    expect_is(eq(x = 1, name = "a", outcome = "b"), "eq")
+
     expect_is(eq_x1y2[["covariates"]], "character")
 })
 
@@ -44,11 +52,23 @@ test_that("handle wrong input type", {
         "string"
     )
     expect_error(
-        eq(x = 1, name = "a", outcome = "a", stratum = c("a", "b")),
+        eq(
+            x = 1,
+            name = "a",
+            outcome = "a",
+            stratum = c(a = "a", a = "b")
+        ),
         "single"
     )
+
     expect_error(
         eq(x = 1, name = "a", outcome = "a", stratum = 1),
         "string"
     )
+
+    expect_error(
+        eq(x = 1, name = "a", outcome = "a", stratum = "a"),
+        "named"
+    )
+
 })
