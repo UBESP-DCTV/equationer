@@ -1,4 +1,6 @@
-* Added extractrs for class `eq`
+* Added `is_applicable_to_covset()` generics and method for `eq`
+  objects; 
+* Added extractrs for class `eq`;
 * Added `eq()` costructor for object of class `eq`;
 * Added ui and utils functions;
 * Insert Logo;
