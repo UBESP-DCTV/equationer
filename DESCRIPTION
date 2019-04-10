@@ -1,12 +1,19 @@
 Package: equationer
-Title: What the Package Does (One Line, Title Case)
+Title: Equations of Energy Requirements
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Corrado",
            family = "Lanera",
            role = c("aut", "cre"),
-           email = "corrado.lanera@gmail.com")
-Description: What the package does (one paragraph).
+           email = "corrado.lanera@gmail.com"
+    )
+Description: The goal of the package `equationer` is to implement an
+    environment to consistently generate the estimations from the
+    equations reported in the paper "Review of Equations of Energy
+    Requirements" by the *Unit of Biostatistcs, Epidemiology and Public
+    Health* of the University of Padova.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/UBESP-DCTV/equationer
+BugReports: https://github.com/UBESP-DCTV/equationer/issues
