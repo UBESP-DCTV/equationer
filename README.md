@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# equationer
+# equationer <img src="man/figures/logo.png" align="right" height=140/>
 
 [![Build
 Status](https://travis-ci.com/UBESP-DCTV/equationer.svg?token=LB47B8iKQhmYmrAuxwVQ&branch=master)](https://travis-ci.com/UBESP-DCTV/equationer)
