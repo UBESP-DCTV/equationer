@@ -1,7 +1,6 @@
 * Added extractrs for class `eq`
 * Added `eq()` costructor for object of class `eq`;
 * Added ui and utils functions;
-* support for meta-programming by **rlang** package;
 * Insert Logo;
 * update Travis.
 
