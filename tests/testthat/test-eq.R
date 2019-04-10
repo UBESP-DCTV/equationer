@@ -35,6 +35,8 @@ test_that("must have (unique) names", {
 })
 
 test_that("handle wrong input type", {
+    expect_error(eq(name = "a", outcome = "a"), "valid")
+
     expect_error(
         eq(x = 1, name = c("a", "b"), outcome = "a"),
         "single"
