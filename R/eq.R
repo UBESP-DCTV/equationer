@@ -45,7 +45,7 @@ eq <- function(..., name, outcome, stratum = NA_character_) {
     nxs <- names(xs)
 
     res <- list(eq = as.matrix(xs),
-        eq_names   = name,
+        eq_name    = name,
         outcome    = outcome,
         stratum    = stratum,
         covariates = nxs

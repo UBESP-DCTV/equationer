@@ -9,13 +9,13 @@ test_that("correct classes", {
 test_that("components names", {
     expect_equal(
         names(eq_x1y2),
-        c("eq", "eq_names", "outcome", "stratum", "covariates")
+        c("eq", "eq_name", "outcome", "stratum", "covariates")
     )
 })
 
 test_that("type of objects", {
     expect_is(eq_x1y2[["eq"]], "matrix")
-    expect_is(eq_x1y2[["eq_names"]], "character")
+    expect_is(eq_x1y2[["eq_name"]], "character")
     expect_is(eq_x1y2[["outcome"]], "character")
     expect_is(eq_x1y2[["stratum"]], "character")
     expect_is(eq_x1y2[["covariates"]], "character")
