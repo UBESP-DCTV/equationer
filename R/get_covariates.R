@@ -10,7 +10,7 @@ get_covariates <- function(x) {
     UseMethod("get_covariates", x)
 }
 
-#' @describeIn get_stratum Extract the covariates of the given
+#' @describeIn get_covariates Extract the covariates of the given
 #'     \code{eq}uation object.
 #' @export
 #'
@@ -19,7 +19,7 @@ get_covariates <- function(x) {
 #' eq_test <- eq(age = 0.1, bmi = -0.3,
 #'     name    = "first eq_test",
 #'     outcome = "kcal/day",
-#'     stratum = c(sex = "female")
+#'     strata = list(sex = "female")
 #' )
 #' get_outcome(eq_test)
 get_covariates.eq <- function(x) {

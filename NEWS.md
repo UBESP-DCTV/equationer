@@ -1,3 +1,4 @@
+* Changed strata atributes to list of factors
 * Added support for tidy evaluation (`rlang` pkg main utilities)
 
 # equationer 0.0.0.9001
