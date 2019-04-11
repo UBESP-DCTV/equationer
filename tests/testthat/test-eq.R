@@ -3,8 +3,9 @@ context("test-eq")
 eq_x1y2 <- eq(x = 1, y = 2,
     name = "test",
     outcome = "z",
-    stratum = c(sex = "female")
+    strata = list(sex = "female")
 )
+
 
 test_that("correct classes", {
     expect_is(eq_x1y2, "eq")
@@ -14,7 +15,7 @@ test_that("attributes' names", {
     expect_equal(
         names(attributes(eq_x1y2)),
         c(
-            "names", "eq_name", "outcome", "stratum", "covariates",
+            "names", "eq_name", "outcome", "strata", "covariates",
             "class"
         )
     )
@@ -27,8 +28,8 @@ test_that("type of objects", {
     expect_is(attr(eq_x1y2, "eq_name"), "character")
     expect_is(attr(eq_x1y2, "outcome"), "character")
 
-    expect_is(attr(eq_x1y2, "stratum"), "character")
-    expect_named(attr(eq_x1y2, "stratum"))
+    expect_is(attr(eq_x1y2, "strata"), "list")
+    expect_named(attr(eq_x1y2, "strata"))
     expect_is(eq(x = 1, name = "a", outcome = "b"), "eq")
 
     expect_is(attr(eq_x1y2, "covariates"), "character")
@@ -65,19 +66,24 @@ test_that("handle wrong input type", {
             x = 1,
             name = "a",
             outcome = "a",
-            stratum = c(a = "a", a = "b")
+            strata = list(a = "a", a = "b")
         ),
-        "single"
+        "duplicated"
     )
 
     expect_error(
-        eq(x = 1, name = "a", outcome = "a", stratum = 1),
-        "string"
+        eq(x = 1, name = "a", outcome = "a", strata = list(1)),
+        "empty names"
     )
 
     expect_error(
-        eq(x = 1, name = "a", outcome = "a", stratum = "a"),
-        "named"
+        eq(x = 1, name = "a", outcome = "a", strata = list("a")),
+        "empty names"
+    )
+
+    expect_error(
+        eq(x = 1, name = "a", outcome = "a", strata = c(a = "a")),
+        "list"
     )
 
 })

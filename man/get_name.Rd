@@ -3,11 +3,14 @@
 \name{get_name}
 \alias{get_name}
 \alias{get_name.eq}
+\alias{get_name.eqs}
 \title{get name}
 \usage{
 get_name(x)
 
 \method{get_name}{eq}(x)
+
+\method{get_name}{eqs}(x)
 }
 \arguments{
 \item{x}{the object}
@@ -22,6 +25,9 @@ Extract the equation(s) name(s)
 \itemize{
 \item \code{eq}: Extract the name of the given
 \code{eq}uation object.
+
+\item \code{eqs}: Extract the name of the given
+\code{eqs} object.
 }}
 
 \examples{
@@ -31,4 +37,18 @@ eq_test <- eq(age = 0.1, bmi = -0.3,
     outcome = "kcal/day"
 )
 get_name(eq_test)
+library(equationer)
+eq_test <- eq(age = 0.1, bmi = -0.3,
+    name    = "eq_test",
+    outcome = "kcal/day",
+    strata = list(sex = "female")
+)
+eq2_test <- eq(age = 0.1, bmi = -0.3,
+    name    = "eq2_test",
+    outcome = "kcal/day",
+    strata = list(sex = "male")
+)
+
+eqs_test <- eqs(eq_test, eq2_test, name = "eqs-test")
+get_name(eqs_test)
 }

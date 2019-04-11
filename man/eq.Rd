@@ -2,9 +2,9 @@
 % Please edit documentation in R/eq.R
 \name{eq}
 \alias{eq}
-\title{Equation}
+\title{Single equation object}
 \usage{
-eq(..., name, outcome, stratum = NA_character_)
+eq(..., name, outcome, strata = vector("list"))
 }
 \arguments{
 \item{...}{sequence of named coefficients}
@@ -13,9 +13,10 @@ eq(..., name, outcome, stratum = NA_character_)
 
 \item{outcome}{(chr) the outcome produced by the equation}
 
-\item{stratum}{(chr, default = NA) if the equation is one of a set
-of equations defined each one for a level of a strata variable
-\code{stratum} is the name of the reference level for this equation}
+\item{strata}{(list, default = empty list) if the equation is one of
+a set of equations defined each one for a compbination of
+level of some strata variables, \code{strata} is a list for those
+levels (named with strata names)}
 }
 \value{
 an \code{\link{eq}} object
@@ -25,8 +26,43 @@ Costructor for object of class \code{\link{eq}} defined by its
 (named) coefficients.
 }
 \examples{
-eq1 <- eq(sex = 2, age = 0.3, bmi = -0.21,
+eq1 <- eq(female = 2, age = 0.3, bmi = -0.21,
     name = "cl_test_1",
     outcome = "kcal/day"
 )
+
+# works with strata
+eq2 <- eq(age = 0.3, bmi = -0.5,
+    name = "cl_test_1",
+    outcome = "kcal/day",
+    strata = list(sex = "female")
+)
+eq3 <- eq(age = 0.5, bmi = -0.3,
+    name = "cl_test_1",
+    outcome = "kcal/day",
+    strata = list(sex = "male")
+)
+
+# works with multiple strata
+eq4 <- eq(age = 0.3, bmi = -0.5,
+    name = "cl_test_1",
+    outcome = "kcal/day",
+    strata = list(sex = "female", mellitus = 0)
+)
+eq5 <- eq(age = 0.5, bmi = -0.3,
+    name = "cl_test_1",
+    outcome = "kcal/day",
+    strata = list(sex = "female", mellitus = 0)
+)
+eq6 <- eq(age = 0.3, bmi = -0.3,
+    name = "cl_test_1",
+    outcome = "kcal/day",
+    strata = list(sex = "male", mellitus = 1)
+)
+eq7 <- eq(age = 0.5, bmi = -0.5,
+    name = "cl_test_1",
+    outcome = "kcal/day",
+    strata = list(sex = "male", mellitus = 1)
+)
+
 }

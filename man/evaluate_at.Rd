@@ -3,20 +3,30 @@
 \name{evaluate_at}
 \alias{evaluate_at}
 \alias{evaluate_at.eq}
+\alias{evaluate_at.eqs}
 \title{Evaluate equation}
 \usage{
 evaluate_at(x, ...)
 
 \method{evaluate_at}{eq}(x, ...)
+
+\method{evaluate_at}{eqs}(x, ..., .outcome = NULL)
 }
 \arguments{
 \item{x}{equation(s set/bag) object}
 
 \item{...}{sequence of named coefficients's values}
+
+\item{.outcome}{(chr, default NULL) an optional declaration of which
+outcome(s) the computation has to consider}
 }
 \value{
-(named dbl) the value of the outcome that solve the equation when
-its the covariates assume the values supplied
+a one row \link[tibble:tibble-package]{tibble} with one column
+each covariate supplied, one column for possible strata
+considered, one column with the outcome, one column with
+the value of the outcome that solve the equation when
+its the covariates assume the values supplied, and one last
+column wiht the name of the eqaution used
 }
 \description{
 Evaluate (i.e., solve for the outcome) the supplied equation at the
@@ -26,6 +36,10 @@ supplied values of the covariates
 \itemize{
 \item \code{eq}: Evaluate (i.e., solve for the outcome) the
 supplied equation at the supplied values of the covariates.
+
+\item \code{eqs}: Evaluate (i.e., solve for the outcome)
+all the \code{\link{eq}}uations in the \code{\link{eqs}} object
+at the supplied values of the covariates.
 }}
 
 \examples{
@@ -34,13 +48,42 @@ eq_test <- eq(age = 0.1, bmi = -0.3,
     name    = "first eq_test",
     outcome = "out"
 )
+eq2_test <- eq(age = 0.1, bmi = -0.3,
+    name    = "first eq_test",
+    outcome = "out",
+    strata = list(sex = "female")
+)
 
-evaluate_at(eq_test, age = 38, bmi = 18) # c(out = -1.6)
-evaluate_at(eq_test, age = 38, sex = 1, bmi = 18) # c(out = -1.6)
+evaluate_at(eq_test, age = 38, bmi = 18)
+evaluate_at(eq_test, age = 38, sex = 1, bmi = 18)
+evaluate_at(eq2_test, age = 38, bmi = 18)
 
 \dontrun{
     # ERRORS
-    evaluate_at(eq_test, age = 38, bmi = 18, sex = "female"))
+    evaluate_at(eq_test, age = 38, bmi = 18, sex = "female")
+    evaluate_at(eq_test, age = 38)
+}
+library(equationer)
+eq_test <- eq(age = 0.5, bmi = -0.3,
+    name    = "eq_test",
+    outcome = "kcal/day",
+    strata = list(sex = "female")
+)
+eq2_test <- eq(age = 0.3, bmi = -0.5,
+    name    = "eq2_test",
+    outcome = "kcal/day",
+    strata = list(sex = "male")
+)
+
+eqs_test <- eqs(eq_test, eq2_test, name = "eqs-test")
+
+evaluate_at(eqs_test, age = 38, bmi = 18, sex = "female")
+evaluate_at(eqs_test, age = 38, bmi = 18, sex = "male")
+
+\dontrun{
+    # ERRORS
+    evaluate_at(eq_test, age = 38, bmi = 18, mellitus = "yes"))
+    evaluate_at(eqs_test, age = 38, bmi = 18, sex = "unknown")
     evaluate_at(eq_test, age = 38)
 }
 }

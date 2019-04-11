@@ -9,10 +9,10 @@
 \if{html}{\figure{logo.png}{options: align='right'}}
 
 The goal of the package `equationer` is to
-    implement an environment to consistently generate the estimations
-    from the equations reported in the paper "Review of Equations of
-    Energy Requirements" by the *Unit of Biostatistics, Epidemiology and
-    Public Health* of the University of Padova.
+    implement an environment to consistently generate the estimations from
+    the equations reported in the paper "Review of Equations of Energy
+    Requirements" by the *Unit of Biostatistics, Epidemiology and Public
+    Health* of the University of Padova.
 }
 \seealso{
 Useful links:

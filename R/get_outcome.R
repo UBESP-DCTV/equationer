@@ -24,3 +24,27 @@ get_outcome <- function(x) {
 get_outcome.eq <- function(x) {
     attr(x, "outcome")
 }
+
+
+#' @describeIn get_outcome Extract the outcome of the given
+#'     \code{eqs} object.
+#' @export
+#'
+#' @examples
+#' library(equationer)
+#' eq_test <- eq(age = 0.1, bmi = -0.3,
+#'     name    = "eq_test",
+#'     outcome = "kcal/day",
+#'     strata = list(sex = "female")
+#' )
+#' eq2_test <- eq(age = 0.1, bmi = -0.3,
+#'     name    = "eq2_test",
+#'     outcome = "kcal/day",
+#'     strata = list(sex = "male")
+#' )
+#'
+#' eqs_test <- eqs(eq_test, eq2_test, name = "eqs-test")
+#' get_outcome(eqs_test)
+get_outcome.eqs <- function(x) {
+    attr(x, "outcome")
+}

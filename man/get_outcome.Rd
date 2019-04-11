@@ -3,11 +3,14 @@
 \name{get_outcome}
 \alias{get_outcome}
 \alias{get_outcome.eq}
+\alias{get_outcome.eqs}
 \title{get outcome}
 \usage{
 get_outcome(x)
 
 \method{get_outcome}{eq}(x)
+
+\method{get_outcome}{eqs}(x)
 }
 \arguments{
 \item{x}{the object}
@@ -22,6 +25,9 @@ Extract the equation(s) outcome(s)
 \itemize{
 \item \code{eq}: Extract the outcome of the given
 \code{eq}uation object.
+
+\item \code{eqs}: Extract the outcome of the given
+\code{eqs} object.
 }}
 
 \examples{
@@ -31,4 +37,18 @@ eq_test <- eq(age = 0.1, bmi = -0.3,
     outcome = "kcal/day"
 )
 get_outcome(eq_test)
+library(equationer)
+eq_test <- eq(age = 0.1, bmi = -0.3,
+    name    = "eq_test",
+    outcome = "kcal/day",
+    strata = list(sex = "female")
+)
+eq2_test <- eq(age = 0.1, bmi = -0.3,
+    name    = "eq2_test",
+    outcome = "kcal/day",
+    strata = list(sex = "male")
+)
+
+eqs_test <- eqs(eq_test, eq2_test, name = "eqs-test")
+get_outcome(eqs_test)
 }
