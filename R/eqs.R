@@ -83,15 +83,12 @@ eqs <- function(..., name, reference = NA_character_) {
         ui_stop("{ui_code('reference')} must be a single string")
     }
 
-    outcome <- purrr::map_chr(xs, get_outcome) %>%
-        unique()
-
     strata_lst <- purrr::map(xs, get_strata)
 
-    strata_levels <- purrr::map(strata_lst, names)
+    strata_vars <- purrr::map(strata_lst, names)
     if (any(
-        purrr::map_lgl(seq_len(length(strata_levels) - 1),
-            ~!setequal(strata_levels[[.x]], strata_levels[[.x + 1]])
+        purrr::map_lgl(seq_len(length(strata_vars) - 1),
+            ~!setequal(strata_vars[[.x]], strata_vars[[.x + 1]])
         )
     )) {
         ui_stop("All the equations must share the same set of strata")
@@ -110,6 +107,8 @@ eqs <- function(..., name, reference = NA_character_) {
             unname() %>%
             factor()
     })
+
+    outcome <- purrr::map_chr(xs, get_outcome)
 
     strata_df <- dplyr::as_tibble(c(strata, outcome = list(outcome))) %>%
         dplyr::distinct()

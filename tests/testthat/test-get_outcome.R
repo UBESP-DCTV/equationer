@@ -19,5 +19,5 @@ test_that("works for eq objects", {
 
 
 test_that("works for eq objects", {
-  expect_equal(get_outcome(eqs_test), "kcal/day")
+  expect_equal(get_outcome(eqs_test), c("kcal/day", "kcal/day"))
 })

@@ -1,5 +1,6 @@
 * Added `eqs` class including costructor, extractors and main methods,
-  to collect equations from the same "reference"
+  to collect equations from the same "reference" and evaluate them
+  together.
 * Changed strata atributes to list of factors
 * Added support for tidy evaluation (`rlang` pkg main utilities)
 
