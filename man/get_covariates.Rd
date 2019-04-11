@@ -3,11 +3,14 @@
 \name{get_covariates}
 \alias{get_covariates}
 \alias{get_covariates.eq}
+\alias{get_covariates.eqs}
 \title{get covariates}
 \usage{
 get_covariates(x)
 
 \method{get_covariates}{eq}(x)
+
+\method{get_covariates}{eqs}(x)
 }
 \arguments{
 \item{x}{the object}
@@ -22,6 +25,9 @@ Extract the equation(s) covariates
 \itemize{
 \item \code{eq}: Extract the covariates of the given
 \code{eq}uation object.
+
+\item \code{eqs}: Extract the covariates of the given
+\code{eq}uation object.
 }}
 
 \examples{
@@ -31,5 +37,19 @@ eq_test <- eq(age = 0.1, bmi = -0.3,
     outcome = "kcal/day",
     strata = list(sex = "female")
 )
-get_outcome(eq_test)
+get_covariates(eq_test)
+library(equationer)
+eq_test <- eq(age = 0.1, bmi = -0.3,
+    name    = "eq_test",
+    outcome = "kcal/day",
+    strata = list(sex = "female")
+)
+eq2_test <- eq(age = 0.1, bmi = -0.3,
+    name    = "eq2_test",
+    outcome = "kcal/day",
+    strata = list(sex = "male")
+)
+
+eqs_test <- eqs(eq_test, eq2_test, name = "eqs-test")
+get_covariates(eqs_test)
 }

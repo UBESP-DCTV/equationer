@@ -4,12 +4,15 @@
 \alias{eqs}
 \title{Multiple equation object}
 \usage{
-eqs(..., name)
+eqs(..., name, reference = NA_character_)
 }
 \arguments{
 \item{...}{(eq, only) sequence of \code{\link{eq}}uations}
 
 \item{name}{(chr) the name of the equations' set}
+
+\item{reference}{(chr, default NA) an optional reference for the
+set of the equations in the bag.}
 }
 \value{
 an \code{\link{eqs}} object

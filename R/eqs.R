@@ -5,6 +5,8 @@
 #'
 #' @param ... (eq, only) sequence of \code{\link{eq}}uations
 #' @param name (chr) the name of the equations' set
+#' @param reference (chr, default NA) an optional reference for the
+#'     set of the equations in the bag.
 #'
 #' @return an \code{\link{eqs}} object
 #' @export
@@ -48,7 +50,7 @@
 #' )
 #'
 #' eqs2 <- eqs(eq4, eq5, eq6, eq7, name = "multistrata-1")
-eqs <- function(..., name) {
+eqs <- function(..., name, reference = NA_character_) {
 
     xs <- list(...)
 
@@ -70,14 +72,29 @@ eqs <- function(..., name) {
 
 
     if (!is_string(name)) {
-        ui_stop("{ui_code('eq_name')} must be a single string")
+        ui_stop("{ui_code('name')} must be a single string")
+    }
+
+    if (!is_string(reference)) {
+        ui_stop("{ui_code('reference')} must be a single string")
     }
 
     outcome <- purrr::map_chr(xs, get_outcome) %>%
         unique()
 
-    strata_lst <- purrr::map(xs, get_strata) %>%
-        purrr::flatten()
+    strata_lst <- purrr::map(xs, get_strata)
+
+    strata_levels <- purrr::map(strata_lst, names)
+    if (any(
+        purrr::map_lgl(seq_len(length(strata_levels) - 1),
+            ~!setequal(strata_levels[[.x]], strata_levels[[.x + 1]])
+        )
+    )) {
+        ui_stop("All the equations must share the same set of strata")
+    }
+
+
+    strata_lst <- purrr::flatten(strata_lst)
 
     strata_names <- names(strata_lst) %>%
         unique() %>%
@@ -90,11 +107,25 @@ eqs <- function(..., name) {
             factor()
     })
 
+    covariates <- purrr::map(xs, get_covariates)
+
+    if (any(
+        purrr::map_lgl(seq_len(length(covariates) - 1),
+            ~!setequal(covariates[[.x]], covariates[[.x + 1]])
+        )
+    )) {
+        ui_stop("All the equations must have the same set of covariates")
+    }
+
+
 
     structure(purrr::set_names(xs, xs_names),
-        name    = name,
+        name = name,
         outcome = outcome,
-        strata  = strata,
+        covariates = covariates[[1]],
+        strata = strata,
+        reference = reference,
+
         class = "eqs"
     )
 }

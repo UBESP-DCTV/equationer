@@ -17,14 +17,14 @@ get_strata <- function(x) {
 #' @examples
 #' library(equationer)
 #' eq_test <- eq(age = 0.1, bmi = -0.3,
-#'     name    = "first eq_test",
+#'     name    = "eq_test",
 #'     outcome = "kcal/day",
 #'     strata = list(sex = "female")
 #' )
 #' get_outcome(eq_test)
 #'
 #' eq2_test <- eq(age = 0.1, bmi = -0.3,
-#'     name    = "first eq_test",
+#'     name    = "eq2_test",
 #'     outcome = "kcal/day",
 #'     strata = list(sex = "female", nyha = 1)
 #' )
@@ -33,3 +33,30 @@ get_strata <- function(x) {
 get_strata.eq <- function(x) {
     attr(x, "strata")
 }
+
+
+
+
+#' @describeIn get_strata Extract the strata of the given
+#'     \code{eqs} object.
+#' @export
+#'
+#' @examples
+#' library(equationer)
+#' eq_test <- eq(age = 0.1, bmi = -0.3,
+#'     name    = "eq_test",
+#'     outcome = "kcal/day",
+#'     strata = list(sex = "female")
+#' )
+#' eq2_test <- eq(age = 0.1, bmi = -0.3,
+#'     name    = "eq2_test",
+#'     outcome = "kcal/day",
+#'     strata = list(sex = "male")
+#' )
+#'
+#' eqs_test <- eqs(eq_test, eq2_test, name = "eqs-test")
+#' get_strata(eqs_test)
+get_strata.eqs <- function(x) {
+    attr(x, "strata")
+}
+

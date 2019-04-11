@@ -23,6 +23,19 @@ eq4 <- eq(age = 0.5, bmi = -0.3,
     strata = list(sex = "female", nyha = 2)
 )
 
+eq5 <- eq(age = 0.5, bmi = -0.3, weight = 0.1,
+    name = "cl_test_4",
+    outcome = "kcal/day",
+    strata = list(sex = "female", nyha = 2)
+)
+
+eq6 <- eq(age = 0.5, bmi = -0.3,
+    name = "cl_test_4",
+    outcome = "kcal/day",
+    strata = list(sex = "female", mellitus = "yes")
+)
+
+
 eqs1 <- eqs(eq1, eq2, name = "gendered-1")
 
 
@@ -37,12 +50,32 @@ test_that("equations must have different names", {
     )
 })
 
+test_that("equations must have same covariates and strata", {
+    expect_error(
+        eqs(eq1, eq5, name = "different-covariates"),
+        "same set of covariates"
+    )
+    expect_error(
+        eqs(eq1, eq6, name = "different-strata"),
+        "same set of strata"
+    )
+})
+
+
+
 test_that("correct strata", {
     eqs2 <- eqs(eq1, eq2, eq3, eq4, name = "test-strata")
 
     expect_is(attr(eqs2, "strata"), "list")
     expect_is(attr(eqs2, "strata")[["sex"]], "factor")
     expect_is(attr(eqs2, "strata")[["nyha"]], "factor")
+})
+
+test_that("correct covariates", {
+    eqs2 <- eqs(eq1, eq2, eq3, eq4, name = "test-strata")
+
+    expect_equal(attr(eqs2, "covariates"), c("age", "bmi"))
+
 })
 
 
