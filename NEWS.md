@@ -1,3 +1,5 @@
+# equationer 0.0.0.9001
+
 * Added basic methods for class `eq`; 
 * Added extractrs for class `eq`;
 * Added `eq()` costructor for object of class `eq`;
