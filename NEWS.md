@@ -1,3 +1,5 @@
+# equationer (development version)
+
 * Added `eqs` class including costructor, extractors and main methods,
   to collect equations from the same "reference" and evaluate them
   together.
