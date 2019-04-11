@@ -10,23 +10,28 @@ test_that("correct classes", {
     expect_is(eq_x1y2, "eq")
 })
 
-test_that("components names", {
+test_that("attributes' names", {
     expect_equal(
-        names(eq_x1y2),
-        c("eq", "eq_name", "outcome", "stratum", "covariates")
+        names(attributes(eq_x1y2)),
+        c(
+            "names", "eq_name", "outcome", "stratum", "covariates",
+            "class"
+        )
     )
 })
 
 test_that("type of objects", {
-    expect_is(eq_x1y2[["eq"]], "matrix")
-    expect_is(eq_x1y2[["eq_name"]], "character")
-    expect_is(eq_x1y2[["outcome"]], "character")
+    expect_is(eq_x1y2, "eq")
+    expect_is(eq_x1y2[[1]], "numeric")
 
-    expect_is(eq_x1y2[["stratum"]], "character")
-    expect_named(eq_x1y2[["stratum"]])
+    expect_is(attr(eq_x1y2, "eq_name"), "character")
+    expect_is(attr(eq_x1y2, "outcome"), "character")
+
+    expect_is(attr(eq_x1y2, "stratum"), "character")
+    expect_named(attr(eq_x1y2, "stratum"))
     expect_is(eq(x = 1, name = "a", outcome = "b"), "eq")
 
-    expect_is(eq_x1y2[["covariates"]], "character")
+    expect_is(attr(eq_x1y2, "covariates"), "character")
 })
 
 test_that("must have (unique) names", {
@@ -36,6 +41,8 @@ test_that("must have (unique) names", {
 
 test_that("handle wrong input type", {
     expect_error(eq(name = "a", outcome = "a"), "valid")
+
+    expect_error(eq(x = "1", name = "a", outcome = "b"), "numeric")
 
     expect_error(
         eq(x = 1, name = c("a", "b"), outcome = "a"),

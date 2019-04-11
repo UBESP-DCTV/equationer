@@ -23,5 +23,5 @@ get_stratum <- function(x) {
 #' )
 #' get_outcome(eq_test)
 get_stratum.eq <- function(x) {
-    x[["stratum"]]
+    attr(x, "stratum")
 }

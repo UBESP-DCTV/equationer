@@ -23,5 +23,5 @@ get_covariates <- function(x) {
 #' )
 #' get_outcome(eq_test)
 get_covariates.eq <- function(x) {
-    x[["covariates"]]
+    attr(x, "covariates")
 }

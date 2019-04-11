@@ -30,6 +30,11 @@ eq <- function(..., name, outcome, stratum = NA_character_) {
         ui_stop("Some names are duplicated.")
     }
 
+    if (!all(purrr::map_lgl(xs, is.numeric))) {
+        ui_stop("All covariates must be numeric.")
+    }
+
+
     if (!is_string(name)) {
         ui_stop("{ui_code('eq_name')} must be a single string")
     }
@@ -46,14 +51,11 @@ eq <- function(..., name, outcome, stratum = NA_character_) {
         ui_stop("{ui_code('stratum')} must be named")
     }
 
-    nxs <- names(xs)
-
-    res <- list(eq = as.matrix(xs),
+    structure(unlist(xs),
         eq_name    = name,
         outcome    = outcome,
         stratum    = stratum,
-        covariates = nxs
+        covariates = names(xs),
+        class = "eq"
     )
-
-    structure(res, class = "eq")
 }

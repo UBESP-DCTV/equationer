@@ -22,5 +22,5 @@ get_outcome <- function(x) {
 #' )
 #' get_outcome(eq_test)
 get_outcome.eq <- function(x) {
-    x[["outcome"]]
+    attr(x, "outcome")
 }
