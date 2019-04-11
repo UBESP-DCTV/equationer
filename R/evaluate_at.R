@@ -24,10 +24,14 @@ evaluate_at <- function(x, ...) {
 #'     outcome = "out"
 #' )
 #'
-#' evaluate_at.eq(eq_test, age = 38, bmi = 18) # c(out = -1.6)
-#' evaluate_at.eq(eq_test, age = 38, bmi = 18, sex = 1) # c(out = -1.6)
-#' evaluate_at.eq(eq_test, age = 38, bmi = 18, sex = "female")) # ERROR
-#' evaluate_at.eq(eq_test, age = 38) # ERROR
+#' evaluate_at(eq_test, age = 38, bmi = 18) # c(out = -1.6)
+#' evaluate_at(eq_test, age = 38, sex = 1, bmi = 18) # c(out = -1.6)
+#'
+#' \dontrun{
+#'     # ERRORS
+#'     evaluate_at(eq_test, age = 38, bmi = 18, sex = "female"))
+#'     evaluate_at(eq_test, age = 38)
+#' }
 evaluate_at.eq <- function(x, ...) {
 
     vs <- list(...)

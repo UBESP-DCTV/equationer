@@ -1,4 +1,5 @@
-* Added `is_applicable_to_covset()` generics and method for `eq`
+* Added `evaluate_at()` generic and method for `eq`
+* Added `is_applicable_to_covset()` generic and method for `eq`
   objects; 
 * Added extractrs for class `eq`;
 * Added `eq()` costructor for object of class `eq`;
