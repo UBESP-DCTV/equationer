@@ -3,11 +3,14 @@
 \name{is_applicable_to_covset}
 \alias{is_applicable_to_covset}
 \alias{is_applicable_to_covset.eq}
+\alias{is_applicable_to_covset.eqs}
 \title{Check equation for covariates}
 \usage{
 is_applicable_to_covset(x, cov)
 
 \method{is_applicable_to_covset}{eq}(x, cov)
+
+\method{is_applicable_to_covset}{eqs}(x, cov)
 }
 \arguments{
 \item{x}{equation(s set/bag) object}
@@ -26,7 +29,11 @@ set of covariates
 \section{Methods (by class)}{
 \itemize{
 \item \code{eq}: Check if the \code{eq}uation can
-be applied to \code{cov}.
+be applied to the \code{cov}ariates supplied.
+
+\item \code{eqs}: Check if (all) the
+\code{\link{eq}}uations in the \code{\link{eqs}} object can be
+applied to the \code{cov}ariates supplied.
 }}
 
 \examples{
@@ -39,4 +46,22 @@ is_applicable_to_covset(eq_test, c("age", "bmi")) # TRUE
 is_applicable_to_covset(eq_test, c("age", "bmi", "sex")) # TRUE
 is_applicable_to_covset(eq_test, c("age")) # FALSE
 is_applicable_to_covset(eq_test, c("age", "sex")) # FALSE
+library(equationer)
+eq_test <- eq(age = 0.1, bmi = -0.3,
+    name    = "eq_test",
+    outcome = "kcal/day",
+    strata = list(sex = "female")
+)
+eq2_test <- eq(age = 0.1, bmi = -0.3,
+    name    = "eq2_test",
+    outcome = "kcal/day",
+    strata = list(sex = "male")
+)
+
+eqs_test <- eqs(eq_test, eq2_test, name = "eqs-test")
+
+is_applicable_to_covset(eqs_test, c("age", "bmi")) # TRUE
+is_applicable_to_covset(eqs_test, c("age", "bmi", "sex")) # TRUE
+is_applicable_to_covset(eqs_test, c("age")) # FALSE
+is_applicable_to_covset(eqs_test, c("age", "sex")) # FALSE
 }

@@ -3,6 +3,10 @@
 #' Costructor for object of class \code{\link{eqs}} defined by its
 #' \code{\link{eq}}s components.
 #'
+#' @details All the \code{\link{eq}}uations included in the
+#'     \code{\link{eqs}} object must share the same covariates and
+#'     the same strata (with different combinations!)
+#'
 #' @param ... (eq, only) sequence of \code{\link{eq}}uations
 #' @param name (chr) the name of the equations' set
 #' @param reference (chr, default NA) an optional reference for the
@@ -31,7 +35,7 @@
 #' eq4 <- eq(age = 0.3, bmi = -0.5,
 #'     name = "cl_test_4",
 #'     outcome = "kcal/day",
-#'     strata = list(sex = "female", mellitus = 0)
+#'     strata = list(sex = "male", mellitus = 0)
 #' )
 #' eq5 <- eq(age = 0.5, bmi = -0.3,
 #'     name = "cl_test_5",
@@ -46,7 +50,7 @@
 #' eq7 <- eq(age = 0.5, bmi = -0.5,
 #'     name = "cl_test_7",
 #'     outcome = "kcal/day",
-#'     strata = list(sex = "male", mellitus = 1)
+#'     strata = list(sex = "female", mellitus = 1)
 #' )
 #'
 #' eqs2 <- eqs(eq4, eq5, eq6, eq7, name = "multistrata-1")
@@ -106,6 +110,15 @@ eqs <- function(..., name, reference = NA_character_) {
             unname() %>%
             factor()
     })
+
+    strata_df <- dplyr::as_tibble(c(strata, outcome = list(outcome))) %>%
+        dplyr::distinct()
+
+    if (nrow(strata_df) < length(strata[[1]])) {
+        ui_stop(
+            "The equations cannot share same combination of strata and outcome"
+        )
+    }
 
     covariates <- purrr::map(xs, get_covariates)
 

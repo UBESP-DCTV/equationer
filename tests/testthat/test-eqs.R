@@ -24,17 +24,27 @@ eq4 <- eq(age = 0.5, bmi = -0.3,
 )
 
 eq5 <- eq(age = 0.5, bmi = -0.3, weight = 0.1,
-    name = "cl_test_4",
+    name = "cl_test_5",
     outcome = "kcal/day",
     strata = list(sex = "female", nyha = 2)
 )
 
 eq6 <- eq(age = 0.5, bmi = -0.3,
-    name = "cl_test_4",
+    name = "cl_test_6",
     outcome = "kcal/day",
     strata = list(sex = "female", mellitus = "yes")
 )
 
+eq7 <- eq(age = 0.5, bmi = -0.3,
+    name = "cl_test_7",
+    outcome = "kcal/day",
+    strata = list(sex = "male", nyha = 1)
+)
+eq8 <- eq(age = 0.5, bmi = -0.3,
+    name = "cl_test_7",
+    outcome = "kcal/month",
+    strata = list(sex = "male", nyha = 1)
+)
 
 eqs1 <- eqs(eq1, eq2, name = "gendered-1")
 
@@ -76,6 +86,17 @@ test_that("correct covariates", {
 
     expect_equal(attr(eqs2, "covariates"), c("age", "bmi"))
 
+})
+
+test_that("same combination of strata and output throw an error", {
+    expect_error(
+        eqs(eq1, eq7, name = "redundant-strata-and-output"),
+        "cannot share same combination of strata and outcome"
+    )
+    expect_is(
+        eqs(eq1, eq8, name = "redundant-strata-not_output"),
+        "eqs"
+    )
 })
 
 

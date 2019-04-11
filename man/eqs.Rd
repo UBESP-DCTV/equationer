@@ -21,6 +21,11 @@ an \code{\link{eqs}} object
 Costructor for object of class \code{\link{eqs}} defined by its
 \code{\link{eq}}s components.
 }
+\details{
+All the \code{\link{eq}}uations included in the
+\code{\link{eqs}} object must share the same covariates and
+the same strata (with different combinations!)
+}
 \examples{
 eq1 <- eq(age = 0.3, bmi = -0.5,
     name    = "cl_test_1",
@@ -41,7 +46,7 @@ eqs1 <- eqs(eq1, eq2, name = "gendered-1")
 eq4 <- eq(age = 0.3, bmi = -0.5,
     name = "cl_test_4",
     outcome = "kcal/day",
-    strata = list(sex = "female", mellitus = 0)
+    strata = list(sex = "male", mellitus = 0)
 )
 eq5 <- eq(age = 0.5, bmi = -0.3,
     name = "cl_test_5",
@@ -56,7 +61,7 @@ eq6 <- eq(age = 0.3, bmi = -0.3,
 eq7 <- eq(age = 0.5, bmi = -0.5,
     name = "cl_test_7",
     outcome = "kcal/day",
-    strata = list(sex = "male", mellitus = 1)
+    strata = list(sex = "female", mellitus = 1)
 )
 
 eqs2 <- eqs(eq4, eq5, eq6, eq7, name = "multistrata-1")
