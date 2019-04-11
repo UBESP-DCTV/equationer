@@ -1,40 +1,5 @@
 context("test-evaluate_at")
 
-eq_test <- eq(age = 0.5, bmi = -0.3,
-    name    = "eq_test",
-    outcome = "kcal/day"
-)
-eq1_test <- eq(age = 0.5, bmi = -0.3,
-    name    = "eq_test",
-    outcome = "kcal/day",
-    strata = list(sex = "female")
-)
-
-evaluated <- evaluate_at(eq_test, age = 38, bmi = 18)
-evaluated1 <- evaluate_at(eq_test, age = 38, bmi = 18, weight = 81)
-evaluated2 <- evaluate_at(eq1_test, age = 38, bmi = 18)
-
-
-eq2_test <- eq(age = 0.3, bmi = -0.5,
-    name    = "eq2_test",
-    outcome = "kcal/day",
-    strata = list(sex = "male")
-)
-
-eqs_test <- eqs(eq1_test, eq2_test, name = "eqs-test")
-
-evaluateds  <- evaluate_at(eqs_test, age = 38, bmi = 18)
-evaluateds1 <- evaluate_at(eqs_test, age = 38, bmi = 18, weight = 81)
-evaluateds2 <- evaluate_at(eqs_test, age = 38, bmi = 18, sex = "female")
-evaluateds3 <- evaluate_at(eqs_test, age = 38, bmi = 18, .outcome = "kcal/day")
-evaluateds4 <- evaluate_at(eqs_test, age = 38, bmi = 18, sex = "female", .outcome = "kcal/day")
-
-
-
-
-
-
-
 test_that("correct class", {
     expect_is(evaluated, "tbl_df")
     expect_is(evaluated1, "tbl_df")
@@ -56,19 +21,12 @@ test_that("correct columns", {
     )
     expect_equal(
         names(evaluated2),
-        c("age", "bmi", "sex", "outcome", "estimation", "eq_name")
+        c("age", "bmi", "sex", "nyha", "outcome", "estimation", "eq_name")
     )
 
 
-    var_output <- c(
-        "age", "bmi", "sex", "outcome", "estimation", "eq_name",
-        "eq_group", "reference"
-    )
     expect_equal(names(evaluateds), var_output)
-    expect_equal(names(evaluateds1), c(
-        "age", "bmi", "weight", "sex", "outcome", "estimation", "eq_name",
-        "eq_group", "reference"
-    ))
+    expect_equal(names(evaluateds1), var_output_weight)
     expect_equal(names(evaluateds2), var_output)
     expect_equal(names(evaluateds3), var_output)
     expect_equal(names(evaluateds4), var_output)
@@ -106,7 +64,8 @@ test_that("correct evaluation for eq", {
 
     expect_equal(evaluated1[["weight"]], 81)
 
-    expect_equal(evaluated2[["sex"]], "female")
+    expect_equal(evaluated2[["sex"]], "male")
+    expect_equal(evaluated2[["nyha"]], 1)
 
 })
 
@@ -132,19 +91,22 @@ test_that("eror works for eq", {
 
 
 test_that("correct evaluation for eqs", {
-    expect_equal(evaluateds[["estimation"]],  c(13.6, 2.4))
-    expect_equal(evaluateds1[["estimation"]], c(13.6, 2.4))
-    expect_equal(evaluateds2[["estimation"]], 13.6)
-    expect_equal(evaluateds3[["estimation"]], c(13.6, 2.4))
-    expect_equal(evaluateds4[["estimation"]], 13.6)
+    expect_equal(evaluateds[["estimation"]],  c(2.4, 13.6, -2.4, -13.6))
+    expect_equal(evaluateds1[["estimation"]], c(2.4, 13.6, -2.4, -13.6))
+    expect_equal(evaluateds2[["estimation"]], c(13.6, -13.6))
+    expect_equal(evaluateds3[["estimation"]], c(2.4, 13.6, -2.4, -13.6))
+    expect_equal(evaluateds4[["estimation"]], c(13.6, -13.6))
 
-    expect_equal(evaluateds[["age"]],  c(38, 38))
-    expect_equal(evaluateds[["bmi"]],  c(18, 18))
-    expect_equal(evaluateds[["sex"]],  factor(c("female", "male")))
-    expect_equal(evaluateds[["outcome"]],  c("kcal/day", "kcal/day"))
-    expect_equal(evaluateds[["eq_name"]],  c("eq_test", "eq2_test"))
-    expect_equal(evaluateds[["eq_group"]],  c("eqs-test", "eqs-test"))
-    expect_equal(evaluateds[["reference"]],  c(NA_character_, NA_character_))
+    expect_equal(evaluateds[["age"]],  rep(38, 4))
+    expect_equal(evaluateds[["bmi"]],  rep(18, 4))
+    expect_equal(
+        evaluateds[["sex"]],
+        factor(rep(c("male", "female"), 2))
+    )
+    expect_equal(evaluateds[["outcome"]],  rep("kcal/day", 4))
+    expect_equal(evaluateds[["eq_name"]],  paste0("cl_test_", 1:4))
+    expect_equal(evaluateds[["eq_group"]],  rep("eqs-test", 4))
+    expect_equal(evaluateds[["reference"]],  rep("ref-1", 4))
 
 })
 
