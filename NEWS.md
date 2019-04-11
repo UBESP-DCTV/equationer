@@ -1,3 +1,5 @@
+* Added support for tidy evaluation (`rlang` pkg main utilities)
+
 # equationer 0.0.0.9001
 
 * Added basic methods for class `eq`; 
