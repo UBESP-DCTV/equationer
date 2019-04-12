@@ -1,4 +1,4 @@
-* Added `eqs_bag` class, constructor. and extractors
+* Added `eqs_bag` class, constructor, and extractors
 * Updated tests moving all the data in `test/testthat/helper-eq.R`.
 
 # equationer (development version)

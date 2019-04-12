@@ -101,7 +101,7 @@ test_that("correct evaluation for eqs", {
     expect_equal(evaluateds[["bmi"]],  rep(18, 4))
     expect_equal(
         evaluateds[["sex"]],
-        factor(rep(c("male", "female"), 2))
+        rep(c("male", "female"), 2)
     )
     expect_equal(evaluateds[["outcome"]],  rep("kcal/day", 4))
     expect_equal(evaluateds[["eq_name"]],  paste0("cl_test_", 1:4))
@@ -134,3 +134,92 @@ test_that("warnins work for eqs", {
         "levels requested are not included"
     )
 })
+
+
+
+
+
+
+test_that("correct evaluation for eqs_bag", {
+
+    expect_equal(
+        evaluate_at(eqs_bag_test, age = 35)[["estimation"]],
+        numeric()
+    )
+
+    expect_equal(
+        suppressWarnings(
+            evaluate_at(eqs_bag_test, age = 35, bmi = 18)[["estimation"]]
+        ),
+        c(1.5, 12.1, -1.5, -12.1)
+    )
+
+    expect_equal(
+        suppressWarnings(
+            evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81)[["estimation"]]
+        ),
+        c(1.5, 12.1, -1.5, -12.1, 12.7, 1.1, -12.7, -9.2)
+    )
+
+    expect_equal(
+        suppressWarnings(
+            evaluate_at(eqs_bag_test, age = 35, bmi = 18, sex = "female")[["estimation"]]
+        ),
+        c(12.1, -12.1)
+    )
+
+    expect_equal(
+        suppressWarnings(
+            evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female")[["estimation"]]
+        ),
+        c(12.1, -12.1,  12.7, -12.7)
+    )
+
+    expect_equal(
+        suppressWarnings(
+            evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, nyha = 1)[["estimation"]]
+        ),
+        c(1.5, 12.1, 12.7, 1.1, -12.7, -9.2)
+    )
+
+    expect_equal(evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, .outcome = "kcal/day")[["estimation"]],
+        c(1.5, 12.1, -1.5, -12.1, -12.7, -9.2)
+    )
+
+    expect_equal(evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female", .outcome = "kcal/day")[["estimation"]],
+        c(12.1, -12.1, -12.7)
+    )
+})
+
+
+test_that("warnins work for eqs", {
+    expect_warning(
+        evaluate_at(eqs_bag_test, age = 38, bmi = 18, sex = "unknown"),
+        "levels requested are not included"
+    )
+
+    expect_warning(
+        evaluate_at(eqs_bag_test, age = 35, bmi = 18),
+        "Only equations with possible outcome"
+    )
+    expect_warning(
+        evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81),
+        "Only equations with possible outcome"
+    )
+    expect_warning(
+        evaluate_at(eqs_bag_test, age = 35, bmi = 18, sex = "female"),
+        "Only equations with possible outcome"
+    )
+    expect_warning(
+        evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female"),
+        "Only equations with possible outcome"
+    )
+    expect_warning(
+        evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, nyha = 1),
+        "Only equations with possible outcome"
+    )
+
+})
+
+
+

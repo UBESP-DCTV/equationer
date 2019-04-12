@@ -4,6 +4,7 @@
 \alias{evaluate_at}
 \alias{evaluate_at.eq}
 \alias{evaluate_at.eqs}
+\alias{evaluate_at.eqs_bag}
 \title{Evaluate equation}
 \usage{
 evaluate_at(x, ...)
@@ -11,6 +12,8 @@ evaluate_at(x, ...)
 \method{evaluate_at}{eq}(x, ...)
 
 \method{evaluate_at}{eqs}(x, ..., .outcome = NULL)
+
+\method{evaluate_at}{eqs_bag}(x, ..., .outcome = NULL)
 }
 \arguments{
 \item{x}{equation(s set/bag) object}
@@ -40,6 +43,10 @@ supplied equation at the supplied values of the covariates.
 \item \code{eqs}: Evaluate (i.e., solve for the outcome)
 all the \code{\link{eq}}uations in the \code{\link{eqs}} object
 at the supplied values of the covariates.
+
+\item \code{eqs_bag}: Evaluate (i.e., solve for the outcome)
+all the \code{\link{eq}}uations in all the possible
+\code{\link{eqs}} at the supplied values of the covariates.
 }}
 
 \examples{
@@ -86,4 +93,78 @@ evaluate_at(eqs_test, age = 38, bmi = 18, sex = "male")
     evaluate_at(eqs_test, age = 38, bmi = 18, sex = "unknown")
     evaluate_at(eq_test, age = 38)
 }
+
+eq1 <- eq(age = 0.3, bmi = -0.5,
+    name    = "cl_test_1",
+    outcome = "kcal/day",
+    strata = list(sex = "male", nyha = 1)
+)
+
+eq2 <- eq(age = 0.5, bmi = -0.3,                 # change strata wrt eq1
+    name = "cl_test_2",
+    outcome = "kcal/day",
+    strata = list(sex = "female", nyha = 1)
+)
+
+eq3 <- eq(age = -0.3, bmi = 0.5,
+    name    = "cl_test_3",
+    outcome = "kcal/day",
+    strata = list(sex = "male", nyha = 2)
+)
+eq4 <- eq(age = -0.5, bmi = 0.3,
+    name = "cl_test_4",
+    outcome = "kcal/day",
+    strata = list(sex = "female", nyha = 2)
+)
+
+eq9 <- eq(age = -0.1, weight = 0.2,                # change var, strata
+    name = "cl_test_9",
+    outcome = "kcal/month",
+    strata = list(sex = "female")
+)
+
+eq10 <- eq(age = -0.2, weight = 0.1,                # change var, strata
+    name = "cl_test_10",
+    outcome = "kcal/month",
+    strata = list(sex = "male")
+)
+
+eq11 <- eq(age = 0.1, weight = -0.2,                # change var, strata
+    name = "cl_test_11",
+    outcome = "kcal/day",
+    strata = list(sex = "female")
+)
+
+eq12 <- eq(age = 0.2, weight = -0.2,                # change var, strata
+    name = "cl_test_12",
+    outcome = "kcal/day",
+    strata = list(sex = "male")
+)
+
+
+eqs1 <- eqs(eq1, eq2, eq3, eq4,
+    name = "eqs1",
+    reference = "ref-a"
+)
+
+eqs2 <- eqs(eq9, eq10, eq11, eq12,
+    name = "eqs2",
+    reference = "ref-b"
+)
+
+
+eqs_bag_test <- eqs_bag(eqs1, eqs2,
+    name = "overall-bag",
+    reference = "equationer-test-bag"
+)
+
+
+evaluate_at(eqs_bag_test, age = 35)
+evaluate_at(eqs_bag_test, age = 35, bmi = 18)
+evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81)
+evaluate_at(eqs_bag_test, age = 35, bmi = 18, sex = "female")
+evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female")
+evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, nyha = 1)
+evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, .outcome = "kcal/day")
+evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female", .outcome = "kcal/day")
 }

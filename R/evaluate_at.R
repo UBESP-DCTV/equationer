@@ -144,20 +144,16 @@ evaluate_at.eqs <- function(x, ..., .outcome = NULL) {
     x_strata <- get_strata(x)
     x_strata_names <- names(x_strata)
 
-    # are_strata_supplied <- x_strata_names %in% vs_names
-    # strata_supplied <- x_strata[are_strata_supplied]
-    # strata_not_supplied <- x_strata[!are_strata_supplied]
-
     vs_strata_values <- vs[vs_names %in% x_strata_names]
     are_values_in_levels <- purrr::imap_lgl(vs_strata_values, ~{
         .x %in% levels(x_strata[[.y]])
     })
     if (!all(are_values_in_levels)) {
+        ui_warn("Some strata's levels requested are not included in the equations in {ui_field(get_name(x))}. They won't be evaluated.")
         purrr::iwalk(vs_strata_values[!are_values_in_levels], ~{
             ui_fail("Values {ui_value(.x)} is not present in the {ui_field(.y)}'s strata possible levels.")
             ui_todo("Possible values for {ui_field(.y)} are: {ui_value(levels(x_strata[[.y]]))}.")
         })
-            ui_warn("Some strata's levels requested are not included in the equations in {ui_field(get_name(x))}. They won't be evaluated.")
     }
 
     .outcome <- .outcome %||% get_outcome(x)
@@ -165,11 +161,11 @@ evaluate_at.eqs <- function(x, ..., .outcome = NULL) {
     are_possible_outcome <- .outcome %in% get_outcome(x)
 
     if (!all(are_possible_outcome)) {
+        ui_warn("Only equations with possible outcome (if any) will be considered for {ui_value(get_name(x))}.")
         purrr::walk(.outcome[!are_possible_outcome], ~{
             ui_fail("Outcome {ui_value(.x)} is not present in the equations {ui_field(get_name(x))}")
             ui_todo("Possible outcomes are: {ui_value(unique(get_outcome(x)))}.")
         })
-        ui_warn("Only equations with possible outcome (if any) will be considered.")
     }
 
     strata_df <- c(
@@ -210,8 +206,6 @@ evaluate_at.eqs <- function(x, ..., .outcome = NULL) {
         )
     }
 
-    res <- dplyr::mutate_at(res, x_strata_names, as.factor)
-
     dplyr::as_tibble(c(
         res,
         list(
@@ -220,5 +214,189 @@ evaluate_at.eqs <- function(x, ..., .outcome = NULL) {
         )
     ))
 
+}
+
+
+
+
+
+
+
+
+
+#' @describeIn evaluate_at Evaluate (i.e., solve for the outcome)
+#'     all the \code{\link{eq}}uations in all the possible
+#'     \code{\link{eqs}} at the supplied values of the covariates.
+#'
+#' @export
+#'
+#' @examples
+#'
+#' eq1 <- eq(age = 0.3, bmi = -0.5,
+#'     name    = "cl_test_1",
+#'     outcome = "kcal/day",
+#'     strata = list(sex = "male", nyha = 1)
+#' )
+#'
+#' eq2 <- eq(age = 0.5, bmi = -0.3,                 # change strata wrt eq1
+#'     name = "cl_test_2",
+#'     outcome = "kcal/day",
+#'     strata = list(sex = "female", nyha = 1)
+#' )
+#'
+#' eq3 <- eq(age = -0.3, bmi = 0.5,
+#'     name    = "cl_test_3",
+#'     outcome = "kcal/day",
+#'     strata = list(sex = "male", nyha = 2)
+#' )
+#' eq4 <- eq(age = -0.5, bmi = 0.3,
+#'     name = "cl_test_4",
+#'     outcome = "kcal/day",
+#'     strata = list(sex = "female", nyha = 2)
+#' )
+#'
+#' eq9 <- eq(age = -0.1, weight = 0.2,                # change var, strata
+#'     name = "cl_test_9",
+#'     outcome = "kcal/month",
+#'     strata = list(sex = "female")
+#' )
+#'
+#' eq10 <- eq(age = -0.2, weight = 0.1,                # change var, strata
+#'     name = "cl_test_10",
+#'     outcome = "kcal/month",
+#'     strata = list(sex = "male")
+#' )
+#'
+#' eq11 <- eq(age = 0.1, weight = -0.2,                # change var, strata
+#'     name = "cl_test_11",
+#'     outcome = "kcal/day",
+#'     strata = list(sex = "female")
+#' )
+#'
+#' eq12 <- eq(age = 0.2, weight = -0.2,                # change var, strata
+#'     name = "cl_test_12",
+#'     outcome = "kcal/day",
+#'     strata = list(sex = "male")
+#' )
+#'
+#'
+#' eqs1 <- eqs(eq1, eq2, eq3, eq4,
+#'     name = "eqs1",
+#'     reference = "ref-a"
+#' )
+#'
+#' eqs2 <- eqs(eq9, eq10, eq11, eq12,
+#'     name = "eqs2",
+#'     reference = "ref-b"
+#' )
+#'
+#'
+#' eqs_bag_test <- eqs_bag(eqs1, eqs2,
+#'     name = "overall-bag",
+#'     reference = "equationer-test-bag"
+#' )
+#'
+#'
+#' evaluate_at(eqs_bag_test, age = 35)
+#' evaluate_at(eqs_bag_test, age = 35, bmi = 18)
+#' evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81)
+#' evaluate_at(eqs_bag_test, age = 35, bmi = 18, sex = "female")
+#' evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female")
+#' evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, nyha = 1)
+#' evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, .outcome = "kcal/day")
+#' evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female", .outcome = "kcal/day")
+evaluate_at.eqs_bag <- function(x, ..., .outcome = NULL) {
+    vs <- list(...)
+
+    if (!rlang::is_named(vs)) {
+        ui_stop("Not all variable/strata names are valid or non empty names.")
+    }
+
+    vs_names <- names(vs)
+    if (any(duplicated(vs_names))) {
+        ui_stop("Some variable/strata names are duplicated.")
+    }
+
+    x_strata <- get_strata(x)
+    x_strata_names <- names(x_strata)
+
+    vs_strata_values <- vs[vs_names %in% x_strata_names]
+
+    are_values_in_levels <- purrr::imap_lgl(vs_strata_values, ~{
+        .x %in% x_strata[[.y]]
+    })
+
+    if (!all(are_values_in_levels)) {
+        missing_strata <- vs_strata_values[!are_values_in_levels]
+        ui_warn("Some strata's levels requested are not included in the equations in {ui_field(get_name(x))}.\n Only equation without {ui_field(names(missing_strata))} strata will be evaluated.")
+        purrr::iwalk(missing_strata, ~{
+            ui_fail("Values {ui_value(.x)} is not present in the levels of {ui_field(.y)} for equations in {ui_value(get_name(x))}.")
+            ui_todo("Possible values for {ui_field(.y)} are: {ui_value(x_strata[[.y]])}.")
+        })
+    }
+
+    .outcome <- .outcome %||% get_outcome(x)
+    are_possible_outcome <- .outcome %in% get_outcome(x)
+
+    if (!all(are_possible_outcome)) {
+        ui_warn("(Some) outcome requested is not evaluated using equations in {ui_value(get_name(x))}. They will be excluded")
+        purrr::walk(.outcome[!are_possible_outcome], ~{
+            ui_fail("Outcome {ui_value(.x)} is not present in the equations of the group {ui_field(get_name(x))}")
+            ui_todo("Possible outcomes for {ui_field(get_name(x))} are: {ui_value(unique(get_outcome(x)))}.")
+        })
+    }
+
+    vs_covs_values <- vs[!vs_names %in% x_strata_names]
+    vs_covs_names <- names(vs_covs_values)
+
+    vs_strata_values <- vs_strata_values[are_values_in_levels]
+
+    .outcome <- .outcome[are_possible_outcome]
+
+    eqs_to_consider <- which_are_applicable_to_covset(x, vs_covs_names)
+
+    if (!length(eqs_to_consider)) {
+        res <- dplyr::as_tibble(
+            c(
+                purrr::map(vs_covs_values, ~.x[0]),
+                purrr::map(x_strata, ~.x[0]),
+                list(
+                    outcome = character(),
+                    estimation = numeric(),
+                    eq_name = character(),
+                    eq_group = character(),
+                    reference = character()
+                )
+            ),
+            .rows = 0
+        )
+        return(res)
+    }
+
+    reduced_bag <- do.call(eqs_bag,
+        c(
+            x[which_are_applicable_to_covset(x, vs_covs_names)],
+            list(
+                name = get_name(x),
+                reference = get_reference(x),
+                last_update = get_last_update(x)
+            )
+        )
+    )
+
+    res_lst <- purrr::map(reduced_bag,
+        ~do.call(evaluate_at, c(
+            vs_covs_values,
+            vs_strata_values,
+            list(
+                x = .x,
+                .outcome = .outcome
+            )
+        ))
+    )
+
+    if (length(res_lst) == 1) return(res_lst[[1]])
+
+    suppressMessages(purrr::reduce(res_lst, dplyr::full_join))
 }
 

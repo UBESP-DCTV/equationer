@@ -3,6 +3,7 @@
 S3method(are_applicable_to_coveset,eqs_bag)
 S3method(evaluate_at,eq)
 S3method(evaluate_at,eqs)
+S3method(evaluate_at,eqs_bag)
 S3method(get_covariates,eq)
 S3method(get_covariates,eqs)
 S3method(get_covariates,eqs_bag)
