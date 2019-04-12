@@ -1,11 +1,23 @@
-#' @param x (eq) equation to print
+#' Print equations
 #'
-#' @return invisible \code(x)
+#' \code{print} prints its argument and returns it invisibly
+#' (via invisible(x))
+#'
+#' @param x an object used to select a method
+#' @param ... further arguments passed to or from other methods
+#'
+#' @return invisible(x)
+#' @name print
+NULL
+
+#' @describeIn eq Method to print \code{\link{eq}}uations
+#' @inheritParams print
+#' @return invisible \code{x}
 #' @export
 #'
 #' @examples
 #' eq(age = 0.5, bmi = -0.3, name = "eq_test", outcome = "kcal/day")
-print.eq <- function(x) {
+print.eq <- function(x, ...) {
 
     ui_line("")
     ui_todo("Equation {ui_value(get_name(x))}: {get_outcome(x)} = {paste(x, names(x), collapse = ' + ')}")
@@ -19,9 +31,9 @@ print.eq <- function(x) {
 }
 
 
-#' @param x (eq) equation to print
-#'
-#' @return invisible \code(x)
+#' @describeIn eqs Method to print \code{\link{eqs}} groups
+#' @inheritParams print
+#' @return invisible \code{x}
 #' @export
 #'
 #' @examples
@@ -38,7 +50,7 @@ print.eq <- function(x) {
 #' )
 #'
 #' eqs(eq1, eq2, name = "author19", reference = "A.Uthor et.al 2019")
-print.eqs <- function(x) {
+print.eqs <- function(x, ...) {
 
     ui_line("")
     ui_line("Equations group {ui_value(get_name(x))}:")
@@ -60,9 +72,9 @@ print.eqs <- function(x) {
 
 
 
-#' @param x (eq) equation to print
-#'
-#' @return invisible \code(x)
+#' @describeIn eqs_bag Method to print \code{\link{eqs_bag}} bag
+#' @inheritParams print
+#' @return invisible \code{x}
 #' @export
 #'
 #' @examples
@@ -98,7 +110,7 @@ print.eqs <- function(x) {
 #' eqs2 <- eqs(eq9, eq10, eq11, eq12, name = "eqs-b", reference = "ref-b")
 #'
 #' eqs_bag(eqs1, eqs2, name = "ubesp19", reference = "DG et.al 2019")
-print.eqs_bag <- function(x) {
+print.eqs_bag <- function(x, ...) {
 
     ui_line("")
     ui_line("Equations bag {ui_value(get_name(x))} (last update {ui_code(get_last_update(x))})")
