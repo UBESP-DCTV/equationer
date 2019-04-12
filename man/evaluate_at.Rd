@@ -167,4 +167,18 @@ evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female")
 evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, nyha = 1)
 evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, .outcome = "kcal/day")
 evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female", .outcome = "kcal/day")
+
+one_patient <- dplyr::tribble(
+    ~id, ~age, ~bmi, ~weight,     ~sex,
+      1,   35,   18,      81,  "female"
+)
+
+more_patients <- dplyr::tribble(
+    ~id, ~age, ~bmi, ~weight,     ~sex,
+      1,   35,   18,      81,  "female",
+      2,   27,   20,      93,    "male"
+)
+
+evaluate_at(eqs_bag_test, one_patient)
+evaluate_at(eqs_bag_test, more_patients)
 }

@@ -221,5 +221,39 @@ test_that("warnins work for eqs", {
 
 })
 
+test_that("works with data frames", {
+    expect_is(
+        suppressWarnings(evaluate_at(eqs_bag_test, one_patient)),
+        "tbl_df"
+    )
+    expect_is(
+        suppressWarnings(evaluate_at(eqs_bag_test, more_patients)),
+        "tbl_df"
+    )
 
+    expect_equal(
+        suppressWarnings(
+            evaluate_at(eqs_bag_test, one_patient)[["estimation"]]
+        ),
+        c(12.1, -12.1, 12.7, -12.7)
+    )
+    expect_equal(
+        suppressWarnings(
+            evaluate_at(eqs_bag_test, more_patients)[["estimation"]]
+        ),
+        c(12.1, -12.1, 12.7, -12.7, -1.9, 1.9, 3.9, -13.2)
+    )
+
+    expect_equal(
+        suppressWarnings(
+            names(evaluate_at(eqs_bag_test, more_patients))
+        ),
+        c(
+            "id", "age", "bmi", "weight", "sex", "nyha", "outcome",
+            "estimation", "eq_name", "eq_group", "reference",
+            ".source_row"
+        )
+    )
+
+})
 

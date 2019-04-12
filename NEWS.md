@@ -1,4 +1,7 @@
-* Added `eqs_bag` class, constructor, and extractors
+* Support for data frame in put in `evaluate_at.eqs_bag()`
+* Added `eqs_bag` class, constructor, extractors, and main methods,
+  to collect equations from the same "reference" and evaluate them
+  together;
 * Updated tests moving all the data in `test/testthat/helper-eq.R`.
 
 # equationer (development version)
