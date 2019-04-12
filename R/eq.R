@@ -1,6 +1,6 @@
 #' Single equation object
 #'
-#' Costructor for object of class \code{\link{eq}} defined by its
+#' Constructor for object of class \code{\link{eq}} defined by its
 #' (named) coefficients.
 #'
 #' @param ... sequence of named coefficients
@@ -94,10 +94,13 @@ eq <- function(..., name, outcome, strata = vector("list")) {
 
 
     structure(unlist(xs),
-        eq_name    = name,
-        outcome    = outcome,
-        strata     = strata,
+
         covariates = names(xs),
+        strata     = strata,
+        outcome    = outcome,
+
+        eq_name    = name,
+
         class = "eq"
     )
 }

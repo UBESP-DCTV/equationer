@@ -1,38 +1,33 @@
 context("test-eq")
 
-eq_x1y2 <- eq(x = 1, y = 2,
-    name = "test",
-    outcome = "z",
-    strata = list(sex = "female")
-)
-
-
 test_that("correct classes", {
-    expect_is(eq_x1y2, "eq")
+    expect_is(eq1, "eq")
 })
 
 test_that("attributes' names", {
     expect_equal(
-        names(attributes(eq_x1y2)),
+        names(attributes(eq1)),
         c(
-            "names", "eq_name", "outcome", "strata", "covariates",
+            "names",
+            "covariates", "strata", "outcome",
+            "eq_name",
             "class"
         )
     )
 })
 
 test_that("type of objects", {
-    expect_is(eq_x1y2, "eq")
-    expect_is(eq_x1y2[[1]], "numeric")
+    expect_is(eq1, "eq")
+    expect_is(eq1[[1]], "numeric")
 
-    expect_is(attr(eq_x1y2, "eq_name"), "character")
-    expect_is(attr(eq_x1y2, "outcome"), "character")
+    expect_is(attr(eq1, "eq_name"), "character")
+    expect_is(attr(eq1, "outcome"), "character")
 
-    expect_is(attr(eq_x1y2, "strata"), "list")
-    expect_named(attr(eq_x1y2, "strata"))
+    expect_is(attr(eq1, "strata"), "list")
+    expect_named(attr(eq1, "strata"))
     expect_is(eq(x = 1, name = "a", outcome = "b"), "eq")
 
-    expect_is(attr(eq_x1y2, "covariates"), "character")
+    expect_is(attr(eq1, "covariates"), "character")
 })
 
 test_that("must have (unique) names", {

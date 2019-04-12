@@ -1,56 +1,8 @@
 context("test-eqs")
 
-eq1 <- eq(age = 0.3, bmi = -0.5,
-    name    = "cl_test_1",
-    outcome = "kcal/day",
-    strata = list(sex = "male", nyha = 1)
-)
-
-eq2 <- eq(age = 0.5, bmi = -0.3,
-    name = "cl_test_2",
-    outcome = "kcal/day",
-    strata = list(sex = "female", nyha = 1)
-)
-
-eq3 <- eq(age = 0.3, bmi = -0.5,
-    name    = "cl_test_3",
-    outcome = "kcal/day",
-    strata = list(sex = "male", nyha = 2)
-)
-eq4 <- eq(age = 0.5, bmi = -0.3,
-    name = "cl_test_4",
-    outcome = "kcal/day",
-    strata = list(sex = "female", nyha = 2)
-)
-
-eq5 <- eq(age = 0.5, bmi = -0.3, weight = 0.1,
-    name = "cl_test_5",
-    outcome = "kcal/day",
-    strata = list(sex = "female", nyha = 2)
-)
-
-eq6 <- eq(age = 0.5, bmi = -0.3,
-    name = "cl_test_6",
-    outcome = "kcal/day",
-    strata = list(sex = "female", mellitus = "yes")
-)
-
-eq7 <- eq(age = 0.5, bmi = -0.3,
-    name = "cl_test_7",
-    outcome = "kcal/day",
-    strata = list(sex = "male", nyha = 1)
-)
-eq8 <- eq(age = 0.5, bmi = -0.3,
-    name = "cl_test_7",
-    outcome = "kcal/month",
-    strata = list(sex = "male", nyha = 1)
-)
-
-eqs1 <- eqs(eq1, eq2, name = "gendered-1")
-
 
 test_that("correct class", {
-    expect_is(eqs1, "eqs")
+    expect_is(eqs_test, "eqs")
 })
 
 test_that("equations must have different names", {

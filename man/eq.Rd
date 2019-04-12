@@ -22,7 +22,7 @@ levels (named with strata names)}
 an \code{\link{eq}} object
 }
 \description{
-Costructor for object of class \code{\link{eq}} defined by its
+Constructor for object of class \code{\link{eq}} defined by its
 (named) coefficients.
 }
 \examples{

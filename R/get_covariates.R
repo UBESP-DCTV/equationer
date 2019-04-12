@@ -50,3 +50,13 @@ get_covariates.eq <- function(x) {
 get_covariates.eqs <- function(x) {
     attr(x, "covariates")
 }
+
+
+
+#' @describeIn get_covariates Extract all the possible covariates used
+#'     by any \code{\link{eq}}uation in the \code{\link{eqs_bag}}.
+#' @export
+get_covariates.eqs_bag <- function(x) {
+    attr(x, "covariates")
+}
+

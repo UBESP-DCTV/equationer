@@ -12,17 +12,24 @@ get_reference <- function(x) {
 
 
 #' @describeIn get_strata Extract the strata of the given
-#'     \code{eq}uation object.
+#'     \code{\link{eq}}uation object.
 #' @export
 get_reference.default <- function(x) {
     ui_stop(
-        "{ui_code('get_reference()')} works only on object of class {ui_value('eqs')})}"
+        "{ui_code('get_reference()')} works only on object of class {ui_value('eqs')} or {ui_value('eqs_bag')})."
     )
 }
 
 #' @describeIn get_strata Extract the strata of the given
-#'     \code{eq}uation object.
+#'     \code{\link{eqs}} object.
 #' @export
 get_reference.eqs <- function(x) {
+    attr(x, "reference")
+}
+
+#' @describeIn get_strata Extract the strata of the given
+#'     \code{eqs_bag} object.
+#' @export
+get_reference.eqs_bag <- function(x) {
     attr(x, "reference")
 }

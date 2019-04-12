@@ -1,6 +1,6 @@
 #' Multiple equation object
 #'
-#' Costructor for object of class \code{\link{eqs}} defined by its
+#' Constructor for object of class \code{\link{eqs}} defined by its
 #' \code{\link{eq}}s components.
 #'
 #' @details All the \code{\link{eq}}uations included in the
@@ -58,7 +58,7 @@ eqs <- function(..., name, reference = NA_character_) {
 
     xs <- list(...)
 
-    are_eq <- are_equations(xs)
+    are_eq <- are_eq(xs)
     if (!all(are_eq)) {
         purrr::iwalk(are_eq, ~if (!.x) ui_fail(
             "object number {ui_field(.y)} is of class {ui_value(class(xs[[.y]]))}"
@@ -132,10 +132,12 @@ eqs <- function(..., name, reference = NA_character_) {
 
 
     structure(purrr::set_names(xs, xs_names),
-        name = name,
-        outcome = outcome,
+
         covariates = covariates[[1]],
         strata = strata,
+        outcome = outcome,
+
+        name = name,
         reference = reference,
 
         class = "eqs"

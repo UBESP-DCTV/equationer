@@ -18,7 +18,7 @@ set of the equations in the bag.}
 an \code{\link{eqs}} object
 }
 \description{
-Costructor for object of class \code{\link{eqs}} defined by its
+Constructor for object of class \code{\link{eqs}} defined by its
 \code{\link{eq}}s components.
 }
 \details{
