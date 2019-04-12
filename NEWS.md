@@ -1,3 +1,5 @@
+# equationer 0.1.0
+
 * Support for data frame in put in `evaluate_at.eqs_bag()`
 * Added `eqs_bag` class, constructor, extractors, and main methods,
   to collect equations from the same "reference" and evaluate them
