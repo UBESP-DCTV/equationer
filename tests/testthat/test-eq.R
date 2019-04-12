@@ -8,7 +8,9 @@ test_that("attributes' names", {
     expect_equal(
         names(attributes(eq1)),
         c(
-            "names", "eq_name", "outcome", "strata", "covariates",
+            "names",
+            "covariates", "strata", "outcome",
+            "eq_name",
             "class"
         )
     )

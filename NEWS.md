@@ -1,16 +1,19 @@
+* Added `eqs_bag` class and constructor
+* Updated tests moving all the data in `test/testthat/helper-eq.R`.
+
 # equationer (development version)
 
-* Added `eqs` class including costructor, extractors and main methods,
+* Added `eqs` class including constructor, extractors and main methods,
   to collect equations from the same "reference" and evaluate them
-  together.
-* Changed strata atributes to list of factors
-* Added support for tidy evaluation (`rlang` pkg main utilities)
+  together;
+* Changed strata atributes to list of factors;
+* Added support for tidy evaluation (`rlang` pkg main utilities).
 
 # equationer 0.0.0.9001
 
 * Added basic methods for class `eq`; 
 * Added extractrs for class `eq`;
-* Added `eq()` costructor for object of class `eq`;
+* Added `eq()` constructor for object of class `eq`;
 * Added ui and utils functions;
 * Insert Logo;
 * update Travis.
