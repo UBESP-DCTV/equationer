@@ -305,8 +305,52 @@ evaluate_at.eqs <- function(x, ..., .outcome = NULL) {
 #' evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, nyha = 1)
 #' evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, .outcome = "kcal/day")
 #' evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female", .outcome = "kcal/day")
+#'
+#' one_patient <- dplyr::tribble(
+#'     ~id, ~age, ~bmi, ~weight,     ~sex,
+#'       1,   35,   18,      81,  "female"
+#' )
+#'
+#' more_patients <- dplyr::tribble(
+#'     ~id, ~age, ~bmi, ~weight,     ~sex,
+#'       1,   35,   18,      81,  "female",
+#'       2,   27,   20,      93,    "male"
+#' )
+#'
+#' evaluate_at(eqs_bag_test, one_patient)
+#' evaluate_at(eqs_bag_test, more_patients)
 evaluate_at.eqs_bag <- function(x, ..., .outcome = NULL) {
     vs <- list(...)
+
+    if (length(vs) == 1) {
+
+        single_vs <- vs[[1]]
+
+        if (inherits(single_vs, "data.frame") && nrow(single_vs) < 2) {
+            var_lst <- as.list(single_vs)
+            res <- do.call(evaluate_at,
+                c(var_lst, list(x = x, .outcome = .outcome))
+            )
+            return(res)
+        }
+
+        if (inherits(single_vs, "data.frame")) {
+            res_dfs <- purrr::map(seq_len(nrow(single_vs)), ~{
+                evaluate_at(
+                    x = x,
+                    single_vs[.x, , drop = FALSE],
+                    .outcome = .outcome
+                ) %>%
+                    dplyr::mutate(.source_row = .x)
+            })
+            res <- suppressMessages(
+                purrr::reduce(res_dfs, dplyr::full_join)
+            )
+            return(res)
+        }
+    }
+
+
 
     if (!rlang::is_named(vs)) {
         ui_stop("Not all variable/strata names are valid or non empty names.")

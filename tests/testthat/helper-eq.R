@@ -138,3 +138,19 @@ eqs_bag_test <- eqs_bag(eqs1, eqs2,
     name = "overall-bag",
     reference = "equationer-test-bag"
 )
+
+
+
+# patients df -----------------------------------------------------
+
+one_patient <- dplyr::tribble(
+    ~id, ~age, ~bmi, ~weight,     ~sex,
+      1,   35,   18,      81,  "female"
+)
+
+more_patients <- dplyr::tribble(
+    ~id, ~age, ~bmi, ~weight,     ~sex,
+      1,   35,   18,      81,  "female",
+      2,   27,   20,      93,    "male"
+)
+
