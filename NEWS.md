@@ -1,3 +1,6 @@
+* fix a bug which prevent to `eqs()` to create a set of equations if
+  they have no strata at all.
+
 # equationer 0.1.1
 
 * Updated README 

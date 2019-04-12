@@ -6,3 +6,4 @@
 ^README\.Rmd$
 ^equationer\.Rproj$
 ^\.Rproj\.user$
+^data-raw$

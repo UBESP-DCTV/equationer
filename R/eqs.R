@@ -94,33 +94,34 @@ eqs <- function(..., name, reference = NA_character_) {
         ui_stop("All the equations must share the same set of strata")
     }
 
-
+    outcome <- purrr::map_chr(xs, get_outcome)
     strata_lst <- purrr::flatten(strata_lst)
 
-    strata_names <- names(strata_lst) %>%
-        unique() %>%
-        purrr::set_names()
+    if (is.null(names(strata_lst))) {
+        strata <- list()
+    } else {
+        strata_names <- names(strata_lst) %>%
+            unique() %>%
+            purrr::set_names()
 
-    strata <- purrr::map(strata_names, ~{
-        strata_lst[names(strata_lst) == .x] %>%
-            unlist() %>%
-            unname() %>%
-            factor()
-    })
+        strata <- purrr::map(strata_names, ~{
+            strata_lst[names(strata_lst) == .x] %>%
+                unlist() %>%
+                unname() %>%
+                factor()
+        })
 
-    outcome <- purrr::map_chr(xs, get_outcome)
+        strata_df <- dplyr::as_tibble(c(strata, outcome = list(outcome))) %>%
+            dplyr::distinct()
 
-    strata_df <- dplyr::as_tibble(c(strata, outcome = list(outcome))) %>%
-        dplyr::distinct()
-
-    if (nrow(strata_df) < length(strata[[1]])) {
-        ui_stop(
-            "The equations cannot share same combination of strata and outcome"
-        )
+        if (nrow(strata_df) < length(strata[[1]])) {
+            ui_stop(
+                "The equations cannot share same combination of strata and outcome"
+            )
+        }
     }
 
     covariates <- purrr::map(xs, get_covariates)
-
     if (any(
         purrr::map_lgl(seq_len(length(covariates) - 1),
             ~!setequal(covariates[[.x]], covariates[[.x + 1]])

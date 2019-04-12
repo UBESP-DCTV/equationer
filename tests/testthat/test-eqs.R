@@ -61,3 +61,11 @@ test_that("handle wrong input type", {
     expect_output(try(eqs(eq1, "a", name = "test")), "2")
     expect_output(try(eqs(eq1, "a", name = "test")), "character")
 })
+
+
+test_that("eqs works without strata in eq", {
+    expect_is(
+        eqs(eq(a = 1, b = 2, name = "a", outcome = "b"), name = "c"),
+        "eqs"
+    )
+})
