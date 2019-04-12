@@ -1,3 +1,5 @@
+# equationer 0.1.1
+
 * Updated README 
 * print methods.
 
