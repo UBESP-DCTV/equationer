@@ -4,7 +4,7 @@
 # equationer <img src="man/figures/logo.png" align="right" height=140/>
 
 [![Build
-Status](https://travis-ci.com/UBESP-DCTV/equationer.svg?token=LB47B8iKQhmYmrAuxwVQ&branch=master)](https://travis-ci.com/UBESP-DCTV/equationer)
+Status](https://travis-ci.org/UBESP-DCTV/equationer.svg?branch=master)](https://travis-ci.org/UBESP-DCTV/equationer)
 [![Coverage
 status](https://codecov.io/gh/UBESP-DCTV/equationer/branch/master/graph/badge.svg)](https://codecov.io/github/UBESP-DCTV/equationer?branch=master)
 
