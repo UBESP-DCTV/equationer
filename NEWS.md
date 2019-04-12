@@ -1,3 +1,6 @@
+* Updated README 
+* print methods.
+
 # equationer 0.1.0
 
 * Support for data frame in put in `evaluate_at.eqs_bag()`
