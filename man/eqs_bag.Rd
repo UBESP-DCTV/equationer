@@ -4,7 +4,8 @@
 \alias{eqs_bag}
 \title{Bag of multiple equation object}
 \usage{
-eqs_bag(..., name, reference = NA_character_)
+eqs_bag(..., name, reference = NA_character_,
+  last_update = lubridate::today())
 }
 \arguments{
 \item{...}{(\code{\link{eqs}}, only) sequence of \code{\link{eqs}}}
@@ -13,6 +14,9 @@ eqs_bag(..., name, reference = NA_character_)
 
 \item{reference}{(chr, default NA) an optional reference for the
 bag of \code{\link{eqs}}(s) in the bag.}
+
+\item{last_update}{(Date, dafault today) the date of the last bag
+update.}
 }
 \value{
 an \code{\link{eqs_bag}} object

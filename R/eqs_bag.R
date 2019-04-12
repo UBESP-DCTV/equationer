@@ -7,6 +7,8 @@
 #' @param name (chr) the name of the \code{\link{eqs}}(s)' bag
 #' @param reference (chr, default NA) an optional reference for the
 #'     bag of \code{\link{eqs}}(s) in the bag.
+#' @param last_update (Date, dafault today) the date of the last bag
+#'     update.
 #'
 #' @return an \code{\link{eqs_bag}} object
 #' @export
@@ -74,7 +76,9 @@
 #'     name = "overall-bag",
 #'     reference = "equationer-test-bag"
 #' )
-eqs_bag <- function(..., name, reference = NA_character_) {
+eqs_bag <- function(...,
+    name, reference = NA_character_, last_update = lubridate::today()
+) {
     xs <- list(...)
 
     are_eqs <- are_eqs(xs)
@@ -99,6 +103,11 @@ eqs_bag <- function(..., name, reference = NA_character_) {
 
     if (!is_string(reference)) {
         ui_stop("{ui_code('name')} must be a single string")
+    }
+
+    if (!(length(last_update) == 1) || !lubridate::is.Date(last_update)) {
+        ui_fail("{ui_field('last_update')} is of class {ui_code(class(last_update))}")
+        ui_stop("{ui_code('last_update')} must be a single date")
     }
 
 
@@ -127,6 +136,7 @@ eqs_bag <- function(..., name, reference = NA_character_) {
 
         name = name,
         reference = reference,
+        last_update = last_update,
 
         class = "eqs_bag"
     )

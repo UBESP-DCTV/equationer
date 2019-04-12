@@ -4,6 +4,7 @@
 \alias{get_covariates}
 \alias{get_covariates.eq}
 \alias{get_covariates.eqs}
+\alias{get_covariates.eqs_bag}
 \title{get covariates}
 \usage{
 get_covariates(x)
@@ -11,6 +12,8 @@ get_covariates(x)
 \method{get_covariates}{eq}(x)
 
 \method{get_covariates}{eqs}(x)
+
+\method{get_covariates}{eqs_bag}(x)
 }
 \arguments{
 \item{x}{the object}
@@ -28,6 +31,9 @@ Extract the equation(s) covariates
 
 \item \code{eqs}: Extract the covariates of the given
 \code{eq}uation object.
+
+\item \code{eqs_bag}: Extract all the possible covariates used
+by any \code{\link{eq}}uation in the \code{\link{eqs_bag}}.
 }}
 
 \examples{

@@ -32,6 +32,14 @@ test_that("list all outcome", {
     )
 })
 
+
+test_that("list the last update", {
+    expect_equal(
+        attr(eqs_bag_test, "last_update"),
+        lubridate::today()
+    )
+})
+
 test_that("error if without name", {
     expect_error(eqs_bag(eqs1, eqs2), "is missing")
 })
@@ -65,3 +73,22 @@ test_that("error if multiple ref", {
         "single string"
     )
 })
+
+
+test_that("error if wrong date", {
+    expect_error(
+        eqs_bag(eqs1, eqs2,
+            name = "a",
+            last_update = "01-01-2001"
+        ),
+        "single date"
+    )
+    expect_error(
+        eqs_bag(eqs1, eqs2,
+            name = "a",
+            last_update = rep(lubridate::today(), 2)
+        ),
+        "single date"
+    )
+})
+

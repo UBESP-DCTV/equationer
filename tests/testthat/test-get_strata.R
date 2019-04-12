@@ -16,3 +16,12 @@ test_that("works for eqs objects", {
     )
 })
 
+test_that("works for eqs objects", {
+    expect_equal(
+        get_strata(eqs_bag_test),
+        list(
+          sex  = c("female", "male"),
+          nyha = c(1L, 2L)
+        )
+    )
+})

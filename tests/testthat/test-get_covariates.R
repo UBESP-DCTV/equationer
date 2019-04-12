@@ -7,3 +7,7 @@ test_that("works for eq objects", {
 test_that("works for eqs objects", {
   expect_equal(get_covariates(eqs_test), c("age", "bmi"))
 })
+
+test_that("works for eqs_bag objects", {
+  expect_equal(get_covariates(eqs_bag_test), c("age", "bmi", "weight"))
+})

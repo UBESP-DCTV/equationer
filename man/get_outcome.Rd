@@ -4,6 +4,7 @@
 \alias{get_outcome}
 \alias{get_outcome.eq}
 \alias{get_outcome.eqs}
+\alias{get_outcome.eqs_bag}
 \title{get outcome}
 \usage{
 get_outcome(x)
@@ -11,6 +12,8 @@ get_outcome(x)
 \method{get_outcome}{eq}(x)
 
 \method{get_outcome}{eqs}(x)
+
+\method{get_outcome}{eqs_bag}(x)
 }
 \arguments{
 \item{x}{the object}
@@ -28,6 +31,9 @@ Extract the equation(s) outcome(s)
 
 \item \code{eqs}: Extract the outcome of the given
 \code{eqs} object.
+
+\item \code{eqs_bag}: Extract all the possible outcomes for some
+\code{\link{eq}}ation in the \code{\link{eqs_bag}}.
 }}
 
 \examples{
@@ -51,4 +57,35 @@ eq2_test <- eq(age = 0.1, bmi = -0.3,
 
 eqs_test <- eqs(eq_test, eq2_test, name = "eqs-test")
 get_outcome(eqs_test)
+library(equationer)
+eq_test <- eq(age = 0.1, bmi = -0.3,
+    name    = "eq_test",
+    outcome = "kcal/day",
+    strata = list(sex = "female")
+)
+eq2_test <- eq(age = 0.1, bmi = -0.3,
+    name    = "eq2_test",
+    outcome = "kcal/day",
+    strata = list(sex = "male")
+)
+
+eq3_test <- eq(age = -0.1, bmi = 0.3,
+    name    = "eq_test",
+    outcome = "kcal/month",
+    strata = list(sex = "male", nyha = 1)
+)
+eq4_test <- eq(age = -0.1, bmi = 0.3,
+    name    = "eq2_test",
+    outcome = "kcal/month",
+    strata = list(sex = "unknown", nyha = 2)
+)
+
+eqs_test <- eqs(eq_test, eq2_test, name = "eqs-test")
+eqs2_test <- eqs(eq3_test, eq4_test, name = "eqs2-test")
+
+eqs_bag1_test <- eqs_bag(eqs_test, eqs2_test,
+    name = "a",
+    reference = "b"
+)
+get_outcome(eqs_bag1_test)
 }

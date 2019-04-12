@@ -4,6 +4,7 @@
 \alias{get_name}
 \alias{get_name.eq}
 \alias{get_name.eqs}
+\alias{get_name.eqs_bag}
 \title{get name}
 \usage{
 get_name(x)
@@ -11,6 +12,8 @@ get_name(x)
 \method{get_name}{eq}(x)
 
 \method{get_name}{eqs}(x)
+
+\method{get_name}{eqs_bag}(x)
 }
 \arguments{
 \item{x}{the object}
@@ -27,6 +30,9 @@ Extract the equation(s) name(s)
 \code{eq}uation object.
 
 \item \code{eqs}: Extract the name of the given
+\code{eqs} object.
+
+\item \code{eqs_bag}: Extract the name of the given
 \code{eqs} object.
 }}
 
@@ -51,4 +57,35 @@ eq2_test <- eq(age = 0.1, bmi = -0.3,
 
 eqs_test <- eqs(eq_test, eq2_test, name = "eqs-test")
 get_name(eqs_test)
+library(equationer)
+eq_test <- eq(age = 0.1, bmi = -0.3,
+    name    = "eq_test",
+    outcome = "kcal/day",
+    strata = list(sex = "female")
+)
+eq2_test <- eq(age = 0.1, bmi = -0.3,
+    name    = "eq2_test",
+    outcome = "kcal/day",
+    strata = list(sex = "male")
+)
+
+eq3_test <- eq(age = -0.1, bmi = 0.3,
+    name    = "eq_test",
+    outcome = "kcal/month",
+    strata = list(sex = "male", nyha = 1)
+)
+eq4_test <- eq(age = -0.1, bmi = 0.3,
+    name    = "eq2_test",
+    outcome = "kcal/month",
+    strata = list(sex = "unknown", nyha = 2)
+)
+
+eqs_test <- eqs(eq_test, eq2_test, name = "eqs-test")
+eqs2_test <- eqs(eq3_test, eq4_test, name = "eqs2-test")
+
+eqs_bag1_test <- eqs_bag(eqs_test, eqs2_test,
+    name = "a",
+    reference = "b"
+)
+get_name(eqs_bag1_test)
 }
