@@ -114,9 +114,13 @@ eqs_bag <- function(...,
     strata_lst <- purrr::map(xs, get_strata) %>%
         purrr::flatten()
 
-    strata_names <- names(strata_lst) %>%
-        unique() %>%
-        purrr::set_names()
+    strata_names <- if (length(strata_lst)) {
+        names(strata_lst) %>%
+            unique() %>%
+            purrr::set_names()
+    } else {
+        c("a" = "a")[0]
+    }
 
     strata <- purrr::map(strata_names, ~{
         strata_lst[names(strata_lst) == .x] %>%

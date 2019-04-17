@@ -276,3 +276,13 @@ test_that("eqs_bag works with data that include missing strata", {
         "tbl_df"
     )
 })
+
+
+test_that("Works with only age and BMI on reer", {
+    expect_is(
+        suppressWarnings(
+            evaluate_at(reer, intercept = 1, age = 50, bmi = 21, sex = "female")
+        ),
+        "tbl_df"
+    )
+})
