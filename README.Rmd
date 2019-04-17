@@ -15,7 +15,7 @@ library(DT)
 ```
 # equationer <img src="man/figures/logo.png" align="right" height=140/>
 
-[![Build Status](https://travis-ci.org/UBESP-DCTV/equationer.svg?branch=master)](https://travis-ci.org/UBESP-DCTV/equationer)
+[![Build Status](https://travis-ci.com/UBESP-DCTV/equationer.svg?branch=master)](https://travis-ci.com/UBESP-DCTV/equationer)
 [![Coverage status](https://codecov.io/gh/UBESP-DCTV/equationer/branch/master/graph/badge.svg)](https://codecov.io/github/UBESP-DCTV/equationer?branch=master)
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
@@ -88,6 +88,8 @@ highlighted
 
 ```{r}
 eq1
+eq2
+eq3
 
 eq9
 ```
@@ -187,7 +189,7 @@ patients) using a data frame! In the latter case, a column which keep
 track of the original row in the sourced dataframe will be added
 
 ```{r, error=TRUE}
-evaluate_at(eqs_bag_test,
+evaluate_at(bag1,
     age = 35, bmi = 18, weight = 81, sex = "female"
 )
 
@@ -196,7 +198,7 @@ one_patient <- dplyr::tribble(
       35,   18,      81,  "female"
 )
 
-evaluate_at(eqs_bag_test, one_patient)
+evaluate_at(bag1, one_patient)
 
 
 
@@ -206,7 +208,7 @@ more_patients <- dplyr::tribble(
       27,   20,      93,    "male"
 )
 
-evaluate_at(eqs_bag_test, more_patients)
+evaluate_at(bag1, more_patients)
 
 ```
 

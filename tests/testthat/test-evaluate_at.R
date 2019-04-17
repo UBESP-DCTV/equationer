@@ -182,11 +182,13 @@ test_that("correct evaluation for eqs_bag", {
         c(1.5, 12.1, 12.7, 1.1, -12.7, -9.2)
     )
 
-    expect_equal(evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, .outcome = "kcal/day")[["estimation"]],
+    expect_equal(
+        evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, .outcome = "kcal/day")[["estimation"]],
         c(1.5, 12.1, -1.5, -12.1, -12.7, -9.2)
     )
 
-    expect_equal(evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female", .outcome = "kcal/day")[["estimation"]],
+    expect_equal(
+        evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female", .outcome = "kcal/day")[["estimation"]],
         c(12.1, -12.1, -12.7)
     )
 })
@@ -257,3 +259,8 @@ test_that("works with data frames", {
 
 })
 
+
+test_that("works with multiple posible matching variables", {
+    expect_is(evaluated_multimatch_bag, "tbl_df")
+    expect_equal(nrow(evaluated_multimatch_bag), 4)
+})

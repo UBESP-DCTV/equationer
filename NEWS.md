@@ -1,6 +1,10 @@
+* fix bug which prevent `evaluate_at()` to works with bag which include
+  equations group which differ in variables that match the same regexpr,
+  e.g, "weight" and "weight_adjusted" both match the regexpr "weight".
+
 # equationer 0.1.2
 
-* fix a bug which prevent to `eqs()` to create a set of equations if
+* fix a bug which prevents `eqs()` to create a set of equations if
   they have no strata at all.
 
 # equationer 0.1.1

@@ -31,7 +31,7 @@ is_applicable_to_covset <- function(x, cov) {
 is_applicable_to_covset.eq <- function(x, cov) {
     get_covariates(x) %>%
         purrr::map_lgl(
-            ~any(stringr::str_detect(.x, pattern = cov))
+            ~any(stringr::str_detect(.x, pattern = paste0("^", cov, "$")))
         ) %>%
         all()
 }
@@ -65,7 +65,7 @@ is_applicable_to_covset.eq <- function(x, cov) {
 is_applicable_to_covset.eqs <- function(x, cov) {
     get_covariates(x) %>%
         purrr::map_lgl(
-            ~any(stringr::str_detect(.x, pattern = cov))
+            ~any(stringr::str_detect(.x, pattern = paste0("^", cov, "$")))
         ) %>%
         all()
 }

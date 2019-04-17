@@ -80,6 +80,17 @@ eq12 <- eq(age = 0.2, weight = -0.2,                # change var, strata
     strata = list(sex = "male")
 )
 
+eq13 <- eq(age = 0.1, weight_adjust = -0.2,                # change var, strata
+    name = "cl_test_13",
+    outcome = "kcal/day",
+    strata = list(sex = "female")
+)
+
+eq14 <- eq(age = 0.2, weight_adjust = -0.2,                # change var, strata
+    name = "cl_test_14",
+    outcome = "kcal/day",
+    strata = list(sex = "male")
+)
 
 # Equations groups ------------------------------------------------
 
@@ -106,6 +117,10 @@ eqs2_samename <- eqs(eq9, eq10, eq11, eq12,          # same name as eqs1
     reference = "ref-b"
 )
 
+eqs2_multiplematch <- eqs(eq13, eq14,
+    name = "eqs3",
+    reference = "ref-c"
+)
 
 
 # Evaluations -----------------------------------------------------
@@ -131,7 +146,6 @@ evaluateds3 <- evaluate_at(eqs_test, age = 38, bmi = 18, .outcome = "kcal/day")
 evaluateds4 <- evaluate_at(eqs_test, age = 38, bmi = 18, sex = "female", .outcome = "kcal/day")
 
 
-
 # Bag of set of equations -----------------------------------------
 
 eqs_bag_test <- eqs_bag(eqs1, eqs2,
@@ -139,6 +153,12 @@ eqs_bag_test <- eqs_bag(eqs1, eqs2,
     reference = "equationer-test-bag"
 )
 
+eqs_bag2_test <- eqs_bag(eqs2, eqs2_multiplematch,
+    name = "multimatch-bag",
+    reference = "equationer-test-bag2"
+)
+
+evaluated_multimatch_bag <- evaluate_at(eqs_bag2_test, age = 1, weight = 80)
 
 
 # patients df -----------------------------------------------------
