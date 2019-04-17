@@ -68,7 +68,7 @@ test_that("correct evaluation for eq", {
 })
 
 
-test_that("eror works for eq", {
+test_that("error works for eq", {
     expect_error(
         evaluate_at(eq_test, age = 38, weight = "heavy"),
         "are included"
@@ -279,10 +279,11 @@ test_that("eqs_bag works with data that include missing strata", {
 
 
 test_that("Works with only age and BMI on reer", {
-    expect_is(
+    expect_equal(
         suppressWarnings(
-            evaluate_at(reer, intercept = 1, age = 50, bmi = 21, sex = "female")
+            evaluate_at(reer, age = 50, bmi = 21, sex = "female") %>%
+                nrow()
         ),
-        "tbl_df"
+        1L
     )
 })
