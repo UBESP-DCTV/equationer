@@ -71,7 +71,7 @@ eqs <- function(..., name, reference = NA_character_) {
     xs_names <- purrr::map_chr(xs, get_name)
 
     if (any(duplicated(xs_names))) {
-        ui_stop("Some equations' names are duplicated.")
+        ui_stop("In {ui_code(name)}, some equations' names are duplicated.")
     }
 
 
@@ -80,7 +80,7 @@ eqs <- function(..., name, reference = NA_character_) {
     }
 
     if (!is_string(reference)) {
-        ui_stop("{ui_code('reference')} must be a single string")
+        ui_stop("In {ui_code(name)}, {ui_code('reference')} must be a single string")
     }
 
     strata_lst <- purrr::map(xs, get_strata)
@@ -91,7 +91,7 @@ eqs <- function(..., name, reference = NA_character_) {
             ~!setequal(strata_vars[[.x]], strata_vars[[.x + 1]])
         )
     )) {
-        ui_stop("All the equations must share the same set of strata")
+        ui_stop("In {ui_code(name)} all the equations must share the same set of strata, and they don't!")
     }
 
     outcome <- purrr::map_chr(xs, get_outcome)
@@ -116,7 +116,7 @@ eqs <- function(..., name, reference = NA_character_) {
 
         if (nrow(strata_df) < length(strata[[1]])) {
             ui_stop(
-                "The equations cannot share same combination of strata and outcome"
+                "In {ui_code(name)} the equations cannot share same combination of strata and outcome"
             )
         }
     }
@@ -127,7 +127,7 @@ eqs <- function(..., name, reference = NA_character_) {
             ~!setequal(covariates[[.x]], covariates[[.x + 1]])
         )
     )) {
-        ui_stop("All the equations must have the same set of covariates")
+        ui_stop("In {ui_code(name)} all the equations must have the same set of covariates")
     }
 
 

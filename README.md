@@ -4,7 +4,7 @@
 # equationer <img src="man/figures/logo.png" align="right" height=140/>
 
 [![Build
-Status](https://travis-ci.org/UBESP-DCTV/equationer.svg?branch=master)](https://travis-ci.org/UBESP-DCTV/equationer)
+Status](https://travis-ci.com/UBESP-DCTV/equationer.svg?branch=master)](https://travis-ci.com/UBESP-DCTV/equationer)
 [![Coverage
 status](https://codecov.io/gh/UBESP-DCTV/equationer/branch/master/graph/badge.svg)](https://codecov.io/github/UBESP-DCTV/equationer?branch=master)
 
@@ -80,6 +80,16 @@ eq1
 #> <U+25CF> Equation 'eq-1': kcal/day = 0.3 age + -0.5 bmi
 #> Strata: sex = 'male'
 #> Strata: nyha = 1
+eq2
+#> 
+#> <U+25CF> Equation 'eq-2': kcal/day = 0.5 age + -0.3 bmi
+#> Strata: sex = 'female'
+#> Strata: nyha = 1
+eq3
+#> 
+#> <U+25CF> Equation 'eq-3': kcal/day = -0.3 age + 0.5 bmi
+#> Strata: sex = 'male'
+#> Strata: nyha = 2
 
 eq9
 #> 
@@ -245,7 +255,7 @@ bag1 <- eqs_bag(eqs1, eqs2, name = "ubesp19",
 
 bag1
 #> 
-#> Equations bag 'ubesp19' (last update `2019-04-12`)
+#> Equations bag 'ubesp19' (last update `2019-04-17`)
 #> 
 #> Variable included: 'age', 'bmi', 'weight'
 #> Strata: sex w/ levels: 'female', 'male'
@@ -264,18 +274,40 @@ patients) using a data frame\! In the latter case, a column which keep
 track of the original row in the sourced dataframe will be added
 
 ``` r
-evaluate_at(eqs_bag_test,
+evaluate_at(bag1,
     age = 35, bmi = 18, weight = 81, sex = "female"
 )
-#> Error in evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female"): object 'eqs_bag_test' not found
+#> Warning: Only equations with possible outcome (if any) will be considered
+#> for 'eqs-a'.
+#> <U+2716> Outcome 'kcal/month' is not present in the equations eqs-a
+#> <U+25CF> Possible outcomes are: 'kcal/day'.
+#> # A tibble: 4 x 10
+#>     age   bmi weight sex    nyha outcome estimation eq_name eq_group
+#>   <dbl> <dbl>  <dbl> <chr> <dbl> <chr>        <dbl> <chr>   <chr>   
+#> 1    35    18     81 fema~     1 kcal/d~       12.1 eq-2    eqs-a   
+#> 2    35    18     81 fema~     2 kcal/d~      -12.1 eq-4    eqs-a   
+#> 3    35    18     81 fema~    NA kcal/m~       12.7 eq-9    eqs-b   
+#> 4    35    18     81 fema~    NA kcal/d~      -12.7 eq-11   eqs-b   
+#> # ... with 1 more variable: reference <chr>
 
 one_patient <- dplyr::tribble(
     ~age, ~bmi, ~weight,     ~sex,
       35,   18,      81,  "female"
 )
 
-evaluate_at(eqs_bag_test, one_patient)
-#> Error in evaluate_at(eqs_bag_test, one_patient): object 'eqs_bag_test' not found
+evaluate_at(bag1, one_patient)
+#> Warning: Only equations with possible outcome (if any) will be considered
+#> for 'eqs-a'.
+#> <U+2716> Outcome 'kcal/month' is not present in the equations eqs-a
+#> <U+25CF> Possible outcomes are: 'kcal/day'.
+#> # A tibble: 4 x 10
+#>     age   bmi weight sex    nyha outcome estimation eq_name eq_group
+#>   <dbl> <dbl>  <dbl> <chr> <dbl> <chr>        <dbl> <chr>   <chr>   
+#> 1    35    18     81 fema~     1 kcal/d~       12.1 eq-2    eqs-a   
+#> 2    35    18     81 fema~     2 kcal/d~      -12.1 eq-4    eqs-a   
+#> 3    35    18     81 fema~    NA kcal/m~       12.7 eq-9    eqs-b   
+#> 4    35    18     81 fema~    NA kcal/d~      -12.7 eq-11   eqs-b   
+#> # ... with 1 more variable: reference <chr>
 
 
 
@@ -285,8 +317,27 @@ more_patients <- dplyr::tribble(
       27,   20,      93,    "male"
 )
 
-evaluate_at(eqs_bag_test, more_patients)
-#> Error in evaluate_at(eqs_bag_test, more_patients): object 'eqs_bag_test' not found
+evaluate_at(bag1, more_patients)
+#> Warning: Only equations with possible outcome (if any) will be considered
+#> for 'eqs-a'.
+#> <U+2716> Outcome 'kcal/month' is not present in the equations eqs-a
+#> <U+25CF> Possible outcomes are: 'kcal/day'.
+#> Warning: Only equations with possible outcome (if any) will be considered
+#> for 'eqs-a'.
+#> <U+2716> Outcome 'kcal/month' is not present in the equations eqs-a
+#> <U+25CF> Possible outcomes are: 'kcal/day'.
+#> # A tibble: 8 x 11
+#>     age   bmi weight sex    nyha outcome estimation eq_name eq_group
+#>   <dbl> <dbl>  <dbl> <chr> <dbl> <chr>        <dbl> <chr>   <chr>   
+#> 1    35    18     81 fema~     1 kcal/d~       12.1 eq-2    eqs-a   
+#> 2    35    18     81 fema~     2 kcal/d~      -12.1 eq-4    eqs-a   
+#> 3    35    18     81 fema~    NA kcal/m~       12.7 eq-9    eqs-b   
+#> 4    35    18     81 fema~    NA kcal/d~      -12.7 eq-11   eqs-b   
+#> 5    27    20     93 male      1 kcal/d~       -1.9 eq-1    eqs-a   
+#> 6    27    20     93 male      2 kcal/d~        1.9 eq-3    eqs-a   
+#> 7    27    20     93 male     NA kcal/m~        3.9 eq-10   eqs-b   
+#> 8    27    20     93 male     NA kcal/d~      -13.2 eq-12   eqs-b   
+#> # ... with 2 more variables: reference <chr>, .source_row <int>
 ```
 
 ## Code of Conduct

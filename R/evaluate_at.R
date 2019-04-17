@@ -391,7 +391,7 @@ evaluate_at.eqs_bag <- function(x, ..., .outcome = NULL) {
     }
 
     vs_covs_values <- vs[!vs_names %in% x_strata_names]
-    vs_covs_names <- names(vs_covs_values)
+    vs_covs_names  <- names(vs_covs_values)
 
     vs_strata_values <- vs_strata_values[are_values_in_levels]
 
@@ -419,7 +419,7 @@ evaluate_at.eqs_bag <- function(x, ..., .outcome = NULL) {
 
     reduced_bag <- do.call(eqs_bag,
         c(
-            x[which_are_applicable_to_covset(x, vs_covs_names)],
+            x[eqs_to_consider],
             list(
                 name = get_name(x),
                 reference = get_reference(x),
