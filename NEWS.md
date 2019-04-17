@@ -1,3 +1,5 @@
+# equationer 0.1.3
+
 * fix bug which prevent `evaluate_at()` to works with bag which include
   equations group which differ in variables that match the same regexpr,
   e.g, "weight" and "weight_adjusted" both match the regexpr "weight".
