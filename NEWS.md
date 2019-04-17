@@ -1,3 +1,6 @@
+* fix bug that prevents `evaluate_at()` to work if data supplied 
+  strata not in the eqs_bag.
+
 # equationer 0.1.3
 
 * fix bug which prevent `evaluate_at()` to works with bag which include

@@ -130,7 +130,7 @@ var_output <- c(
     "eq_group", "reference"
 )
 var_output_weight <- c(
-    "age", "bmi", "weight", "sex", "nyha", "outcome", "estimation",
+    "age", "bmi", "sex", "nyha", "outcome", "estimation",
     "eq_name", "eq_group", "reference"
 )
 

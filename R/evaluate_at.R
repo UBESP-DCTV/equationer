@@ -45,6 +45,7 @@ evaluate_at <- function(x, ...) {
 evaluate_at.eq <- function(x, ...) {
 
     vs <- list(...)
+    vs <- vs[names(vs) %in% get_covariates(x)]
 
     if (!rlang::is_named(vs)) {
         ui_stop("Not all variable names are valid or non empty names")
@@ -53,6 +54,8 @@ evaluate_at.eq <- function(x, ...) {
     if (any(duplicated(names(vs)))) {
         ui_stop("Some variable names are duplicated.")
     }
+
+
 
     are_cov_num <- purrr::map_lgl(vs, is.numeric)
     if (!all(are_cov_num)) {
