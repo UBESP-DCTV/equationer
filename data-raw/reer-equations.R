@@ -2,7 +2,7 @@
 
 library(equationer)
 
-reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
+reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019, Review of Equations of Energy Requirements",
 
 
     # Arciero 1993 a ---------------------------------------------------
