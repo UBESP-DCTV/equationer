@@ -1,3 +1,5 @@
+* Shiny messages bug fixes
+
 # equationer 0.2.0
 
 * added warning if not sufficient input are supplied (#11)

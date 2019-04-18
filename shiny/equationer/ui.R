@@ -114,14 +114,14 @@ shinyUI(fluidPage(
                     strong("OUTCOMES"),
 
             fluidRow(
-                column(4, checkboxInput("bee_tick", "BEE", TRUE)),
-                column(4, checkboxInput("eee_tick", "EEE", TRUE)),
-                column(4, checkboxInput("ree_tick", "REE", TRUE))
+                column(3, checkboxInput("bee_tick", "BEE:\nBasal Energy Expenditure", TRUE)),
+                column(3, checkboxInput("eee_tick", "EEE:\nEstimated Energy Expenditure", TRUE)),
+                column(3, checkboxInput("ree_tick", "REE:\nResting Energy Expenditure", TRUE))
             ),
             fluidRow(
-                column(4, checkboxInput("bmr_tick", "BMR", TRUE)),
-                column(4),
-                column(4, checkboxInput("rmr_tick", "RMR", TRUE))
+                column(3, checkboxInput("bmr_tick", "BMR:\nBasal Metabolic Rate", TRUE)),
+                column(3),
+                column(3, checkboxInput("rmr_tick", "RMR:\nResting Metabolic Rate", TRUE))
             ),
 
 

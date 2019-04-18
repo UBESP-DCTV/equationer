@@ -127,15 +127,33 @@ cat(str(outcomes))
         }
 
         if (
-            input[['bmi']] && input[['height']] && input[['weight']] &&
+            !is.na(input[['bmi']]) &&
+            !is.na(input[['weight']]) &&
+            !is.na(input[['height']]) &&
+            (input[['height']] > 0) &&
             input[['bmi']] != input[['height']]/(input[['weight']]/100)^2
         ) {
             showNotification(
-                glue::glue("BMI supplied - BMI computed = {input[['weight']]/(input[['height']]/100)^2}"),
+                glue::glue("BMI supplied - BMI computed = {round(input[['bmi']] - input[['weight']]/(input[['height']]/100)^2, 2)}"),
                 duration = 3, type = "warning"
             )
-            dots <- data.frame(foo = "foo")
         }
+
+
+        if (
+            !is.na(input[['bmi']]) &&
+            !is.na(input[['bmi_greater_21']]) &&
+            (
+                ((input[['bmi']] >  21) && (input[['bmi_greater_21']] == "FALSE")) ||
+                ((input[['bmi']] <= 21) && (input[['bmi_greater_21']] == "TRUE"))
+            )
+        ) {
+            showNotification(
+                glue::glue("BMI > 21 strata is {input[['bmi_greater_21']]} but BMI supplied is {input[['bmi']]}."),
+                duration = 3, type = "warning"
+            )
+        }
+
 
 
         res <- evaluate_at(reer, dots, .outcome = outcomes) %>%
