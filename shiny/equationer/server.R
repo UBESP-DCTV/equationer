@@ -100,6 +100,10 @@ shinyServer(function(input, output, session) {
                 input[["weight_tick"]]
             )]
 
+        if (input[["menopausal_tick"]]) {
+            cov[["menopausal"]] <- as.integer(cov[["menopausal"]])
+        }
+
 cat("\nCOV\n")
 cat(str(cov))
 
@@ -148,7 +152,7 @@ cat(str(outcomes))
 
         if (!ncol(dots)) {
           showNotification("Please, supply information about more covariates.", duration = 30, type = "error")
-            dots <- data.frame(foo = "foo")
+            dots <- data.frame(age = 0)
         }
 
         if (
@@ -186,7 +190,9 @@ cat(str(outcomes))
 
 
         res <- res %>%
-            dplyr::select(outcome, estimation, dplyr::everything())
+            dplyr::select(outcome, estimation, dplyr::everything()) %>%
+            dplyr::mutate_if(is.character, ~ tidyr::replace_na(., "NOTCONSIDERED") %>% factor()) %>%
+            dplyr::rename(gender = sex)
 
 cat(str(res))
 
