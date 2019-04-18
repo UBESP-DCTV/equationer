@@ -1,3 +1,5 @@
+# equationer 0.2.1
+
 * Shiny messages bug fixes
 
 # equationer 0.2.0
