@@ -65,10 +65,19 @@ shinyServer(function(input, output, session) {
         ) {
             showNotification(
                 glue::glue("You have select a menopausal status for a male"),
-                duration = 30, type = "warning"
+                duration = 30, type = "error"
             )
         }
 
+        if (
+            input[["glucose_g_dl_tick"]] && (input[["glucose_g_dl"]] > 126) &&
+            input[["diabetic_tick"]] && (input[["diabetic"]] == "FALSE")
+        ) {
+            showNotification(
+                glue::glue("Glucose above 126 g/dl should be diabetic. Glucose provided is {input[['glucose_g_dl']]} and diabetic is marked FALSE"),
+                duration = 30, type = "error"
+            )
+        }
 
 
         reer_covs_no_intercept <- get_covariates(reer) %>%
