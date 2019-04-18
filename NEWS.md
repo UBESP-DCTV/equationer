@@ -1,3 +1,7 @@
+# equationer (development version)
+
+* Hotfix for menopausal in shiny that still constant
+
 # equationer 0.2.2
 
 * restyle shiny UI 
