@@ -14,7 +14,7 @@ activate_numeric_if_checked <- function(name, input, output, session) {
             updateNumericInput(session, name, value = numeric())
         } else {
             enable(name)
-            updateNumericInput(session, name, value = 0, min = 0)
+            updateNumericInput(session, name, value = numeric())
         }
     })
 }

@@ -59,6 +59,18 @@ shinyServer(function(input, output, session) {
         }
 
 
+        if (
+            input[["menopausal_tick"]] &&
+            input[["sex_tick"]] && (input[["sex"]] == "male")
+        ) {
+            showNotification(
+                glue::glue("You have select a menopausal status for a male"),
+                duration = 30, type = "warning"
+            )
+        }
+
+
+
         reer_covs_no_intercept <- get_covariates(reer) %>%
             .[!stringr::str_detect(., "intercept")] %>%
             sort()
