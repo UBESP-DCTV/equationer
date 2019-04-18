@@ -27,7 +27,11 @@ activate_selector_if_checked <- function(name, input, output, session) {
             updateSelectInput(session, name, choices = "not-selected", selected = "not-selected")
         } else {
             enable(name)
-            updateSelectInput(session, name, choices = get_strata(reer)[[name]], selected = input[[name]][1])
+            if (name == "menopausal") {
+                updateSelectInput(session, name, choices = 1:3, selected = integer())
+            } else {
+                updateSelectInput(session, name, choices = get_strata(reer)[[name]], selected = input[[name]][1])
+            }
         }
     })
 }
