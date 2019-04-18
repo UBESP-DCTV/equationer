@@ -35,6 +35,9 @@ shinyServer(function(input, output, session) {
 # Evaluate --------------------------------------------------------
 
     observeEvent(input[["eval"]], {
+        reer_covs_no_intercept <- get_covariates(reer) %>%
+            .[!stringr::str_detect(., "intercept")]
+
         cov <- list(
             input[["adjusted_weight"]],
             input[["age"]],
@@ -44,7 +47,6 @@ shinyServer(function(input, output, session) {
             input[["bmi"]],
             input[["glucose_g_dl"]],
             input[["height"]],
-            1L,
             input[["lbm"]],
             input[["lta"]],
             input[["mean_chest_skinfold"]],
@@ -54,7 +56,7 @@ shinyServer(function(input, output, session) {
             input[["weight"]],
             input[["wrist_circumference"]]
         ) %>%
-            setNames(sort(get_covariates(reer))) %>%
+            setNames(sort(reer_covs_no_intercept)) %>%
             .[c(
                 input[["adjusted_weight_tick"]],
                 input[["age_tick"]],
@@ -64,7 +66,6 @@ shinyServer(function(input, output, session) {
                 input[["bmi_tick"]],
                 input[["glucose_g_dl_tick"]],
                 input[["height_tick"]],
-                TRUE,
                 input[["lbm_tick"]],
                 input[["lta_tick"]],
                 input[["mean_chest_skinfold_tick"]],
@@ -120,11 +121,40 @@ cat(str(dots))
 cat("\noutcomes\n")
 cat(str(outcomes))
 
+        if (!ncol(dots)) {
+          showNotification("Please, supply information about more covariates.", duration = 3, type = "error")
+            dots <- data.frame(foo = "foo")
+        }
+
+        if (
+            input[['bmi']] && input[['height']] && input[['weight']] &&
+            input[['bmi']] != input[['height']]/(input[['weight']]/100)^2
+        ) {
+            showNotification(
+                glue::glue("BMI supplied - BMI computed = {input[['weight']]/(input[['height']]/100)^2}"),
+                duration = 3, type = "warning"
+            )
+            dots <- data.frame(foo = "foo")
+        }
+
+
         res <- evaluate_at(reer, dots, .outcome = outcomes) %>%
             dplyr::mutate(estimation = round(estimation, 2))
 
+
+        res <- res %>%
+            dplyr::select(outcome, estimation, dplyr::everything())
+
+cat(str(res))
+
         output[["res_tab"]] <- renderDT(res,
-            options = list(filter = "top")
+            rownames = FALSE,
+            filter = "top",
+            selection = list(
+                mode = "single",
+                selected = 1L,
+                target = "column"
+            )
         )
 
 

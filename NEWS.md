@@ -1,3 +1,4 @@
+* added warning if not sufficient input are supplied (#11)
 * remove the needs to provide the intercept
 * fix bug found by DB that prevents `evaluate_at()` to work if
   no strata are provided to a bag (#10)
