@@ -1,5 +1,6 @@
 library(dplyr)
 library(shinyjs)
+library(shinyBS)
 library(DT)
 library(equationer)
 data("reer")
