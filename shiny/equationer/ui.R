@@ -2,13 +2,19 @@ shinyUI(fluidPage(
     # Use shiny js to disable fields
     useShinyjs(),
     title = "equationer",
-    titlePanel("Equations of Energy Requirements"),
-
+    titlePanel("Equations of Energy Requirements in Elderly Patients"),
+    glue::glue("Last update: {get_last_update(reer)}"),
+    hr(),
+    p("Please select the information to use for the energy requirement estimation(s):"),
+    p(strong("Covariates"), ": personal information (must be numeric). They will be used to evaluate the equations", strong("The more covariates you include, the more equations will be evaluated.")),
+    p(strong("Filters"), ": for the equations provided with categorical variables (e.g., gender = male/female), select a value for a category will evaluate these equations considering only that value. All the equations which do not consider the category at all will be evaluated as well. If a category is not selected (i.e., without tick) the equations which consider it will be evaluated for all the possible values of the category.", strong("The more filters you select, the less equations will be evaluated.")),
+    p(strong("Outcomes"), ": only the equations which provide estimation for the selected outcome will be evaluated", strong("The more outcomes you select, the more equations will be evaluated.")),
+    hr(),
+    p("All the equations for which there will be enough information will be evaluated."),
 
     # Sidebar with a slider input for number of bins
     sidebarLayout(
         sidebarPanel(
-
                     strong("COVARIATES"),
 
             fluidRow(
@@ -95,7 +101,7 @@ shinyUI(fluidPage(
 
 
                     hr(),
-                    strong("STRATA (uncheck to do not use the strata, i.e. it does not means 'no'/'false'!)"),
+                    strong("FILTERS"),
 
             fluidRow(
                 column(4, checkboxInput("sex_tick", "Gender", FALSE)),
