@@ -1,3 +1,10 @@
+* added warning if not sufficient input are supplied (#11)
+* remove the needs to provide the intercept
+* fix bug found by DB that prevents `evaluate_at()` to work if
+  no strata are provided to a bag (#10)
+* fix bug that prevents `evaluate_at()` to work if data supplied 
+  strata not in the eqs_bag.
+
 # equationer 0.1.3
 
 * fix bug which prevent `evaluate_at()` to works with bag which include

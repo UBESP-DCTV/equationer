@@ -17,7 +17,7 @@ test_that("correct columns", {
     )
     expect_equal(
         names(evaluated1),
-        c("age", "bmi", "weight", "outcome", "estimation", "eq_name")
+        c("age", "bmi", "outcome", "estimation", "eq_name")
     )
     expect_equal(
         names(evaluated2),
@@ -62,18 +62,16 @@ test_that("correct evaluation for eq", {
     expect_equal(evaluated[["eq_name"]], "eq_test")
 
 
-    expect_equal(evaluated1[["weight"]], 81)
-
     expect_equal(evaluated2[["sex"]], "male")
     expect_equal(evaluated2[["nyha"]], 1)
 
 })
 
 
-test_that("eror works for eq", {
+test_that("error works for eq", {
     expect_error(
         evaluate_at(eq_test, age = 38, weight = "heavy"),
-        "numeric"
+        "are included"
     )
 
     expect_error(evaluate_at(eq_test, 38), "names")
@@ -251,9 +249,9 @@ test_that("works with data frames", {
             names(evaluate_at(eqs_bag_test, more_patients))
         ),
         c(
-            "id", "age", "bmi", "weight", "sex", "nyha", "outcome",
+            "age", "bmi", "sex", "nyha", "outcome",
             "estimation", "eq_name", "eq_group", "reference",
-            ".source_row"
+            "weight", ".source_row"
         )
     )
 
@@ -263,4 +261,29 @@ test_that("works with data frames", {
 test_that("works with multiple posible matching variables", {
     expect_is(evaluated_multimatch_bag, "tbl_df")
     expect_equal(nrow(evaluated_multimatch_bag), 4)
+})
+
+
+
+
+test_that("eqs_bag works with data that include missing strata", {
+    expect_is(
+        suppressWarnings(
+            evaluate_at(eqs_bag_test,
+                age = 1, bmi = 1, weight = 1, diabetics = FALSE
+            )
+        ),
+        "tbl_df"
+    )
+})
+
+
+test_that("Works with only age and BMI on reer", {
+    expect_equal(
+        suppressWarnings(
+            evaluate_at(reer, age = 50, bmi = 21, sex = "female") %>%
+                nrow()
+        ),
+        1L
+    )
 })

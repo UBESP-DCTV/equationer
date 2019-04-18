@@ -45,6 +45,9 @@ evaluate_at <- function(x, ...) {
 evaluate_at.eq <- function(x, ...) {
 
     vs <- list(...)
+    eq_cov <- get_covariates(x)
+
+    vs <- vs[names(vs) %in% eq_cov]
 
     if (!rlang::is_named(vs)) {
         ui_stop("Not all variable names are valid or non empty names")
@@ -53,6 +56,8 @@ evaluate_at.eq <- function(x, ...) {
     if (any(duplicated(names(vs)))) {
         ui_stop("Some variable names are duplicated.")
     }
+
+
 
     are_cov_num <- purrr::map_lgl(vs, is.numeric)
     if (!all(are_cov_num)) {
@@ -63,7 +68,8 @@ evaluate_at.eq <- function(x, ...) {
         ))
     }
 
-    eq_cov <- get_covariates(x)
+    vs[["intercept"]] <- 1L
+
     cov_val_name <- names(vs)
 
     if (!is_applicable_to_covset(x, cov_val_name)) {
@@ -76,11 +82,13 @@ evaluate_at.eq <- function(x, ...) {
         ))
     }
 
+
+
     res <- unlist(vs[eq_cov]) %*% x %>%
         drop() %>%
         purrr::set_names(get_outcome(x))
 
-    dplyr::as_tibble(c(
+    res <- dplyr::as_tibble(c(
         vs,
         get_strata(x),
         list(
@@ -89,6 +97,9 @@ evaluate_at.eq <- function(x, ...) {
             eq_name = get_name(x)
         )
     ))
+
+    res[["intercept"]] <- NULL # not select in case it not exists
+    res
 }
 
 
@@ -143,6 +154,8 @@ evaluate_at.eqs <- function(x, ..., .outcome = NULL) {
 
     x_strata <- get_strata(x)
     x_strata_names <- names(x_strata)
+
+    vs[["intercept"]] <- 1L
 
     vs_strata_values <- vs[vs_names %in% x_strata_names]
     are_values_in_levels <- purrr::imap_lgl(vs_strata_values, ~{
@@ -206,13 +219,15 @@ evaluate_at.eqs <- function(x, ..., .outcome = NULL) {
         )
     }
 
-    dplyr::as_tibble(c(
+    res <- dplyr::as_tibble(c(
         res,
         list(
             eq_group = get_name(x),
             reference = get_reference(x)
         )
     ))
+    res[["intercept"]] <- NULL
+    res
 
 }
 
@@ -361,6 +376,8 @@ evaluate_at.eqs_bag <- function(x, ..., .outcome = NULL) {
         ui_stop("Some variable/strata names are duplicated.")
     }
 
+    vs[["intercept"]] <- 1L
+
     x_strata <- get_strata(x)
     x_strata_names <- names(x_strata)
 
@@ -414,6 +431,7 @@ evaluate_at.eqs_bag <- function(x, ..., .outcome = NULL) {
             ),
             .rows = 0
         )
+        res[["intercept"]] <- NULL
         return(res)
     }
 
@@ -439,8 +457,15 @@ evaluate_at.eqs_bag <- function(x, ..., .outcome = NULL) {
         ))
     )
 
-    if (length(res_lst) == 1) return(res_lst[[1]])
+    if (length(res_lst) == 1) {
+        res_lst[[1]][["intercept"]] <- NULL
+        return(res_lst[[1]])
+    }
 
-    suppressMessages(purrr::reduce(res_lst, dplyr::full_join))
+    suppressMessages(
+        res <- purrr::reduce(res_lst, dplyr::full_join)
+    )
+    res[["intercept"]] <- NULL
+    res
 }
 
