@@ -287,3 +287,4 @@ test_that("Works with only age and BMI on reer", {
         0L
     )
 })
+

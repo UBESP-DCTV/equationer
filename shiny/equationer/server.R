@@ -11,7 +11,6 @@ shinyServer(function(input, output, session) {
     activate_numeric_if_checked("bmi", input, output, session)
     activate_numeric_if_checked("glucose_g_dl", input, output, session)
     activate_numeric_if_checked("height", input, output, session)
-    # activate_numeric_if_checked("lbm", input, output, session)
     activate_numeric_if_checked("lta", input, output, session)
     activate_numeric_if_checked("mean_chest_skinfold", input, output, session)
     activate_numeric_if_checked("subscapular_skinfold", input, output, session)
@@ -212,7 +211,7 @@ cat(str(outcomes))
 
         res <- res %>%
             dplyr::select(outcome, estimation, dplyr::everything()) %>%
-            dplyr::mutate_if(is.character, ~ tidyr::replace_na(., "NOTCONSIDERED") %>% factor()) %>%
+            dplyr::mutate_if(is.character, ~tidyr::replace_na(., "not-considered") %>% as.factor()) %>%
             dplyr::rename(gender = sex)
 
 cat(str(res))
@@ -226,6 +225,18 @@ cat(str(res))
                 target = "column"
             )
         )
+
+
+        resplot <- res %>%
+            ggplot(aes(x = gender, y = estimation, colour = gender)) +
+            geom_boxplot(varwidth = TRUE) +
+            theme(axis.text.x = element_blank()) +
+            ggtitle(
+                "Distribution of the Estimated Energy Requirements by Gender",
+                subtitle = "'not-considered' are the estimations from the equations which do not consider the gender."
+            )
+
+        output[["res_plot"]] <- renderPlot(resplot)
 
 
     })

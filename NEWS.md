@@ -1,3 +1,7 @@
+* restyle shiny UI 
+* update shiny text for usage explanation
+* bugfix errors and messages in shiny (#13)
+
 # equationer 0.2.1
 
 * Shiny messages bug fixes

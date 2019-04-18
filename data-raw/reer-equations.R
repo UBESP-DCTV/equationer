@@ -2,6 +2,15 @@
 
 library(equationer)
 
+
+mj2kcal   <- 239.006
+kj2kcal   <- 0.239006
+mcal2kcal <- 1000
+cal2kcal  <- 1/1000
+
+
+
+
 reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
 
 
@@ -105,7 +114,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "cunningham_80-noage", reference = "Cunningham, J. J. (1980). A reanalysis of the factors influencing basal metabolic rate in normal adults. The American journal of clinical nutrition, 33(11), 2372-2374.",
 
         eq(name = "cunningham_80-noage", outcome = "bmr", strata = list(),
-            intercept = 500/1000, lbm = 22/1000
+            intercept = 500*1000, lbm = 22*1000
         )
 
     ),
@@ -118,7 +127,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "cunningham_80", reference = "Cunningham, J. J. (1980). A reanalysis of the factors influencing basal metabolic rate in normal adults. The American journal of clinical nutrition, 33(11), 2372-2374.",
 
         eq(name = "cunningham_80", outcome = "bmr", strata = list(),
-            intercept = 601.2/1000, lbm = 21/1000, age = -2.6/1000
+            intercept = 601.2*1000, lbm = 21*1000, age = -2.6*1000
         )
 
     ),
@@ -229,15 +238,16 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
         )
     ),
 
-    # Gaillard 2008-b -----------------------------------------------------
-
-    eqs(name = "gaillard_08-b", reference = "Gaillard, C., Alix, E., Sallé, A., Berrut, G., & Ritz, P. (2008). A practical approach to estimate resting energy expenditure in frail elderly people. The Journal of Nutrition Health and Aging, 12(4), 277.",
-
-        eq(name = "gaillard_08-b", outcome = "ree", strata = list(),
-           intercept = 82.6, weight = -9.5, height = 6.5, age = -6.1
-        )
-
-    ),
+    # # Gaillard 2008-b -----------------------------------------------------
+    # questa è scritta giusta così! però mi dà dei risultati bassissimi, nel paper sembra dare risultati corretti
+    # Model 2a 82.6 - 9.5 x weight (kg) + 6,5 x height (cm) - 6.1 x age
+    # eqs(name = "gaillard_08-b", reference = "Gaillard, C., Alix, E., Sallé, A., Berrut, G., & Ritz, P. (2008). A practical approach to estimate resting energy expenditure in frail elderly people. The Journal of Nutrition Health and Aging, 12(4), 277.",
+    #
+    #     eq(name = "gaillard_08-b", outcome = "ree", strata = list(),
+    #        intercept = 82.6, weight = -9.5, height = 6.5, age = -6.1
+    #     )
+    #
+    # ),
 
     # Gaillard 2008-c -----------------------------------------------------
 
@@ -248,29 +258,31 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
         )
 
     ),
-        # Ganpule 2007 ------------------------------------------------------
+
+    # Ganpule 2007 ------------------------------------------------------
 
     eqs(name = "ganpule_07", reference = "Ganpule, A. A., Tanaka, S., Ishikawa-Takata, K., & Tabata, I. (2007). Interindividual variability in sleeping metabolic rate in Japanese subjects. European Journal of Clinical Nutrition, 61(11), 1256.",
 
         eq(name = "ganpule_07-m", outcome = "rmr", strata = list(sex = "male"),
-           intercept = (0.1238 - 0.5473),   weight = 0.0481, height = 0.0234, age = -0.0138
+           intercept = (0123.8 - 547.3) / 4.184,   weight = 48.1 / 4.184, height = 23.4 / 4.184, age = -013.8 / 4.184
         ),
         eq(name = "ganpule_07-f", outcome = "rmr", strata = list(sex = "female"),
-           intercept = (0.1238 - 2*0.5473), weight = 0.0481, height = 0.0234, age = -0.0138
+           intercept = (123.8 - 2*547.3) / 4.184, weight = 48.1 / 4.184, height = 23.4 / 4.184, age = -13.8 / 4.184
         )
 
     ),
-    # # Author Henry 2005 (age > 60 years) ------------------------------------------------------
-    #
-    # eqs(name = "henry_05-a (age > 60 years)", reference = "Henry, C. J. K. (2005). Basal metabolic rate studies in humans: measurement and development of new equations. Public health nutrition, 8(7a), 1133-1152.",
-    #
-    #     eq(name = "henry_05-a-m", outcome = "rmr", strata = list(sex = "male"),
-    #        intercept = -256, weight = 11.4, height = 541
-    #     ),
-    #     eq(name = "henry_05-a-f", outcome = "rmr", strata = list(sex = "female"),
-    #        intercept = 10.7, weight = 8.52, height = 421
-    #     )
-    # ),
+
+    # Author Henry 2005 (age > 60 years) ------------------------------------------------------
+
+    eqs(name = "henry_05-a (age > 60 years)", reference = "Henry, C. J. K. (2005). Basal metabolic rate studies in humans: measurement and development of new equations. Public health nutrition, 8(7a), 1133-1152.",
+
+        eq(name = "henry_05-a-m", outcome = "rmr", strata = list(sex = "male"),
+           intercept = -256, weight = 11.4, height = 541
+        ),
+        eq(name = "henry_05-a-f", outcome = "rmr", strata = list(sex = "female"),
+           intercept = 10.7, weight = 8.52, height = 421
+        )
+    ),
 
 
     # Author Henry 2005 (60-70 years) ------------------------------------------------------
@@ -495,28 +507,26 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     ),
 
 
-
     # Lazzer 2007-a ------------------------------------------------------
 
     eqs(name = "lazzer_07-a", reference = "Lazzer, S., Agosti, F., Resnik, M., Marazzi, N., Mornati, D., & Sartorio, A. (2007). Prediction of resting energy expenditure in severely obese Italian males. Journal of endocrinological investigation, 30(9), 754-761.",
 
         eq(name = "lazzer_07-a-kcal", outcome = "ree", strata = list(),
-           intercept = 3.605, weight = 0.048, height = 4.655, age = -0.020
+           intercept = -3.605 * 239.006, weight = 0.048 * 239.006, height = 4.655 * 239.006, age = -0.020 * 239.006
         )
     ),
-
 
 
 
     # Lazzer 2007-b ------------------------------------------------------
+# ree=weight*0.042+height*3.619-2.678
 
     eqs(name = "lazzer_07-b", reference = "Lazzer, S., Agosti, F., Resnik, M., Marazzi, N., Mornati, D., & Sartorio, A. (2007). Prediction of resting energy expenditure in severely obese Italian males. Journal of endocrinological investigation, 30(9), 754-761.",
 
-        eq(name = "lazzer_07-b", outcome = "ree", strata = list(),
-           intercept = 2.678 / 4.184, weight = 0.042 / 4.184, height = 3.619 / 4.184
+        eq(name = "lazzer_07-b", outcome = "ree", strata = list(sex = "female", bmi = "obese"),
+           intercept = -2.678 * 239.006, weight = 0.042 * 239.006, height = 3.619 * 239.006
         )
     ),
-
 
 
 
@@ -525,11 +535,11 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "lazzer_07-c", reference = "Lazzer, S., Agosti, F., Silvestri, P., Derumeaux-Burel, H., & Sartorio, A. (2007). Prediction of resting energy expenditure in severely obese Italian women. Journal of endocrinological investigation, 30(1), 20-27.",
 
         eq(name = "lazzer_07-c-m", outcome = "bmr", strata = list(sex = "male"),
-           intercept = (2.678 + 3252), weight = 46, height = 3.619, age = -14
+           intercept = (1.140 + 3.252) * 239.006, weight = 0.046 * 239.006, height = 3.619 * 239.006, age = -0.014 * 239.006
         ),
 
         eq(name = "lazzer_07-c-f", outcome = "bmr", strata = list(sex = "female"),
-           intercept = 2.678,          weight = 46, height = 3.619, age = -14
+           intercept = 1.140 * 239.006,          weight = 0.046 * 239.006, height = 3.619 * 239.006, age = -0.014 * 239.006
         )
     ),
 
@@ -549,7 +559,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
 
     # Liu 1995-a ------------------------------------------------------
 
-    eqs(name = "liu_95-a", reference = "Liu, H. Y., Lu, Y. F., & Chen, W. J. (1995). Predictive equations for basal metabolic rate in Chinese adults: a cross-validation study. Journal of the American Dietetic Association, 95(12), 1403–1408. https://doi.org/10.1016/S0002-8223(95)00369-X",
+    eqs(name = "liu_95-a-weight-age", reference = "Liu, H. Y., Lu, Y. F., & Chen, W. J. (1995). Predictive equations for basal metabolic rate in Chinese adults: a cross-validation study. Journal of the American Dietetic Association, 95(12), 1403–1408. https://doi.org/10.1016/S0002-8223(95)00369-X",
 
         eq(name = "liu_95-a-m", outcome = "bmr", strata = list(sex = "male"),
            intercept = (54.34),          weight = 13.88, height =  4.16, age = -3.43
@@ -564,10 +574,10 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
 
     # Liu 1995-b ------------------------------------------------------
 
-    eqs(name = "liu_95-b", reference = "Liu, H. Y., Lu, Y. F., & Chen, W. J. (1995). Predictive equations for basal metabolic rate in Chinese adults: a cross-validation study. Journal of the American Dietetic Association, 95(12), 1403–1408. https://doi.org/10.1016/S0002-8223(95)00369-X",
+    eqs(name = "liu_95-b-weight", reference = "Liu, H. Y., Lu, Y. F., & Chen, W. J. (1995). Predictive equations for basal metabolic rate in Chinese adults: a cross-validation study. Journal of the American Dietetic Association, 95(12), 1403–1408. https://doi.org/10.1016/S0002-8223(95)00369-X",
 
-        eq(name = "liu_95-b", outcome = "bmr", strata = list(),
-           intercept = -1506.60, weight = 20.293
+        eq(name = "liu_95-b", outcome = "bmr", strata = list(ethnicity = "chinese"),
+           intercept = 29.34, weight = 20.29
         )
 
     ),
@@ -579,7 +589,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "liu_95-c", reference = "Liu, H. Y., Lu, Y. F., & Chen, W. J. (1995). Predictive equations for basal metabolic rate in Chinese adults: a cross-validation study. Journal of the American Dietetic Association, 95(12), 1403–1408. https://doi.org/10.1016/S0002-8223(95)00369-X",
 
         eq(name = "liu_95-c", outcome = "bmr", strata = list(),
-           intercept = 29.34, weight = 13.51, height = 11.93
+           intercept = -1506.60, weight = 13.51, height = 11.93
         )
 
     ),
@@ -942,10 +952,10 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
 
     eqs(name = "sabounchi_13-b", reference = "Sabounchi, N. S., Rahmandad, H., & Ammerman, A. (2013). Best-fitting prediction equations for basal metabolic rate: informing obesity interventions in diverse populations. International Journal of Obesity (2005), 37(10), 1364-1370. https://doi.org/10.1038/ijo.2012.218",
 
-        eq(name = "sabounchi_mf", outcome = "bmr", strata = list(sex = "female"),
+        eq(name = "sabounchi_f", outcome = "bmr", strata = list(sex = "female"),
            intercept = 301, weight = 10.2, height = 3.09, age = -3.09
         ),
-        eq(name = "sabounchi_mf", outcome = "bmr", strata = list(sex = "male"),
+        eq(name = "sabounchi_m", outcome = "bmr", strata = list(sex = "male"),
            intercept = 522, weight = 10.4, height = 3.19, age = -3.10
         )
 
@@ -1176,17 +1186,17 @@ eqs(name = "harris_benedict_918", reference = "Harris, J. A., & Benedict, F. G. 
     )
 ),
 
-# Vander Weg 2004 ------------------------------------------------------
-
-eqs(name = "vander_weg_04", reference = "Vander Weg, M. W., Watson, J. M., Klesges, R. C., Eck Clemens, L. H., Slawson, D. L., & McClanahan, B. S. (2004). Development and cross-validation of a prediction equation for estimating resting  energy expenditure in healthy African-American and European-American women. European Journal of Clinical Nutrition, 58(3), 474-480. https://doi.org/10.1038/sj.ejcn.1601833",
-
-    eq(name = "vander_weg_04-aa", outcome = "ree", strata = list(ethnicity = "african american"),
-       intercept = (616.93 - 64.98) / 4.184, weight = 35.12 / 4.184, height = 19.38 / 4.184, age = -14.9 / 4.184
-    ),
-    eq(name = "vander_weg_04-ea", outcome = "ree", strata = list(ethnicity = "african european american"),
-       intercept = 147.45 / 4.184, weight = 8.39 / 4.184, height = 4.74 / 4.184, age = -3.56 / 4.184
-    )
-),
+# # Vander Weg 2004 ------------------------------------------------------
+#
+# eqs(name = "vander_weg_04", reference = "Vander Weg, M. W., Watson, J. M., Klesges, R. C., Eck Clemens, L. H., Slawson, D. L., & McClanahan, B. S. (2004). Development and cross-validation of a prediction equation for estimating resting  energy expenditure in healthy African-American and European-American women. European Journal of Clinical Nutrition, 58(3), 474-480. https://doi.org/10.1038/sj.ejcn.1601833",
+#
+#     eq(name = "vander_weg_04-aa", outcome = "ree", strata = list(ethnicity = "african american"),
+#        intercept = 147.45 - 64.98, weight = 8.39, height = 4.74, age = -3.56
+#     ),
+#     eq(name = "vander_weg_04-ea", outcome = "ree", strata = list(ethnicity = "african european american"),
+#        intercept = 147.45, weight = 8.39, height = 4.74, age = -3.56
+#     )
+# ),
 
 
 # Orozco 2017 ------------------------------------------------------
@@ -1303,45 +1313,6 @@ eqs(name = "piers_93", reference = "Piers, L. S., & Shetty, P. S. (1993). BASAL 
 #     )
 #
 # )
-#
-# sample_data <- dplyr::as_tibble(data) %>%
-#   dplyr::transmute(
-#     record_id = record_id,
-#     age = eta,
-#     height = height,
-#     weight = intpeso,
-#     bmi = weight/height^2,
-#     sex = sesso.factor,
-#     ethnicity = razza.factor,
-#     mean_chest_skinfold = mean_chest_skinfold,
-#     subscapular_skinfold = mean_subscapular_skinfold,
-#     wrist_circumference = wrist_circumference,
-#
-#     # adjusted_weight = DA CALCOLARE,
-  ## adjusted weight lo calcolo Adjusted_weight= [(actual body weight - ideal weight)x0.25]+ideal weight deal Body Weight (in kilograms) = 45.5 kg + 2.2 kg for each inch over 5 feet. If the wrist is 7 inches, the IBW remains the way it is. However, if the wrist size is more or less than 7 inches, you add or subtract 10% of ideal body weight respectively.
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# #
-# #
-# #
-# #     # Author YYYY ------------------------------------------------------
-# #
-# #     eqs(name = "", reference = "",
-# #
-# #         eq(name = "", outcome = "", strata = list(),
-# #            intercept = 0,
-# #         )
-# #
-# #     )
-# #
 #
 
 
