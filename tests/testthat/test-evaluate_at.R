@@ -284,6 +284,7 @@ test_that("Works with only age and BMI on reer", {
             evaluate_at(reer, age = 50, bmi = 21, sex = "female") %>%
                 nrow()
         ),
-        1L
+        0L
     )
 })
+

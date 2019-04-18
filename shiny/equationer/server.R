@@ -1,6 +1,5 @@
 shinyServer(function(input, output, session) {
 
-
 # covariates ------------------------------------------------------
 
 
@@ -12,7 +11,6 @@ shinyServer(function(input, output, session) {
     activate_numeric_if_checked("bmi", input, output, session)
     activate_numeric_if_checked("glucose_g_dl", input, output, session)
     activate_numeric_if_checked("height", input, output, session)
-    activate_numeric_if_checked("lbm", input, output, session)
     activate_numeric_if_checked("lta", input, output, session)
     activate_numeric_if_checked("mean_chest_skinfold", input, output, session)
     activate_numeric_if_checked("subscapular_skinfold", input, output, session)
@@ -35,8 +33,55 @@ shinyServer(function(input, output, session) {
 # Evaluate --------------------------------------------------------
 
     observeEvent(input[["eval"]], {
+
+        updateSelectInput(session, "lbm_tick", choices = c(TRUE, FALSE), selected = FALSE)
+        updateNumericInput(session, "lbm", value = 0)
+
+        if (
+            input[["weight_tick"]] &&
+            input[["age_tick"]] &&
+            input[["sex_tick"]]
+        ) {
+            lbm_tick <- TRUE
+            lbm <- if (input[["sex"]] == "male") {
+                (79.5 - 0.24*input[['weight']] - 0.15*input[['age']])*input[['weight']] + 73.2
+            } else {
+                (69.8 - 0.26*input[['weight']] - 0.12*input[['age']])*input[['weight']] + 73.2
+            }
+            showNotification(
+                glue::glue("Lean Body Mass (LBM) calculated to be: {lbm}"),
+                duration = 30, type = "message"
+            )
+        } else {
+            lbm_tick <- FALSE
+            lbm <- 0
+        }
+
+
+        if (
+            input[["menopausal_tick"]] &&
+            input[["sex_tick"]] && (input[["sex"]] == "male")
+        ) {
+            showNotification(
+                glue::glue("You have select a menopausal status for a male"),
+                duration = 30, type = "error"
+            )
+        }
+
+        if (
+            input[["glucose_g_dl_tick"]] && (input[["glucose_g_dl"]] > 126) &&
+            input[["diabetic_tick"]] && (input[["diabetic"]] == "FALSE")
+        ) {
+            showNotification(
+                glue::glue("Glucose above 126 g/dl should be diabetic. Glucose provided is {input[['glucose_g_dl']]} and diabetic is marked FALSE"),
+                duration = 30, type = "error"
+            )
+        }
+
+
         reer_covs_no_intercept <- get_covariates(reer) %>%
-            .[!stringr::str_detect(., "intercept")]
+            .[!stringr::str_detect(., "intercept")] %>%
+            sort()
 
         cov <- list(
             input[["adjusted_weight"]],
@@ -47,7 +92,7 @@ shinyServer(function(input, output, session) {
             input[["bmi"]],
             input[["glucose_g_dl"]],
             input[["height"]],
-            input[["lbm"]],
+            lbm,
             input[["lta"]],
             input[["mean_chest_skinfold"]],
             input[["menopausal"]],
@@ -56,7 +101,7 @@ shinyServer(function(input, output, session) {
             input[["weight"]],
             input[["wrist_circumference"]]
         ) %>%
-            setNames(sort(reer_covs_no_intercept)) %>%
+            setNames(reer_covs_no_intercept) %>%
             .[c(
                 input[["adjusted_weight_tick"]],
                 input[["age_tick"]],
@@ -66,7 +111,7 @@ shinyServer(function(input, output, session) {
                 input[["bmi_tick"]],
                 input[["glucose_g_dl_tick"]],
                 input[["height_tick"]],
-                input[["lbm_tick"]],
+                lbm_tick,
                 input[["lta_tick"]],
                 input[["mean_chest_skinfold_tick"]],
                 input[["menopausal_tick"]],
@@ -74,6 +119,10 @@ shinyServer(function(input, output, session) {
                 input[["surface_area_tick"]],
                 input[["weight_tick"]]
             )]
+
+        if (input[["menopausal_tick"]]) {
+            cov[["menopausal"]] <- as.integer(cov[["menopausal"]])
+        }
 
 cat("\nCOV\n")
 cat(str(cov))
@@ -122,27 +171,27 @@ cat("\noutcomes\n")
 cat(str(outcomes))
 
         if (!ncol(dots)) {
-          showNotification("Please, supply information about more covariates.", duration = 3, type = "error")
-            dots <- data.frame(foo = "foo")
+          showNotification("Please, supply information about more covariates.", duration = 30, type = "error")
+            dots <- data.frame(age = 0)
         }
 
         if (
-            !is.na(input[['bmi']]) &&
-            !is.na(input[['weight']]) &&
-            !is.na(input[['height']]) &&
+            input[['bmi_tick']] &&
+            input[['weight_tick']] &&
+            input[['height_tick']] &&
             (input[['height']] > 0) &&
-            input[['bmi']] != input[['height']]/(input[['weight']]/100)^2
+            (abs(input[['bmi']] - input[['height']]/(input[['weight']]/100)^2) >= 1)
         ) {
             showNotification(
-                glue::glue("BMI supplied - BMI computed = {round(input[['bmi']] - input[['weight']]/(input[['height']]/100)^2, 2)}"),
-                duration = 3, type = "warning"
+                glue::glue("BMI supplied - BMI computed = {round(input[['bmi']] - input[['weight']]/(input[['height']]/100)^2)}"),
+                duration = 30, type = "warning"
             )
         }
 
 
         if (
-            !is.na(input[['bmi']]) &&
-            !is.na(input[['bmi_greater_21']]) &&
+            input[['bmi_tick']] &&
+            input[['bmi_greater_21_tick']] &&
             (
                 ((input[['bmi']] >  21) && (input[['bmi_greater_21']] == "FALSE")) ||
                 ((input[['bmi']] <= 21) && (input[['bmi_greater_21']] == "TRUE"))
@@ -150,7 +199,7 @@ cat(str(outcomes))
         ) {
             showNotification(
                 glue::glue("BMI > 21 strata is {input[['bmi_greater_21']]} but BMI supplied is {input[['bmi']]}."),
-                duration = 3, type = "warning"
+                duration = 30, type = "warning"
             )
         }
 
@@ -161,7 +210,9 @@ cat(str(outcomes))
 
 
         res <- res %>%
-            dplyr::select(outcome, estimation, dplyr::everything())
+            dplyr::select(outcome, estimation, dplyr::everything()) %>%
+            dplyr::mutate_if(is.character, ~tidyr::replace_na(., "not-considered") %>% as.factor()) %>%
+            dplyr::rename(gender = sex)
 
 cat(str(res))
 
@@ -174,6 +225,18 @@ cat(str(res))
                 target = "column"
             )
         )
+
+
+        resplot <- res %>%
+            ggplot(aes(x = gender, y = estimation, colour = gender)) +
+            geom_boxplot(varwidth = TRUE) +
+            theme(axis.text.x = element_blank()) +
+            ggtitle(
+                "Distribution of the Estimated Energy Requirements by Gender",
+                subtitle = "'not-considered' are the estimations from the equations which do not consider the gender."
+            )
+
+        output[["res_plot"]] <- renderPlot(resplot)
 
 
     })
