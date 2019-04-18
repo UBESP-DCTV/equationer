@@ -19,24 +19,20 @@ shinyUI(fluidPage(
 
             fluidRow(
                 column(4, checkboxInput("age_tick", "Age (years)", FALSE)),
-                column(8, numericInput("age", "", 0, 0))
+                column(8, numericInput("age", "", numeric(), 18, 122))
             ),
             fluidRow(
                 column(4, checkboxInput("weight_tick", "Weight (kg)", FALSE)),
-                column(8, numericInput("weight", "", 0, 0))
+                column(8, numericInput("weight", "", numeric(), 27, 635))
             ),
             fluidRow(
                 column(4, checkboxInput("height_tick", "Height (cm)", FALSE)),
-                column(8, numericInput("height", "", 0, 0))
+                column(8, numericInput("height", "", numeric(), 62.8, 272))
             ),
             fluidRow(
                 column(4, checkboxInput("bmi_tick", "Body Mass Index (BMI, kg/m^2)", FALSE)),
-                column(8, numericInput("bmi", "", 0, 0))
+                column(8, numericInput("bmi", "", numeric(), 3.65, 200))
             ),
-            # fluidRow(
-            #     column(4, checkboxInput("lbm_tick", "Lean Body Mass (LBM, kg)", FALSE)),
-            #     column(8, numericInput("lbm", "", 0, 0))
-            # ),
             fluidRow(
                 column(4,
                     checkboxInput("lta_tick", "Leasure Time Activity (LTA, hours)", FALSE),
@@ -44,23 +40,23 @@ shinyUI(fluidPage(
                             placement = "right", trigger = "hover"
                         )
                 ),
-                column(8, numericInput("lta", "", 0, 0))
+                column(8, numericInput("lta", "", numeric(), 0))
             ),
             fluidRow(
                 column(4, checkboxInput("mean_chest_skinfold_tick", "Chest skinfold (mean, mm)", FALSE)),
-                column(8, numericInput("mean_chest_skinfold", "", 0, 0))
+                column(8, numericInput("mean_chest_skinfold", "", numeric(), 1, 1000))
             ),
             fluidRow(
                 column(4, checkboxInput("subscapular_skinfold_tick", "Subscapular skinfold (mean, mm)", FALSE)),
-                column(8, numericInput("subscapular_skinfold", "", 0, 0))
+                column(8, numericInput("subscapular_skinfold", "", numeric(), 1, 1000))
             ),
             fluidRow(
                 column(4, checkboxInput("surface_area_tick", "Body surface area (cm^2)", FALSE)),
-                column(8, numericInput("surface_area", "", 0, 0))
+                column(8, numericInput("surface_area", "", numeric(), 10, 1000))
             ),
             fluidRow(
                 column(4, checkboxInput("wrist_circumference_tick", "Wrist circumference (cm)", FALSE)),
-                column(8, numericInput("wrist_circumference", "", 0, 0))
+                column(8, numericInput("wrist_circumference", "", numeric(), 10, 1000))
             ),
             fluidRow(
                 column(4,
@@ -69,15 +65,15 @@ shinyUI(fluidPage(
                             placement = "right", trigger = "hover"
                         )
                 ),
-                column(8, numericInput("adjusted_weight", "", 0, 0))
+                column(8, numericInput("adjusted_weight", "", numeric(), 27, 600))
             ),
             fluidRow(
                 column(4, checkboxInput("albumin_mg_dl_tick", "Seric albumin (mg/dl)", FALSE)),
-                column(8, numericInput("albumin_mg_dl", "", 0, 0))
+                column(8, numericInput("albumin_mg_dl", "", numeric(), 0, 1000))
             ),
             fluidRow(
                 column(4, checkboxInput("glucose_g_dl_tick", "Seric glucose (g/dl)", FALSE)),
-                column(8, numericInput("glucose_g_dl", "", 0, 0))
+                column(8, numericInput("glucose_g_dl", "", numeric(), 0, 1000))
             ),
             fluidRow(
                 column(4,
@@ -90,11 +86,11 @@ shinyUI(fluidPage(
             ),
             fluidRow(
                 column(4, checkboxInput("air_humidity_tick", "Air humidity", FALSE)),
-                column(8, numericInput("air_humidity", "", 0, 0))
+                column(8, numericInput("air_humidity", "", numeric(), 0, 100))
             ),
             fluidRow(
                 column(4, checkboxInput("air_temperature_tick", "Air temperature (C)", FALSE)),
-                column(8, numericInput("air_temperature", "", 0, 0))
+                column(8, numericInput("air_temperature", "", numeric(), -257.15, 257.15))
             ),
 
 
