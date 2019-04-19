@@ -1,3 +1,9 @@
+
+* removed computable covariates from shiny (and internally compute and
+  use them showing output value if useful)
+* bugfix for intercept considered internally as strata 
+* implemented and checked all the equaitons (#5)
+
 # equationer (development version)
 
 * Hotfix for menopausal in shiny that still constant
