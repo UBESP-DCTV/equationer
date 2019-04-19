@@ -147,6 +147,7 @@ evaluate_at.eqs <- function(x, ..., .outcome = NULL) {
         ui_stop("Not all variable/strata names are valid or non empty names.")
     }
 
+    vs[["intercept"]] <- 1L
     vs_names <- names(vs)
     if (any(duplicated(vs_names))) {
         ui_stop("Some variable/strata names are duplicated.")
@@ -155,7 +156,6 @@ evaluate_at.eqs <- function(x, ..., .outcome = NULL) {
     x_strata <- get_strata(x)
     x_strata_names <- names(x_strata)
 
-    vs[["intercept"]] <- 1L
 
     vs_strata_values <- vs[vs_names %in% x_strata_names]
     are_values_in_levels <- purrr::imap_lgl(vs_strata_values, ~{
@@ -371,12 +371,11 @@ evaluate_at.eqs_bag <- function(x, ..., .outcome = NULL) {
         ui_stop("Not all variable/strata names are valid or non empty names.")
     }
 
+    vs[["intercept"]] <- 1L
     vs_names <- names(vs)
     if (any(duplicated(vs_names))) {
         ui_stop("Some variable/strata names are duplicated.")
     }
-
-    vs[["intercept"]] <- 1L
 
     x_strata <- get_strata(x)
     x_strata_names <- names(x_strata)

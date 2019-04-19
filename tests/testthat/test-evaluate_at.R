@@ -288,3 +288,7 @@ test_that("Works with only age and BMI on reer", {
     )
 })
 
+
+test_that("intercept is not considered internally as strata (i.e. no wornings here!)", {
+    expect_silent(evaluate_at(reer, sex = "male"))
+})

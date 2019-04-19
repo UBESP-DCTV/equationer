@@ -13,7 +13,9 @@ shinyUI(fluidPage(
     actionButton("eval", "Evaluate equations", icon = icon("refresh")),
     p("All the equations for which there will be enough information will be evaluated."),
 
-    # Sidebar with a slider input for number of bins
+   # textOutput("test_text"),
+
+   # Sidebar with a slider input for number of bins
 
     sidebarLayout(
         sidebarPanel(
@@ -32,12 +34,8 @@ shinyUI(fluidPage(
                         column(5, numericInput("height", "", numeric(), 62.8, 272))
                     ),
                     fluidRow(
-                        column(7, checkboxInput("bmi_tick", "Body Mass Index (BMI, kg/m^2)", FALSE)),
-                        column(5, numericInput("bmi", "", numeric(), 3.65, 200))
-                    ),
-                    fluidRow(
                         column(7,
-                            checkboxInput("lta_tick", "Leasure Time Activity (LTA, hours)", FALSE),
+                            checkboxInput("lta_tick", "Leasure Time Activity (LTA, kcal/day)", FALSE),
                                 bsTooltip(id = "lta_tick", title = "To compute LTA see: Taylor HL, Jacobs DR Jr. Schucker B. et al: A questionnaire for the assessment of leisure time physical activities. J Chronic Dis",
                                     placement = "right", trigger = "hover"
                                 )
@@ -77,6 +75,10 @@ shinyUI(fluidPage(
                         column(7, checkboxInput("glucose_g_dl_tick", "Seric glucose (g/dl)", FALSE)),
                         column(5, numericInput("glucose_g_dl", "", numeric(), 0, 1000))
                     ),
+                    fluidRow(
+                        column(7, checkboxInput("crp_mg_l_tick", "C-reactive protein (mg/l)", FALSE)),
+                        column(5, numericInput("crp_mg_l", "", numeric(), 0, 10000))
+                    ),
                    fluidRow(
                         column(7, checkboxInput("air_humidity_tick", "Air humidity (%)", FALSE)),
                         column(5, numericInput("air_humidity", "", numeric(), 0, 100))
@@ -87,12 +89,12 @@ shinyUI(fluidPage(
                     ),
                     fluidRow(
                         column(12,
-                            checkboxInput("menopausal_tick", "Menopausal stage (1-3)", FALSE),
-                                bsTooltip(id = "menopausal_tick", title = "1 = Pre-menopausal status; 2 = perimenopausal: vasomotor instability, hot flashes, absence of regular menstruation for 2-12 m; 3 = post-menopausal women: absence of menstruation > 12 m.",
+                            checkboxInput("menopausal_tick", "Menopausal stage", FALSE),
+                                bsTooltip(id = "menopausal_tick", title = "Perimenopausal: vasomotor instability, hot flashes, absence of regular menstruation for 2-12 month; Post-menopausal: absence of menstruation > 12 month.",
                                     placement = "right", trigger = "hover"
                                 )
                         ),
-                        column(12, selectInput("menopausal", "", c(1L, 2L, 3L)))
+                        column(12, selectInput("menopausal", "", c("Pre-menopausal", "Perimenopausal", "Post-menopausal")))
                     )
                  )),
 
@@ -102,29 +104,32 @@ shinyUI(fluidPage(
                         column(6, selectInput("sex", "", get_strata(reer)[["sex"]]))
                     ),
                     fluidRow(
-                        column(6,
-                            checkboxInput("bmi_class_tick", "BMI class", FALSE),
-                                bsTooltip(id = "bmi_class_tick", title = "underweight <= 18.49 < normal weight <= 24.99 < overweight <= 29.99 < obese",
-                                    placement = "right", trigger = "hover"
-                                )
-                        ),
-                        column(6, selectInput("bmi_class", "", get_strata(reer)[["bmi_class"]]))
-                    ),
-                    fluidRow(
                         column(6, checkboxInput("diabetic_tick", "Is diabetic?", FALSE)),
-                        column(6, selectInput("diabetic", "", get_strata(reer)[["diabetic"]]))
+                        column(6, selectInput("diabetic", "", c("FALSE", "TRUE")))
                     ),
                     fluidRow(
-                        column(6, checkboxInput("bmi_greater_21_tick", "Is BMI grater than 21?", FALSE)),
-                        column(6, selectInput("bmi_greater_21", "", get_strata(reer)[["bmi_greater_21"]]))
+                        column(6, checkboxInput("pal_tick", "Physical Activity Level (PAL)", FALSE)),
+                        column(6, selectInput("pal", "", get_strata(reer)[["pal"]]))
                     ),
                     fluidRow(
-                        column(6, checkboxInput("hf_tick", "Is NYHA > II (i.e. III or IV)?", FALSE)),
-                        column(6, selectInput("hf", "", get_strata(reer)[["hf"]]))
+                        column(6, checkboxInput("inpatients_tick", "Is inpatients?", FALSE)),
+                        column(6, selectInput("inpatients", "", c("FALSE", "TRUE")))
+                    ),
+                    fluidRow(
+                        column(6, checkboxInput("rheumatoid_arthritis_tick", "Has rheumatoid arthritis?", FALSE)),
+                        column(6, selectInput("rheumatoid_arthritis", "", c("FALSE", "TRUE")))
+                    ),
+                    fluidRow(
+                        column(6, checkboxInput("hf_tick", "Has heart failure (NHYA >= III)?", FALSE)),
+                        column(6, selectInput("hf", "", c("FALSE", "TRUE")))
+                    ),
+                    fluidRow(
+                        column(6, checkboxInput("copd_tick", "Has Chronic Obstructive Pulmonary Disease (COPD)?", FALSE)),
+                        column(6, selectInput("copd", "", c("FALSE", "TRUE")))
                     ),
                     fluidRow(
                         column(6, checkboxInput("ethnicity_tick", "Ethnicity", FALSE)),
-                        column(6, selectInput("ethnicity", "", get_strata(reer)[["ethnicity"]]))
+                        column(6, selectInput("ethnicity", "", sort(get_strata(reer)[["ethnicity"]])))
                     )
                 )),
 
