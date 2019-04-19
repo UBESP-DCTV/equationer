@@ -1,4 +1,6 @@
-
+* updated the Shiny interface
+* bugfix converting logical to character in the `reer` data to prevent a
+  joining error
 * removed computable covariates from shiny (and internally compute and
   use them showing output value if useful)
 * bugfix for intercept considered internally as strata 
