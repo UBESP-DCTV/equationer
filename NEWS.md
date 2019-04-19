@@ -1,3 +1,5 @@
+# equationer 0.3.0
+
 * updated the Shiny interface
 * bugfix converting logical to character in the `reer` data to prevent a
   joining error
