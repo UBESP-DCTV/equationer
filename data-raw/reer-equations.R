@@ -886,7 +886,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     # Metsios 2008 [CHECKED \(coef \+ udm\)] ---------------------------
         eqs(name = "metsios_08", reference = "Metsios, G. S., Stavropoulos-Kalinoglou, A., Panoulas, V. F., Koutedakis, Y., Nevill, A. M., Douglas, K. M., ... & Kitas, G. D. (2008). New resting energy expenditure prediction equations for patients with rheumatoid arthritis. Rheumatology, 47(4), 500-506.",
 
-            eq(name = "metsios_08", outcome = "ree", strata = list(arthritis_reumatoide = TRUE),
+            eq(name = "metsios_08", outcome = "ree", strata = list(rheumatoid_arthritis = TRUE),
                intercept = 0, var_metsios = 598.8
             )
 
@@ -1052,13 +1052,17 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
 
     # Pavlidou 2018-a [CHECKED \(coef \+ udm\)] -----------------------
 
-    eqs(name = "pavlidou_18-b", reference = "Pavlidou, E., Petridis, D., Tolia, M., Tsoukalas, N., Poultsidi, A., Fasoulas, A., . Giaginis, C. (2018). Estimating the agreement between the metabolic rate calculated from prediction equations and from a portable indirect calorimetry device: an effort to develop a new equation for predicting resting metabolic rate. Nutrition & Metabolism, 15, 41. https://doi.org/10.1186/s12986-018-0278-7",
+    eqs(name = "pavlidou_18-m", reference = "Pavlidou, E., Petridis, D., Tolia, M., Tsoukalas, N., Poultsidi, A., Fasoulas, A., . Giaginis, C. (2018). Estimating the agreement between the metabolic rate calculated from prediction equations and from a portable indirect calorimetry device: an effort to develop a new equation for predicting resting metabolic rate. Nutrition & Metabolism, 15, 41. https://doi.org/10.1186/s12986-018-0278-7",
 
         eq(name = "pavlidou_18-b-m", outcome = "rmr", strata = list(sex = "male"),
-           intercept = 0, bmi_pavlidou = 21.41
-        ),
-        eq(name = "pavlidou_18-b-f", outcome = "rmr", strata = list(sex = 'female'),
-           intercept = 0, bmi_pavlidou = 21.09
+           intercept = 0, bmi_pavlidou_m = 21.41
+        )
+    ),
+
+    eqs(name = "pavlidou_18-f", reference = "Pavlidou, E., Petridis, D., Tolia, M., Tsoukalas, N., Poultsidi, A., Fasoulas, A., . Giaginis, C. (2018). Estimating the agreement between the metabolic rate calculated from prediction equations and from a portable indirect calorimetry device: an effort to develop a new equation for predicting resting metabolic rate. Nutrition & Metabolism, 15, 41. https://doi.org/10.1186/s12986-018-0278-7",
+
+        eq(name = "pavlidou_18-f", outcome = "rmr", strata = list(sex = 'female'),
+           intercept = 0, bmi_pavlidou_f = 21.09
         )
 
     ),
@@ -1363,4 +1367,4 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
 
 reer
 
-usethis::use_data(reer)
+usethis::use_data(reer, overwrite = TRUE)
