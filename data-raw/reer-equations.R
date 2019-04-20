@@ -943,11 +943,11 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "muller_04-a", reference = "Manfred J Müller, Anja Bosy-Westphal, Susanne Klaus, Georg Kreymann, Petra M Lührmann, Monika Neuhäuser-Berthold, Rudolf Noack, Karl M Pirke, Petra Platte, Oliver Selberg, Jochen Steiniger, World Health Organization equations have shortcomings for predicting resting energy expenditure in persons from a modern, affluent population: generation of a new reference standard from a retrospective analysis of a German database of resting energy expenditure, The American Journal of Clinical Nutrition, Volume 80, Issue 5, November 2004, Pages 1379–1390, https://doi.org/10.1093/ajcn/80.5.1379",
 
         eq(name = "muller_04-a-m", outcome = "ree", strata = list(sex = "male"),
-           intercept = (3.210 + 1.009) * mj2kcal, weight = 0.047 * mj2kcal, age = -0.1452 * mj2kcal
+           intercept = (3.210 + 1.009) * mj2kcal, weight = 0.047 * mj2kcal, age = -0.01452 * mj2kcal
         ),
 
         eq(name = "muller_04-a-f", outcome = "ree", strata = list(sex = "female"),
-           intercept = 3.210 * mj2kcal,           weight = 0.047 * mj2kcal, age = -0.1452 * mj2kcal
+           intercept = 3.210 * mj2kcal,           weight = 0.047 * mj2kcal, age = -0.01452 * mj2kcal
         )
     ),
 

@@ -461,6 +461,8 @@ evaluate_at.eqs_bag <- function(x, ..., .outcome = NULL) {
         return(res_lst[[1]])
     }
 
+    res_lst <- res_lst[purrr::map_lgl(res_lst, ~nrow(.x) > 0L)]
+
     suppressMessages(
         res <- purrr::reduce(res_lst, dplyr::full_join)
     )

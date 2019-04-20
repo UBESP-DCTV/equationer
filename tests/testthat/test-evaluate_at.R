@@ -292,3 +292,14 @@ test_that("Works with only age and BMI on reer", {
 test_that("intercept is not considered internally as strata (i.e. no wornings here!)", {
     expect_silent(evaluate_at(reer, sex = "male"))
 })
+
+
+test_that("problems with factor and character join do not occurs", {
+    a <- data.frame(age = 38, bmi = 25.1, bmi_pavlidou = 52.1, bmi_pavlidou_f = 43, bmi_pavlidou_m = 47.8, height = 184, lbm = 62, livingston_weight_age = 7.24, livingston_weight_alone = 8.15, livingston_weight_f = 6.85, livingston_weight_f_alone = 7.76, livingston_weight_m = 6.93, livingston_weight_m_alone = 7.3, weight = 85, age_18_74 = "TRUE", age_60_70 = "FALSE", age_60_74 = "FALSE", bmi_class = "overweight", bmi_greater_21 = "TRUE", copd = "FALSE", diabetic = "FALSE", ethnicity = "white", hf = "FALSE", inpatients = "FALSE", older_18 = "TRUE", older_29 = "TRUE", older_59 = "FALSE", older_60 = "FALSE", older_70 = "FALSE", older_74 = "FALSE", pal = "low-active", rheumatoid_arthritis = "FALSE", sex = "male", stringsAsFactors = FALSE)
+    expect_is(
+        suppressWarnings(suppressMessages(
+            evaluate_at(reer, a)
+        )),
+        "tbl_df"
+    )
+})
