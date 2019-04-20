@@ -1,3 +1,5 @@
+# equationer 0.3.1
+
 * fix a bug that prevent the join of the partial tables if full strata
   are provided and some partial results were evaluated without any
   real results (0-row df)
