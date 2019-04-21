@@ -5,10 +5,10 @@ shinyUI(fluidPage(
     titlePanel("Equations of Energy Requirements in Elderly Patients"),
     glue::glue("Last update: {get_last_update(reer)}"),
     hr(),
-    p("Please select the information to use for the energy requirement estimation(s):"),
-    p(strong("Covariates"), ": personal information (must be numeric). They will be used to evaluate the equations", strong("The more covariates you include, the more equations will be evaluated.")),
-    p(strong("Filters"), ": for the equations provided with categorical variables (e.g., gender = male/female), select a value for a category will evaluate these equations considering only that value. All the equations which do not consider the category at all will be evaluated as well. If a category is not selected (i.e., without tick) the equations which consider it will be evaluated for all the possible values of the category.", strong("The more filters you select, the less equations will be evaluated.")),
-    p(strong("Outcomes"), ": only the equations which provide estimation for the selected outcome will be evaluated", strong("The more outcomes you select, the more equations will be evaluated.")),
+    p("Please, select the variables (i.e., covariates, filters, and outcomes) needed for the computation of the energy requirement estimation(s). It is not necessary to fill all the fields."),
+    p(strong("Covariates"), "(e.g., height, or weight):  all the relevant equations that can be evaluated using some subset of the covariates selected will be evaluated. The more covariates are included, the more equations will be evaluated and appear in the results."),
+    p(strong("Filters"), "(e.g., categorical variables like gender, or ethnicity): if selected will identify -among the equations retrieved through the covariates- the ones which employ the selected filters. Equations that do not consider the selected filters at all will be evaluated as well. On the other hand, equations that consider unselected filters will show the results of each category of the unselected filters. The more filters are selected, the fewer equations will appear in the results."),
+    p(strong("Outcomes"), " (the definition of the caloric intake, like rmr, or ree): vary depending on the validated equations. If you wish to consider only equations with a specific definition of the outcome, please unchecked the other ones. The more outcomes remain selected, the more results will be displayed."),
     hr(),
     actionButton("eval", "Evaluate equations", icon = icon("refresh")),
     p("All the equations for which there will be enough information will be evaluated."),
@@ -152,5 +152,7 @@ shinyUI(fluidPage(
             tabPanel("Plot", icon = icon("chart-bar"), shiny::plotOutput("res_plot")),
             tabPanel("Table", icon = icon("grip-horizontal"), dataTableOutput("res_tab"))
         ))
-    )
+    ),
+    actionButton("eval", "Evaluate equations", icon = icon("refresh")),
+    p("All the equations for which there will be enough information will be evaluated.")
 ))
