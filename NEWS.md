@@ -1,3 +1,5 @@
+# equationer 0.3.2
+
 * Updated text in the shiny app
 
 # equationer 0.3.1
