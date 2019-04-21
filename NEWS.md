@@ -1,3 +1,5 @@
+* Updated text in the shiny app
+
 # equationer 0.3.1
 
 * fix a bug that prevent the join of the partial tables if full strata
