@@ -148,13 +148,13 @@ shinyServer(function(input, output, session) {
             input[["height_tick"]] &&
             input[["sex_tick"]]
         ) {
-            height_inch <- input[["height"]] * 0.393701
+            height_feet <- input[["height"]] * 0.0328084
 
             if (input[["sex"]] == "male") {
-                ibw <- 52 + 1.9 * (height_inch - 5)
+                ibw <- 52 + 1.9 * ((height_feet - 5)*12)
             }
             if (input[["sex"]] == "female") {
-                ibw <- 49 + 1.7 * (height_inch - 5)
+                ibw <- 49 + 1.7 * ((height_feet - 5)*12)
             }
             showNotification(
                 glue::glue("Ideal Body Weigth (IBW, Robinson et.al 1983) calculated to be: {round(ibw, 1)}"),

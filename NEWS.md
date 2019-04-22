@@ -1,5 +1,6 @@
 # equationer 0.3.3
 
+* Hot fix ibw calculatiobn
 * Adjusted weight calculated automatically in the shiny app
 
 # equationer (development version)
