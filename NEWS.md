@@ -1,3 +1,5 @@
+# equationer 0.3.3
+
 * Adjusted weight calculated automatically in the shiny app
 
 # equationer (development version)
