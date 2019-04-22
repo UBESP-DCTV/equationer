@@ -59,15 +59,6 @@ shinyUI(fluidPage(
                         column(5, numericInput("wrist_circumference", "", numeric(), 10, 1000))
                     ),
                     fluidRow(
-                        column(7,
-                            checkboxInput("adjusted_weight_tick", "Adjusted weight (kg)", FALSE),
-                                bsTooltip(id = "adjusted_weight_tick", title = "[(weight - IBW)/4] + IBW. (NOTE: IBW = 45.5 kg + 2.2 kg for each inch over 5 feet of hight if the wrist is 7 inches; if the wrist size is more or less than 7 inches, you add or subtract 10% of IBW respectively).",
-                                    placement = "right", trigger = "hover"
-                                )
-                        ),
-                        column(5, numericInput("adjusted_weight", "", numeric(), 27, 600))
-                    ),
-                    fluidRow(
                         column(7, checkboxInput("albumin_mg_dl_tick", "Seric albumin (mg/dl)", FALSE)),
                         column(5, numericInput("albumin_mg_dl", "", numeric(), 0, 1000))
                     ),
