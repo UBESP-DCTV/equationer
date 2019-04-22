@@ -48,7 +48,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
         ),
 
         eq(name = "bernstein_83-a-f", outcome = "rmr", strata = list(sex = "female"),
-            intercept = -844, weight = 7.48, height = -0.42, age = -3
+            intercept = 844, weight = 7.48, height = -0.42, age = -3
         )
 
     ),

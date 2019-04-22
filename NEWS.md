@@ -1,3 +1,7 @@
+# equationer (development version)
+
+* Hot-fix a sign erorr in a eqaution (#17)
+
 # equationer 0.3.2
 
 * Updated text in the shiny app
