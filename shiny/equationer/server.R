@@ -136,6 +136,36 @@ shinyServer(function(input, output, session) {
 
         }
 
+        ## IBW
+        #
+        ibw <- 0
+        ibw_tick <- FALSE
+        adj_weight <- 0
+        adj_weight_tick <- FALSE
+
+        if (
+            input[["weight_tick"]] &&
+            input[["height_tick"]] &&
+            input[["sex_tick"]]
+        ) {
+            height_inch <- input[["height"]] * 0.393701
+
+            if (input[["sex"]] == "male") {
+                ibw <- 52 + 1.9 * (height_inch - 5)
+            }
+            if (input[["sex"]] == "female") {
+                ibw <- 49 + 1.7 * (height_inch - 5)
+            }
+            showNotification(
+                glue::glue("Ideal Body Weigth (IBW, Robinson et.al 1983) calculated to be: {round(ibw, 1)}"),
+                duration = 30, type = "message"
+            )
+
+            adj_weight <- 0.25*(input[["weight"]] - ibw) + ibw
+
+            ibw_tick <- TRUE
+            adj_weight_tick <- TRUE
+        }
 
 
         ## LBM
@@ -158,6 +188,7 @@ shinyServer(function(input, output, session) {
                 glue::glue("Lean Body Mass (LBM) calculated to be: {round(lbm, 1)}"),
                 duration = 30, type = "message"
             )
+
             lbm_tick <- TRUE
         }
 
@@ -241,7 +272,7 @@ shinyServer(function(input, output, session) {
 
 
         cov <- list(
-            input[["adjusted_weight"]],
+            adj_weight,
             input[["age"]],
             input[["air_humidity"]],
             input[["air_temperature"]],
@@ -270,7 +301,7 @@ shinyServer(function(input, output, session) {
         ) %>%
             setNames(reer_covs_no_intercept) %>%
             .[c(
-                input[["adjusted_weight_tick"]],
+                adj_weight_tick,
                 input[["age_tick"]],
                 input[["air_humidity_tick"]],
                 input[["air_temperature_tick"]],

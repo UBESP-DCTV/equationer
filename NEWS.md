@@ -1,3 +1,7 @@
+# equationer 0.3.3
+
+* Adjusted weight calculated automatically in the shiny app
+
 # equationer (development version)
 
 * Hot-fix a sign erorr in a eqaution (#17)
