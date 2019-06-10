@@ -74,33 +74,5 @@ levels(data$atheletes.factor)=c("Yes","No")
 levels(data$physical_function_complete.factor)=c("Incomplete","Unverified","Complete")
 
 
-sample_data <- dplyr::as_tibble(data) %>%
-    dplyr::transmute(
-        record_id = record_id,
-        age = eta,
-        height = height,
-        weight = intpeso,
-        bmi = weight/height^2,
-        sex = sesso.factor,
-        ethnicity = razza.factor,
-        mean_chest_skinfold = mean_chest_skinfold,
-        subscapular_skinfold = mean_subscapular_skinfold,
-        wrist_circumference = wrist_circumference,
-        # adjusted_weight = DA CALCOLARE,
-        # lbm = DA CALCOLARE,
-        # lta???,
-        # surface_area????,
-        # glucose_g_dl?????,
-        # albumin_mg_dl?????,
-        # bmi_class???? (obese, normal weight, overweight, underweigth),
-        # bmi_greater_21???? (TRUE/FALSE)
-        # age_greater_60???? (TRUE/FALSE),
-        # diabetic???? (TRUE/FALSE),
-        # hf???? (TRUE = nyha III/IV, FALSE = nyha I/II)
-        menopausal = menopausa,
-        air_temperature = temperature,
-        air_humidity = humidity,
-        atheletes = atheletes
-        # pal = physical_activity_iom, # non usato in nessuna equazione....
-        # SBSA = DA CALCOLARE, # non usato in nessuna equazione....
-    )
+data_20190412 <- data
+use_data(data_20190412)

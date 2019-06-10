@@ -112,10 +112,10 @@ shinyServer(function(input, output, session) {
 
 
             bmi_class <- dplyr::case_when(
-                input[["weight"]] < 18.5 ~ "underweight",
-                input[["weight"]] < 25   ~ "normal weight",
-                input[["weight"]] < 25   ~ "overweight",
-                TRUE                     ~ "overweight"
+                bmi < 18.5 ~ "underweight",
+                bmi < 25   ~ "normal weight",
+                bmi < 30   ~ "overweight",
+                TRUE       ~ "obese"
             )
 
             showNotification(
