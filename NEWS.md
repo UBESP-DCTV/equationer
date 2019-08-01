@@ -1,3 +1,7 @@
+# equationer 0.4.0
+
+* Update equations from HO (still remain many commented out to be fixed)
+
 # equationer 0.3.3
 
 * Hot fix ibw calculatiobn

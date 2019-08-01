@@ -1,18 +1,24 @@
 shinyServer(function(input, output, session) {
 
+ui_done("Start server")
 # covariates ------------------------------------------------------
-
-
+ui_info(Sys.getpid())
     activate_numeric_if_checked("adjusted_weight", input, output, session)
     activate_numeric_if_checked("age", input, output, session)
     activate_numeric_if_checked("air_humidity", input, output, session)
     activate_numeric_if_checked("air_temperature", input, output, session)
     activate_numeric_if_checked("albumin_mg_dl", input, output, session)
+    activate_numeric_if_checked("arm_span", input, output, session)
+    activate_numeric_if_checked("blood_pressure_gradient", input, output, session)
     activate_numeric_if_checked("bmi", input, output, session)
+    activate_numeric_if_checked("body_temperature", input, output, session)
+    activate_numeric_if_checked("fasting_plasma_glucose", input, output, session)
     activate_numeric_if_checked("glucose_g_dl", input, output, session)
     activate_numeric_if_checked("height", input, output, session)
+    activate_numeric_if_checked("hip_circumference", input, output, session)
     activate_numeric_if_checked("lta", input, output, session)
     activate_numeric_if_checked("mean_chest_skinfold", input, output, session)
+    activate_numeric_if_checked("midarm_circumference", input, output, session)
     activate_numeric_if_checked("subscapular_skinfold", input, output, session)
     activate_numeric_if_checked("surface_area", input, output, session)
     activate_numeric_if_checked("weight", input, output, session)
@@ -21,19 +27,24 @@ shinyServer(function(input, output, session) {
 
     activate_selector_if_checked("menopausal", input, output, session)
 
+ui_done("Covariates")
+
 # strata ----------------------------------------------------------
 
-    activate_selector_if_checked("sex", input, output, session)
-    activate_selector_if_checked("pal", input, output, session)
+    activate_selector_if_checked("activity_intensity", input, output, session)
     activate_selector_if_checked("ethnicity", input, output, session)
+    activate_selector_if_checked("pal", input, output, session)
+    activate_selector_if_checked("sex", input, output, session)
 
+    activate_bool_if_checked("athletic", input, output, session)
     activate_bool_if_checked("diabetic", input, output, session)
     activate_bool_if_checked("inpatients", input, output, session)
     activate_bool_if_checked("rheumatoid_arthritis", input, output, session)
     activate_bool_if_checked("hf", input, output, session)
     activate_bool_if_checked("copd", input, output, session)
+    activate_bool_if_checked("smoke", input, output, session)
 
-
+ui_done("Strata")
 # Evaluate --------------------------------------------------------
 
 
@@ -41,34 +52,48 @@ shinyServer(function(input, output, session) {
 
 
     observeEvent(input[["eval"]], {
-
+        ui_info("Start observe")
 
         # Auxiliary variables ==========================================
 
 
         ## Age
         #
-        age_18_74 <- older_18 <- older_29 <- older_59 <-
-            older_60 <- age_60_70 <- older_70 <- age_60_74 <-
-            older_74 <- "FALSE"
+        age_18_65 <- age_18_74 <-
+            # older_18 <-
+            older_29 <- age_50_69 <-
+            # older_59 <-
+            older_60 <- age_60_70 <- older_70 <-
+            age_60_74 <- older_74 <- "FALSE"
 
-        age_18_74_tick <- older_18_tick <- older_29_tick <-
-            older_59_tick <- older_60_tick <- age_60_70_tick <-
-            older_70_tick <- age_60_74_tick <- older_74_tick <- FALSE
+        age_18_65_tick <- age_18_74_tick <-
+            # older_18_tick <-
+            older_29_tick <- age_50_69_tick <-
+            # older_59_tick <-
+            older_60_tick <- age_60_70_tick <- older_70_tick <-
+            age_60_74_tick <- older_74_tick <- FALSE
 
         if (input[["age_tick"]]) {
             age <- input[["age"]]
 
-            age_18_74_tick <- older_18_tick <- older_29_tick <-
-                older_59_tick <- older_60_tick <- age_60_70_tick <-
-                older_70_tick <- age_60_74_tick <- older_74_tick <- TRUE
+            age_18_65_tick <- age_18_74_tick <-
+                # older_18_tick <-
+                older_29_tick <- age_50_69_tick <-
+                # older_59_tick <-
+                older_60_tick <- age_60_70_tick <- older_70_tick <-
+                age_60_74_tick <- older_74_tick <- TRUE
 
 
-            if (age >= 18) {age_18_74 <- "TRUE"}
-            if (age > 18) {older_18 <- "TRUE"}
+            if (age >= 18) {age_18_65 <- age_18_74 <- "TRUE"}
+            # if (age > 18) {older_18 <- "TRUE"}
             if (age > 29) {older_29 <- "TRUE"}
-            if (age > 59) {older_59 <- age_60_70 <- age_60_74 <- "TRUE"}
+            if (age >= 50) {age_50_69 <- "TRUE"}
+            if (age > 59) {# older_59 <-
+                age_60_70 <- age_60_74 <- "TRUE"
+            }
             if (age > 60) {older_60 <- "TRUE"}
+            if (age > 65) {age_18_65 <- "FALSE"}
+            if (age > 69) {age_50_69 <- "FALSE"}
             if (age > 70) {
                 older_70 <- "TRUE"
                 age_60_70 <- "FALSE"
@@ -79,6 +104,7 @@ shinyServer(function(input, output, session) {
             }
 
         }
+        ui_done("Age setup")
 
 
         ## BMI and BMI_pavlidou
@@ -135,6 +161,8 @@ shinyServer(function(input, output, session) {
             bmi_pavlidou_tick <- TRUE
 
         }
+        ui_done("BMI setup")
+
 
         ## IBW
         #
@@ -166,6 +194,7 @@ shinyServer(function(input, output, session) {
             ibw_tick <- TRUE
             adj_weight_tick <- TRUE
         }
+        ui_done("IBW setup")
 
 
         ## LBM
@@ -191,6 +220,7 @@ shinyServer(function(input, output, session) {
 
             lbm_tick <- TRUE
         }
+        ui_done("LBW setup")
 
 
 
@@ -215,6 +245,7 @@ shinyServer(function(input, output, session) {
 
             livingston_weight_tick <- TRUE
         }
+        ui_done("Livinston weight setup")
 
 
 
@@ -231,6 +262,7 @@ shinyServer(function(input, output, session) {
             var_metsios <- input[["weight"]]^0.57 * input[["age"]]^(-0.29) * input[["crp_mg_l"]]^0.066
             var_metsios_tick <- TRUE
         }
+        ui_done("Metsios setup")
 
 
 
@@ -277,12 +309,17 @@ shinyServer(function(input, output, session) {
             input[["air_humidity"]],
             input[["air_temperature"]],
             input[["albumin_mg_dl"]],
+            input[["arm_span"]],
+            input[["blood_pressure_gradient"]],
             bmi,
             bmi_pavlidou,
             bmi_pavlidou_f,
             bmi_pavlidou_m,
+            input[["body_temperature"]],
+            input[["fasting_plasma_glucose"]],
             input[["glucose_g_dl"]],
             input[["height"]],
+            input[["hip_circumference"]],
             lbm,
             livingston_weight_age,
             livingston_weight_alone,
@@ -293,6 +330,7 @@ shinyServer(function(input, output, session) {
             input[["lta"]],
             input[["mean_chest_skinfold"]],
             input[["menopausal"]],
+            input[["midarm_circumference"]],
             input[["subscapular_skinfold"]],
             input[["surface_area"]],
             var_metsios,
@@ -306,12 +344,17 @@ shinyServer(function(input, output, session) {
                 input[["air_humidity_tick"]],
                 input[["air_temperature_tick"]],
                 input[["albumin_mg_dl_tick"]],
+                input[["arm_span_tick"]],
+                input[["blood_pressure_gradient_tick"]],
                 bmi_tick,
                 bmi_pavlidou_tick,
                 bmi_pavlidou_tick,
                 bmi_pavlidou_tick,
+                input[["body_temperature_tick"]],
+                input[["fasting_plasma_glucose_tick"]],
                 input[["glucose_g_dl_tick"]],
                 input[["height_tick"]],
+                input[["hip_circumference_tick"]],
                 lbm_tick,
                 livingston_weight_tick,
                 livingston_weight_tick,
@@ -322,6 +365,7 @@ shinyServer(function(input, output, session) {
                 input[["lta_tick"]],
                 input[["mean_chest_skinfold_tick"]],
                 (input[["menopausal_tick"]] && menopausal_check),
+                input[["midarm_circumference_tick"]],
                 input[["subscapular_skinfold_tick"]],
                 input[["surface_area_tick"]],
                 var_metsios_tick,
@@ -342,7 +386,11 @@ cat("\nCOV\n")
 cat(str(cov))
 
         strata <- list(
+            input[["activity_intensity"]],
+            input[["athletic"]],
+            age_18_65,
             age_18_74,
+            age_50_69,
             age_60_70,
             age_60_74,
             bmi_class,
@@ -352,25 +400,33 @@ cat(str(cov))
             input[["ethnicity"]],
             input[["hf"]],
             input[["inpatients"]],
-            older_18,
+            # older_18,
             older_29,
-            older_59,
+            # older_59,
             older_60,
             older_70,
             older_74,
             input[["pal"]],
             input[["rheumatoid_arthritis"]],
-            input[["sex"]]
+            input[["sex"]],
+            input[["smoke"]]
         ) %>%
-            setNames(c(
-                'age_18_74', 'age_60_70', 'age_60_74', 'bmi_class',
-                'bmi_greater_21', 'copd', 'diabetic', 'ethnicity', 'hf',
-                'inpatients', 'older_18', 'older_29', 'older_59',
-                'older_60', 'older_70', 'older_74', 'pal',
-                'rheumatoid_arthritis', 'sex'
+            setNames(c('activity_intensity', 'athletic',
+                'age_18_74', 'age_18_74', 'age_50_69', 'age_60_70',
+                'age_60_74', 'bmi_class', 'bmi_greater_21', 'copd',
+                'diabetic', 'ethnicity', 'hf', 'inpatients',
+                # 'older_18',
+                'older_29',
+                # 'older_59',
+                'older_60', 'older_70',
+                'older_74', 'pal', 'rheumatoid_arthritis', 'sex', 'smoke'
             )) %>%
             .[c(
+                input[["activity_intensity_tick"]],
+                input[["athletic_tick"]],
+                age_18_65_tick,
                 age_18_74_tick,
+                age_50_69_tick,
                 age_60_70_tick,
                 age_60_74_tick,
                 bmi_class_tick,
@@ -380,15 +436,16 @@ cat(str(cov))
                 input[["ethnicity_tick"]],
                 input[["hf_tick"]],
                 input[["inpatients_tick"]],
-                older_18_tick,
+                # older_18_tick,
                 older_29_tick,
-                older_59_tick,
+                # older_59_tick,
                 older_60_tick,
                 older_70_tick,
                 older_74_tick,
                 input[["pal_tick"]],
                 input[["rheumatoid_arthritis_tick"]],
-                input[["sex_tick"]]
+                input[["sex_tick"]],
+                input[["smoke_tick"]]
             )]
 
 cat("\nSTRATA\n")
@@ -402,10 +459,11 @@ cat(str(strata))
 cat("\ndots\n")
 cat(str(dots))
 
-        outcomes <- c("bee", "bmr", "eee", "ree", "rmr")[c(
+        outcomes <- c(
+            "bee", "bmr", "eee", "ree", "rmr", "eer_tick")[c(
             input[["bee_tick"]], input[["bmr_tick"]],
             input[["eee_tick"]], input[["ree_tick"]],
-            input[["rmr_tick"]]
+            input[["rmr_tick"]], input[["eer_tick"]]
         )]
 
 
