@@ -10,7 +10,7 @@ shinyUI(fluidPage(
     p(strong("Filters"), "(e.g., categorical variables like gender, or ethnicity): if selected will identify -among the equations retrieved through the covariates- the ones which employ the selected filters. Equations that do not consider the selected filters at all will be evaluated as well. On the other hand, equations that consider unselected filters will show the results of each category of the unselected filters. The more filters are selected, the fewer equations will appear in the results."),
     p(strong("Outcomes"), " (the definition of the caloric intake, like rmr, or ree): vary depending on the validated equations. If you wish to consider only equations with a specific definition of the outcome, please unchecked the other ones. The more outcomes remain selected, the more results will be displayed."),
     hr(),
-    actionButton("eval", "Evaluate equations", icon = icon("refresh")),
+    # actionButton("eval", "Evaluate equations", icon = icon("refresh")),
     p("All the equations for which there will be enough information will be evaluated."),
 
    # textOutput("test_text"),
@@ -55,8 +55,24 @@ shinyUI(fluidPage(
                         column(5, numericInput("surface_area", "", numeric(), 10, 1000))
                     ),
                     fluidRow(
+                        column(7, checkboxInput("arm_span_tick", "Arm span (cm)", FALSE)),
+                        column(5, numericInput("arm_span", "", numeric(), 10, 1000))
+                    ),
+                    fluidRow(
                         column(7, checkboxInput("wrist_circumference_tick", "Wrist circumference (cm)", FALSE)),
                         column(5, numericInput("wrist_circumference", "", numeric(), 10, 1000))
+                    ),
+                    fluidRow(
+                        column(7, checkboxInput("hip_circumference_tick", "Hip circumference (cm)", FALSE)),
+                        column(5, numericInput("hip_circumference", "", numeric(), 10, 1000))
+                    ),
+                    fluidRow(
+                        column(7, checkboxInput("midarm_circumference_tick", "Midarm circumference (cm)", FALSE)),
+                        column(5, numericInput("midarm_circumference", "", numeric(), 10, 1000))
+                    ),
+                    fluidRow(
+                        column(7, checkboxInput("blood_pressure_gradient_tick", "Blood pressure gradient (mmHg)", FALSE)),
+                        column(5, numericInput("blood_pressure_gradient", "", numeric(), 0, 1000))
                     ),
                     fluidRow(
                         column(7, checkboxInput("albumin_mg_dl_tick", "Seric albumin (mg/dl)", FALSE)),
@@ -67,10 +83,18 @@ shinyUI(fluidPage(
                         column(5, numericInput("glucose_g_dl", "", numeric(), 0, 1000))
                     ),
                     fluidRow(
+                        column(7, checkboxInput("fasting_plasma_glucose_tick", "Fasting plasma glucose (mg/dl)", FALSE)),
+                        column(5, numericInput("fasting_plasma_glucose", "", numeric(), 0, 1000))
+                    ),
+                    fluidRow(
                         column(7, checkboxInput("crp_mg_l_tick", "C-reactive protein (mg/l)", FALSE)),
                         column(5, numericInput("crp_mg_l", "", numeric(), 0, 10000))
                     ),
-                   fluidRow(
+                    fluidRow(
+                        column(7, checkboxInput("body_temperature_tick", "Body temperature (C)", FALSE)),
+                        column(5, numericInput("body_temperature", "", numeric(), 0, 100))
+                    ),
+                    fluidRow(
                         column(7, checkboxInput("air_humidity_tick", "Air humidity (%)", FALSE)),
                         column(5, numericInput("air_humidity", "", numeric(), 0, 100))
                     ),
@@ -103,6 +127,18 @@ shinyUI(fluidPage(
                         column(6, selectInput("pal", "", get_strata(reer)[["pal"]]))
                     ),
                     fluidRow(
+                        column(6, checkboxInput("activity_intensity_tick", "Activity intensity", FALSE)),
+                        column(6, selectInput("activity_intensity", "", get_strata(reer)[["activity_intensity"]]))
+                    ),
+                    fluidRow(
+                        column(6, checkboxInput("athletic_tick", "Is athletic?", FALSE)),
+                        column(6, selectInput("athletic", "", c("FALSE", "TRUE")))
+                    ),
+                    fluidRow(
+                        column(6, checkboxInput("smoke_tick", "Is a smoker?", FALSE)),
+                        column(6, selectInput("smoke", "", c("FALSE", "TRUE")))
+                    ),
+                    fluidRow(
                         column(6, checkboxInput("inpatients_tick", "Is inpatients?", FALSE)),
                         column(6, selectInput("inpatients", "", c("FALSE", "TRUE")))
                     ),
@@ -127,13 +163,13 @@ shinyUI(fluidPage(
                 tabPanel(strong("Outcome"), icon = icon("bullseye"), verticalLayout(
                     fluidRow(
                         column(3, checkboxInput("bee_tick", "BEE: Basal Energy Expenditure (kcal/day)", TRUE)),
-                        column(3, checkboxInput("eee_tick", "EEE: Estimated Energy Expenditure (kcal/day)", TRUE)),
-                        column(3, checkboxInput("ree_tick", "REE: Resting Energy Expenditure (kcal/day)", TRUE))
+                        column(3, checkboxInput("ree_tick", "REE: Resting Energy Expenditure (kcal/day)", TRUE)),
+                        column(3, checkboxInput("eee_tick", "EEE: Estimated Energy Expenditure (kcal/day)", TRUE))
                     ),
                     fluidRow(
                         column(3, checkboxInput("bmr_tick", "BMR: Basal Metabolic Rate (kcal/day)", TRUE)),
-                        column(3),
-                        column(3, checkboxInput("rmr_tick", "RMR: Resting Metabolic Rate (kcal/day)", TRUE))
+                        column(3, checkboxInput("rmr_tick", "RMR: Resting Metabolic Rate (kcal/day)", TRUE)),
+                        column(3, checkboxInput("eer_tick", "EER: Estimated Energy Requirement (kcal/day)", TRUE))
                     )
                 ))
             )
@@ -144,6 +180,7 @@ shinyUI(fluidPage(
             tabPanel("Table", icon = icon("grip-horizontal"), dataTableOutput("res_tab"))
         ))
     ),
+
     actionButton("eval", "Evaluate equations", icon = icon("refresh")),
     p("All the equations for which there will be enough information will be evaluated.")
 ))

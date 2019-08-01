@@ -5,7 +5,7 @@ add_age_classes <- function(x) {
     age <- x[["age"]]
 
     res <- x %>%
-        mutate(
+        dplyr::mutate(
             age_18_74 = FALSE,
             older_18  = FALSE,
             older_29  = FALSE,
@@ -45,13 +45,13 @@ add_bmi_class <- function(x) {
 
     if (is.null(x[["bmi"]])) {
         res <- res %>%
-            mutate(
+            dplyr::mutate(
                 bmi = weight / (height/100)^2
             )
     }
 
     res %>%
-        mutate(
+        dplyr::mutate(
             bmi_greater_21 = as.character(bmi > 21),
             bmi_class = dplyr::case_when(
                 bmi < 18.5 ~ "underweight",
@@ -72,7 +72,7 @@ add_adj_weight <- function(x) {
     stopifnot(all(c("weight", "height", "sex") %in% names(x)))
 
     x %>%
-        mutate(
+        dplyr::mutate(
 
             height_feet = height * 0.0328084,
 
@@ -94,7 +94,7 @@ add_lbm <- function(x) {
     stopifnot(all(c("weight", "sex") %in% names(x)))
 
     x %>%
-        mutate(
+        dplyr::mutate(
             lbm = ifelse(sex == "male",
                 (79.5 - 0.24*weight - 0.15*age)*weight/73.2,
                 (69.8 - 0.26*weight - 0.12*age)*weight/73.2
@@ -109,7 +109,7 @@ add_livingston_weight <- function(x) {
     stopifnot("weight" %in% names(x))
 
     x %>%
-        mutate(
+        dplyr::mutate(
             livingston_weight_f       = weight^0.4330,
             livingston_weight_m       = weight^0.4356,
             livingston_weight_f_alone = weight^0.4613,
