@@ -1,3 +1,5 @@
+# equationer 0.4.1
+
 * Fix `usethis::` declarations
 
 # equationer 0.4.0
