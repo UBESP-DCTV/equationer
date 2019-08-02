@@ -1,8 +1,8 @@
 shinyServer(function(input, output, session) {
 
-ui_done("Start server")
+usethis::ui_done("Start server")
 # covariates ------------------------------------------------------
-ui_info(Sys.getpid())
+usethis::ui_info(Sys.getpid())
     activate_numeric_if_checked("adjusted_weight", input, output, session)
     activate_numeric_if_checked("age", input, output, session)
     activate_numeric_if_checked("air_humidity", input, output, session)
@@ -27,7 +27,7 @@ ui_info(Sys.getpid())
 
     activate_selector_if_checked("menopausal", input, output, session)
 
-ui_done("Covariates")
+usethis::ui_done("Covariates")
 
 # strata ----------------------------------------------------------
 
@@ -44,7 +44,7 @@ ui_done("Covariates")
     activate_bool_if_checked("copd", input, output, session)
     activate_bool_if_checked("smoke", input, output, session)
 
-ui_done("Strata")
+usethis::ui_done("Strata")
 # Evaluate --------------------------------------------------------
 
 
@@ -52,7 +52,7 @@ ui_done("Strata")
 
 
     observeEvent(input[["eval"]], {
-        ui_info("Start observe")
+        usethis::ui_info("Start observe")
 
         # Auxiliary variables ==========================================
 
@@ -104,7 +104,7 @@ ui_done("Strata")
             }
 
         }
-        ui_done("Age setup")
+        usethis::ui_done("Age setup")
 
 
         ## BMI and BMI_pavlidou
@@ -161,7 +161,7 @@ ui_done("Strata")
             bmi_pavlidou_tick <- TRUE
 
         }
-        ui_done("BMI setup")
+        usethis::ui_done("BMI setup")
 
 
         ## IBW
@@ -194,7 +194,7 @@ ui_done("Strata")
             ibw_tick <- TRUE
             adj_weight_tick <- TRUE
         }
-        ui_done("IBW setup")
+        usethis::ui_done("IBW setup")
 
 
         ## LBM
@@ -220,7 +220,7 @@ ui_done("Strata")
 
             lbm_tick <- TRUE
         }
-        ui_done("LBW setup")
+        usethis::ui_done("LBW setup")
 
 
 
@@ -245,7 +245,7 @@ ui_done("Strata")
 
             livingston_weight_tick <- TRUE
         }
-        ui_done("Livinston weight setup")
+        usethis::ui_done("Livinston weight setup")
 
 
 
@@ -262,7 +262,7 @@ ui_done("Strata")
             var_metsios <- input[["weight"]]^0.57 * input[["age"]]^(-0.29) * input[["crp_mg_l"]]^0.066
             var_metsios_tick <- TRUE
         }
-        ui_done("Metsios setup")
+        usethis::ui_done("Metsios setup")
 
 
 

@@ -1,3 +1,7 @@
+# equationer 0.4.1
+
+* Fix `usethis::` declarations
+
 # equationer 0.4.0
 
 * Update equations from HO (still remain many commented out to be fixed)

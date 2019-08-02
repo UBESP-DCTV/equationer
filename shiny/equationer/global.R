@@ -10,15 +10,15 @@ data("reer")
 activate_numeric_if_checked <- function(name, input, output, session) {
     observeEvent(input[[paste0(name, "_tick")]], {
         if (!input[[paste0(name, "_tick")]]) {
-            # ui_todo("disabling numeric field {ui_field(name)}...")
+            # usethis::ui_todo("disabling numeric field {usethis::ui_field(name)}...")
             disable(name)
             updateNumericInput(session, name, value = numeric())
-            ui_oops("field {ui_field(name)} disabled")
+            usethis::ui_oops("field {usethis::ui_field(name)} disabled")
         } else {
-            # ui_todo("enabling numeric field {ui_field(name)}...")
+            # usethis::ui_todo("enabling numeric field {usethis::ui_field(name)}...")
             enable(name)
             updateNumericInput(session, name, value = numeric())
-            ui_done("field {ui_field(name)} enabled")
+            usethis::ui_done("field {usethis::ui_field(name)} enabled")
         }
     })
 }
@@ -27,15 +27,15 @@ activate_numeric_if_checked <- function(name, input, output, session) {
 activate_selector_if_checked <- function(name, input, output, session) {
     observeEvent(input[[paste0(name, "_tick")]], {
         if (!input[[paste0(name, "_tick")]]) {
-            ui_todo("disabling selector field {ui_field(name)}...")
+            usethis::ui_todo("disabling selector field {usethis::ui_field(name)}...")
             disable(name)
             updateSelectInput(session, name,
                 choices = list("not-selected"),
                 selected = "not-selected"
             )
-            ui_oops("field {ui_field(name)} disabled")
+            usethis::ui_oops("field {usethis::ui_field(name)} disabled")
         } else {
-            ui_todo("enabling selector field {ui_field(name)}...")
+            usethis::ui_todo("enabling selector field {usethis::ui_field(name)}...")
             enable(name)
             if (name == "menopausal") {
                 updateSelectInput(session, name,
@@ -52,7 +52,7 @@ activate_selector_if_checked <- function(name, input, output, session) {
                     selected = input[[name]][1]
                 )
             }
-            ui_done("field {ui_field(name)} enabled")
+            usethis::ui_done("field {usethis::ui_field(name)} enabled")
         }
     })
 }
@@ -61,21 +61,21 @@ activate_selector_if_checked <- function(name, input, output, session) {
 activate_bool_if_checked <- function(name, input, output, session) {
     observeEvent(input[[paste0(name, "_tick")]], {
         if (!input[[paste0(name, "_tick")]]) {
-            ui_todo("disabling boolean field {ui_field(name)}...")
+            usethis::ui_todo("disabling boolean field {usethis::ui_field(name)}...")
             disable(name)
             updateSelectInput(session, name,
                 choices = list("not-selected"),
                 selected = "not-selected"
             )
-            ui_oops("field {ui_field(name)} disabled")
+            usethis::ui_oops("field {usethis::ui_field(name)} disabled")
         } else {
-            ui_todo("enabling boolean field {ui_field(name)}...")
+            usethis::ui_todo("enabling boolean field {usethis::ui_field(name)}...")
             enable(name)
             updateSelectInput(session, name,
                 choices = c("FALSE", "TRUE"),
                 selected = character()
             )
-            ui_done("field {ui_field(name)} enabled")
+            usethis::ui_done("field {usethis::ui_field(name)} enabled")
         }
     })
 }
