@@ -9,3 +9,4 @@
 ^data-raw$
 ^analyses$
 ^shiny$
+^\.github/ISSUE_TEMPLATE$
