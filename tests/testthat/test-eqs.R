@@ -8,18 +8,21 @@ test_that("correct class", {
 test_that("equations must have different names", {
     expect_error(
         eqs(eq1, eq1, name = "same-names"),
-        "names are duplicated"
+        "names are duplicated",
+        class = "equationer_error"
     )
 })
 
 test_that("equations must have same covariates and strata", {
     expect_error(
         eqs(eq1, eq5, name = "different-covariates"),
-        "same set of covariates"
+        "same set of covariates",
+        class = "equationer_error"
     )
     expect_error(
         eqs(eq1, eq6, name = "different-strata"),
-        "same set of strata"
+        "same set of strata",
+        class = "equationer_error"
     )
 })
 
@@ -43,7 +46,8 @@ test_that("correct covariates", {
 test_that("same combination of strata and output throw an error", {
     expect_error(
         eqs(eq1, eq7, name = "redundant-strata-and-output"),
-        "cannot share same combination of strata and outcome"
+        "cannot share same combination of strata and outcome",
+        class = "equationer_error"
     )
     expect_is(
         eqs(eq1, eq8, name = "redundant-strata-not_output"),
@@ -53,11 +57,15 @@ test_that("same combination of strata and output throw an error", {
 
 
 test_that("handle wrong input type", {
-    expect_error(eqs(2, name = "test"), "class")
+    expect_error(eqs(2, name = "test"), "class",
+        class = "equationer_error"
+    )
     expect_output(try(eqs(2, name = "test")), "1")
     expect_output(try(eqs(2, name = "test")), "numeric")
 
-    expect_error(eqs(eq1, "a", name = "test"), "class")
+    expect_error(eqs(eq1, "a", name = "test"), "class",
+        class = "equationer_error"
+    )
     expect_output(try(eqs(eq1, "a", name = "test")), "2")
     expect_output(try(eqs(eq1, "a", name = "test")), "character")
 })

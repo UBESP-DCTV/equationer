@@ -31,30 +31,42 @@ test_that("type of objects", {
 })
 
 test_that("must have (unique) names", {
-    expect_error(eq(x = 1, 2), "all")
-    expect_error(eq(x = 1, y = 2, x = 3), "duplicated")
+    expect_error(eq(x = 1, 2), "all",
+        class = "equationer_error"
+    )
+    expect_error(eq(x = 1, y = 2, x = 3), "duplicated",
+        class = "equationer_error"
+    )
 })
 
 test_that("handle wrong input type", {
-    expect_error(eq(name = "a", outcome = "a"), "valid")
+    expect_error(eq(name = "a", outcome = "a"), "valid",
+        class = "equationer_error"
+    )
 
-    expect_error(eq(x = "1", name = "a", outcome = "b"), "numeric")
+    expect_error(eq(x = "1", name = "a", outcome = "b"), "numeric",
+        class = "equationer_error"
+    )
 
     expect_error(
         eq(x = 1, name = c("a", "b"), outcome = "a"),
-        "single"
+        "single",
+        class = "equationer_error"
     )
     expect_error(
         eq(x = 1, name = 1, outcome = "a"),
-        "string"
+        "string",
+        class = "equationer_error"
     )
     expect_error(
         eq(x = 1, name = "a", outcome = c("a", "b")),
-        "single"
+        "single",
+        class = "equationer_error"
     )
     expect_error(
         eq(x = 1, name = "a", outcome = 1),
-        "string"
+        "string",
+        class = "equationer_error"
     )
     expect_error(
         eq(
@@ -63,22 +75,26 @@ test_that("handle wrong input type", {
             outcome = "a",
             strata = list(a = "a", a = "b")
         ),
-        "duplicated"
+        "duplicated",
+        class = "equationer_error"
     )
 
     expect_error(
         eq(x = 1, name = "a", outcome = "a", strata = list(1)),
-        "empty names"
+        "empty names",
+        class = "equationer_error"
     )
 
     expect_error(
         eq(x = 1, name = "a", outcome = "a", strata = list("a")),
-        "empty names"
+        "empty names",
+        class = "equationer_error"
     )
 
     expect_error(
         eq(x = 1, name = "a", outcome = "a", strata = c(a = "a")),
-        "list"
+        "list",
+        class = "equationer_error"
     )
 
 })

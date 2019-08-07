@@ -8,6 +8,8 @@ test_that("works properly", {
 })
 
 test_that("error on wrong input", {
-  expect_error(get_reference(eq_test), "only on object of class")
+    expect_error(get_reference(eq_test), "only on object of class",
+            class = "equationer_error"
+        )
 })
 

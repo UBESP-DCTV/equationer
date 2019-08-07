@@ -90,7 +90,7 @@ ui_stop <- function(x, .envir = parent.frame()) {
   x <- glue::glue(x, .envir = .envir)
 
   cnd <- structure(
-    class = c("equtioner_error", "error", "condition"),
+    class = c("equationer_error", "error", "condition"),
     list(message = x)
   )
 
