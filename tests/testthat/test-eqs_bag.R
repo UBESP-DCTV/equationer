@@ -41,36 +41,47 @@ test_that("list the last update", {
 })
 
 test_that("error if without name", {
-    expect_error(eqs_bag(eqs1, eqs2), "is missing")
+    expect_error(eqs_bag(eqs1, eqs2), "is missing"
+    )
 })
 
 test_that("error if not all eqs", {
-    expect_error(eqs_bag(eqs1, eq_test, name = "a"), "are of class")
+    expect_error(eqs_bag(eqs1, eq_test, name = "a"), "are of class",
+        class = "equationer_error"
+    )
 })
 
 test_that("error if eqs have same names", {
-    expect_error(eqs_bag(eqs1, eqs2_samename, name = "a"), "names are duplicated")
+    expect_error(
+        eqs_bag(eqs1, eqs2_samename, name = "a"),
+        "names are duplicated",
+        class = "equationer_error"
+    )
 })
 
 test_that("error if multiple names", {
     expect_error(
         eqs_bag(eqs1, eqs2, name = c("a", "b")),
-        "single string"
+        "single string",
+        class = "equationer_error"
     )
     expect_error(
         eqs_bag(eqs1, eqs2, name = 1),
-        "single string"
+        "single string",
+        class = "equationer_error"
     )
 })
 
 test_that("error if multiple ref", {
     expect_error(
         eqs_bag(eqs1, eqs2, name = "a", reference = c("a", "b")),
-        "single string"
+        "single string",
+        class = "equationer_error"
     )
     expect_error(
         eqs_bag(eqs1, eqs2, name = "a", reference = 1),
-        "single string"
+        "single string",
+        class = "equationer_error"
     )
 })
 
@@ -81,14 +92,16 @@ test_that("error if wrong date", {
             name = "a",
             last_update = "01-01-2001"
         ),
-        "single date"
+        "single date",
+        class = "equationer_error"
     )
     expect_error(
         eqs_bag(eqs1, eqs2,
             name = "a",
             last_update = rep(lubridate::today(), 2)
         ),
-        "single date"
+        "single date",
+        class = "equationer_error"
     )
 })
 
