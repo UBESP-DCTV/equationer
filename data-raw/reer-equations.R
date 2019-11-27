@@ -1216,7 +1216,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
         ),
 
         eq(name = "muller_04-b-f-nw", outcome = "ree", strata = list(sex = "female", bmi_class = "normal weight"),
-           intercept = 1233 * mj2kcal,             weight = 0.02219 * mj2kcal, age = -0.01191 * mj2kcal, height = 0.02118 * mj2kcal
+           intercept = 1.233 * mj2kcal,             weight = 0.02219 * mj2kcal, age = -0.01191 * mj2kcal, height = 0.02118 * mj2kcal
         )
     ),
 
@@ -1735,14 +1735,14 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
 
 
 
-    # Wells 2009
-
-    eqs(name = "wells", reference = "Wells JCK, Williams JE, Haroun D, Fewtrell MS, Colantuoni A, Siervo M. Aggregate predictions improve accuracy when calculating metabolic variables used  to guide treatment. Am J Clin Nutr. 2009;89(2):491-499.",
-
-        eq(name = "wells", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight"),
-           intercept = 204, age = -4, weight = 11.69, height = 45050
-        )
-    ),
+    # # Wells 2009 # dainserire!!!!!
+    #
+    # eqs(name = "wells", reference = "Wells JCK, Williams JE, Haroun D, Fewtrell MS, Colantuoni A, Siervo M. Aggregate predictions improve accuracy when calculating metabolic variables used  to guide treatment. Am J Clin Nutr. 2009;89(2):491-499.",
+    #
+    #     eq(name = "wells", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight"),
+    #        intercept = 204, age = -4, weight = 11.69, height = 45050
+    #     )
+    # ),
 
 
 
