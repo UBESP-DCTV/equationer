@@ -1850,4 +1850,4 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     )
 )
 
-use_data(reer, overwrite = TRUE)
+usethis::use_data(reer, overwrite = TRUE)
