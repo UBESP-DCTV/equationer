@@ -496,7 +496,7 @@ cat("\ndots\n")
 cat(str(dots))
 
         outcomes <- c(
-            "bee", "bmr", "eee", "ree", "rmr", "eer_tick")[c(
+            "bee", "bmr", "eee", "ree", "rmr", "eer")[c(
             input[["bee_tick"]], input[["bmr_tick"]],
             input[["eee_tick"]], input[["ree_tick"]],
             input[["rmr_tick"]], input[["eer_tick"]]
