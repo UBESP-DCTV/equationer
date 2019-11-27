@@ -1,3 +1,5 @@
+# equationer 0.4.3
+
 # equationer 0.4.2
 
 # equationer 0.4.1
