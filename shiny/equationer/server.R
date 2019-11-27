@@ -417,12 +417,12 @@ cat(str(cov))
 
         strata <- list(
             input[["activity_intensity"]],
-            input[["athletic"]],
             age_18_65,
             age_18_74,
             age_50_69,
             age_60_70,
             age_60_74,
+            input[["athletic"]],
             bmi_class,
             bmi_greater_21,
             input[["copd"]],
@@ -438,30 +438,31 @@ cat(str(cov))
             older_70,
             older_74,
             input[["pal"]],
-            input[["rheumatoid_arthritis"]],
             input[["race"]],
+            input[["rheumatoid_arthritis"]],
             input[["sex"]],
             input[["smoke"]]
         ) %>%
-            setNames(c('activity_intensity', 'athletic',
-                'age_18_65', 'age_18_74', 'age_50_69', 'age_60_70',
-                'age_60_74', 'bmi_class', 'bmi_greater_21', 'copd',
-                'diabetic', 'ethnicity', 'hf', 'inpatients', 'meal',
+            setNames(c(
+                'activity_intensity', 'age_18_65', 'age_18_74',
+                'age_50_69', 'age_60_70', 'age_60_74', 'athletic',
+                'bmi_class', 'bmi_greater_21', 'copd', 'diabetic',
+                'ethnicity', 'hf', 'inpatients', 'meal',
                 # 'older_18',
                 'older_29',
                 # 'older_59',
                 'older_60', 'older_70',
-                'older_74', 'pal', 'rheumatoid_arthritis', 'race',
+                'older_74', 'pal', 'race', 'rheumatoid_arthritis',
                 'sex', 'smoke'
             )) %>%
             .[c(
                 input[["activity_intensity_tick"]],
-                input[["athletic_tick"]],
                 age_18_65_tick,
                 age_18_74_tick,
                 age_50_69_tick,
                 age_60_70_tick,
                 age_60_74_tick,
+                input[["athletic_tick"]],
                 bmi_class_tick,
                 bmi_greater_21_tick,
                 input[["copd_tick"]],
@@ -477,8 +478,8 @@ cat(str(cov))
                 older_70_tick,
                 older_74_tick,
                 input[["pal_tick"]],
-                input[["rheumatoid_arthritis_tick"]],
                 input[["race_tick"]],
+                input[["rheumatoid_arthritis_tick"]],
                 input[["sex_tick"]],
                 input[["smoke_tick"]]
             )]
