@@ -38,6 +38,8 @@ usethis::ui_done("Covariates")
     activate_selector_if_checked("ethnicity", input, output, session)
     activate_selector_if_checked("pal", input, output, session)
     activate_selector_if_checked("sex", input, output, session)
+    activate_selector_if_checked("race", input, output, session)
+    activate_selector_if_checked("meal", input, output, session)
 
     activate_bool_if_checked("athletic", input, output, session)
     activate_bool_if_checked("diabetic", input, output, session)
@@ -394,7 +396,7 @@ usethis::ui_done("Strata")
                 input[["mean_chest_skinfold_tick"]],
                 (input[["menopausal_tick"]] && menopausal_check),
                 input[["midarm_circumference_tick"]],
-                input[["pulse"]],
+                input[["pulse_tick"]],
                 input[["subscapular_skinfold_tick"]],
                 var_metsios_tick,
                 input[["weight_tick"]],
@@ -428,6 +430,7 @@ cat(str(cov))
             input[["ethnicity"]],
             input[["hf"]],
             input[["inpatients"]],
+            input[["meal"]],
             # older_18,
             older_29,
             # older_59,
@@ -436,18 +439,20 @@ cat(str(cov))
             older_74,
             input[["pal"]],
             input[["rheumatoid_arthritis"]],
+            input[["race"]],
             input[["sex"]],
             input[["smoke"]]
         ) %>%
             setNames(c('activity_intensity', 'athletic',
-                'age_18_74', 'age_18_74', 'age_50_69', 'age_60_70',
+                'age_18_65', 'age_18_74', 'age_50_69', 'age_60_70',
                 'age_60_74', 'bmi_class', 'bmi_greater_21', 'copd',
-                'diabetic', 'ethnicity', 'hf', 'inpatients',
+                'diabetic', 'ethnicity', 'hf', 'inpatients', 'meal',
                 # 'older_18',
                 'older_29',
                 # 'older_59',
                 'older_60', 'older_70',
-                'older_74', 'pal', 'rheumatoid_arthritis', 'sex', 'smoke'
+                'older_74', 'pal', 'rheumatoid_arthritis', 'race',
+                'sex', 'smoke'
             )) %>%
             .[c(
                 input[["activity_intensity_tick"]],
@@ -464,6 +469,7 @@ cat(str(cov))
                 input[["ethnicity_tick"]],
                 input[["hf_tick"]],
                 input[["inpatients_tick"]],
+                input[["meal_tick"]],
                 # older_18_tick,
                 older_29_tick,
                 # older_59_tick,
@@ -472,6 +478,7 @@ cat(str(cov))
                 older_74_tick,
                 input[["pal_tick"]],
                 input[["rheumatoid_arthritis_tick"]],
+                input[["race_tick"]],
                 input[["sex_tick"]],
                 input[["smoke_tick"]]
             )]

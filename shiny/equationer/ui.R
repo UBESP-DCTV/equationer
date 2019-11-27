@@ -167,6 +167,14 @@ shinyUI(fluidPage(
                         column(6, selectInput("copd", "", c("FALSE", "TRUE")))
                     ),
                     fluidRow(
+                        column(6, checkboxInput("meal_tick", "Meal", FALSE)),
+                        column(6, selectInput("meal", "", sort(get_strata(reer)[["meal"]])))
+                    ),
+                    fluidRow(
+                        column(6, checkboxInput("race_tick", "Race", FALSE)),
+                        column(6, selectInput("race", "", sort(get_strata(reer)[["race"]])))
+                    ),
+                    fluidRow(
                         column(6, checkboxInput("ethnicity_tick", "Ethnicity", FALSE)),
                         column(6, selectInput("ethnicity", "", sort(get_strata(reer)[["ethnicity"]])))
                     )
