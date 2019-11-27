@@ -3,6 +3,7 @@ shinyServer(function(input, output, session) {
 usethis::ui_done("Start server")
 # covariates ------------------------------------------------------
 usethis::ui_info(Sys.getpid())
+    activate_numeric_if_checked("abdomen_circ", input, output, session)
     activate_numeric_if_checked("adjusted_weight", input, output, session)
     activate_numeric_if_checked("age", input, output, session)
     activate_numeric_if_checked("air_humidity", input, output, session)
@@ -11,16 +12,18 @@ usethis::ui_info(Sys.getpid())
     activate_numeric_if_checked("arm_span", input, output, session)
     activate_numeric_if_checked("blood_pressure_gradient", input, output, session)
     activate_numeric_if_checked("bmi", input, output, session)
+    activate_numeric_if_checked("body_surface_area", input, output, session)
     activate_numeric_if_checked("body_temperature", input, output, session)
     activate_numeric_if_checked("fasting_plasma_glucose", input, output, session)
     activate_numeric_if_checked("glucose_g_dl", input, output, session)
     activate_numeric_if_checked("height", input, output, session)
     activate_numeric_if_checked("hip_circumference", input, output, session)
+    activate_numeric_if_checked("hour", input, output, session)
     activate_numeric_if_checked("lta", input, output, session)
     activate_numeric_if_checked("mean_chest_skinfold", input, output, session)
     activate_numeric_if_checked("midarm_circumference", input, output, session)
+    activate_numeric_if_checked("pulse", input, output, session)
     activate_numeric_if_checked("subscapular_skinfold", input, output, session)
-    activate_numeric_if_checked("surface_area", input, output, session)
     activate_numeric_if_checked("weight", input, output, session)
     activate_numeric_if_checked("wrist_circumference", input, output, session)
     activate_numeric_if_checked("crp_mg_l", input, output, session)
@@ -323,6 +326,7 @@ usethis::ui_done("Strata")
 
 
         cov <- list(
+            input[["abdomen_circ"]],
             adj_weight,
             input[["age"]],
             input[["air_humidity"]],
@@ -334,11 +338,13 @@ usethis::ui_done("Strata")
             bmi_pavlidou,
             bmi_pavlidou_f,
             bmi_pavlidou_m,
+            input[["body_surface_area"]],
             input[["body_temperature"]],
             input[["fasting_plasma_glucose"]],
             input[["glucose_g_dl"]],
             input[["height"]],
             input[["hip_circumference"]],
+            input[["hour"]],
             lbm,
             livingston_weight_age,
             livingston_weight_alone,
@@ -350,15 +356,15 @@ usethis::ui_done("Strata")
             input[["mean_chest_skinfold"]],
             input[["menopausal"]],
             input[["midarm_circumference"]],
+            input[["pulse"]],
             input[["subscapular_skinfold"]],
-            input[["body_surface_area"]],
-            input[["surface_area"]],
             var_metsios,
             input[["weight"]],
             input[["wrist_circumference"]]
         ) %>%
             setNames(reer_covs_no_intercept) %>%
             .[c(
+                input[["abdomen_circ_tick"]],
                 adj_weight_tick,
                 input[["age_tick"]],
                 input[["air_humidity_tick"]],
@@ -370,11 +376,13 @@ usethis::ui_done("Strata")
                 bmi_pavlidou_tick,
                 bmi_pavlidou_tick,
                 bmi_pavlidou_tick,
+                input[["body_surface_area_tick"]],
                 input[["body_temperature_tick"]],
                 input[["fasting_plasma_glucose_tick"]],
                 input[["glucose_g_dl_tick"]],
                 input[["height_tick"]],
                 input[["hip_circumference_tick"]],
+                input[["hour_tick"]],
                 lbm_tick,
                 livingston_weight_tick,
                 livingston_weight_tick,
@@ -386,9 +394,8 @@ usethis::ui_done("Strata")
                 input[["mean_chest_skinfold_tick"]],
                 (input[["menopausal_tick"]] && menopausal_check),
                 input[["midarm_circumference_tick"]],
+                input[["pulse"]],
                 input[["subscapular_skinfold_tick"]],
-                input[["body_surface_area_tick"]],
-                input[["surface_area_tick"]],
                 var_metsios_tick,
                 input[["weight_tick"]],
                 input[["wrist_circumference_tick"]]

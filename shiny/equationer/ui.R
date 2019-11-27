@@ -51,8 +51,8 @@ shinyUI(fluidPage(
                         column(5, numericInput("subscapular_skinfold", "", numeric(), 1, 1000))
                     ),
                     fluidRow(
-                        column(7, checkboxInput("surface_area_tick", "Body surface area (cm^2)", FALSE)),
-                        column(5, numericInput("surface_area", "", numeric(), 10, 1000))
+                        column(7, checkboxInput("body_surface_area_tick", "Body surface area (cm^2)", FALSE)),
+                        column(5, numericInput("body_surface_area", "", numeric(), 10, 1000))
                     ),
                     fluidRow(
                         column(7, checkboxInput("arm_span_tick", "Arm span (cm)", FALSE)),
@@ -67,12 +67,20 @@ shinyUI(fluidPage(
                         column(5, numericInput("hip_circumference", "", numeric(), 10, 1000))
                     ),
                     fluidRow(
+                        column(7, checkboxInput("abdomen_circ_tick", "Abdominal circumference (cm)", FALSE)),
+                        column(5, numericInput("abdomen_circ", "", numeric(), 10, 1000))
+                    ),
+                    fluidRow(
                         column(7, checkboxInput("midarm_circumference_tick", "Midarm circumference (cm)", FALSE)),
                         column(5, numericInput("midarm_circumference", "", numeric(), 10, 1000))
                     ),
                     fluidRow(
                         column(7, checkboxInput("blood_pressure_gradient_tick", "Blood pressure gradient (mmHg)", FALSE)),
                         column(5, numericInput("blood_pressure_gradient", "", numeric(), 0, 1000))
+                    ),
+                    fluidRow(
+                        column(7, checkboxInput("pulse_tick", "Heart rate (bbp)", FALSE)),
+                        column(5, numericInput("pulse", "", numeric(), 0, 300))
                     ),
                     fluidRow(
                         column(7, checkboxInput("albumin_mg_dl_tick", "Seric albumin (mg/dl)", FALSE)),
@@ -101,6 +109,10 @@ shinyUI(fluidPage(
                     fluidRow(
                         column(7, checkboxInput("air_temperature_tick", "Air temp. (C)", FALSE)),
                         column(5, numericInput("air_temperature", "", numeric(), -257.15, 257.15))
+                    ),
+                    fluidRow(
+                        column(7, checkboxInput("hour_tick", "Hour (HH)", FALSE)),
+                        column(5, numericInput("hour", "", numeric(), 0, 24))
                     ),
                     fluidRow(
                         column(12,

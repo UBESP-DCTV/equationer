@@ -85,11 +85,11 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "bernstein_83-b", reference = "Bernstein, R. S., Thornton, J. C., Yang, M. U., Wang, J., Redmond, A. M., Pierson Jr, R. N., ... & Van Itallie, T. B. (1983). Prediction of the resting metabolic rate in obese patients. The American journal of clinical nutrition, 37(4), 595-602.",
 
         eq(name = "bernstein_83-b-m-sa", outcome = "rmr", strata = list(sex = "male"),
-           intercept = -1079, age = 6.2, surface_area = 1372
+           intercept = -1079, age = 6.2, body_surface_area = 1372
         ),
 
         eq(name = "bernstein_83-b-f-sa", outcome = "rmr", strata = list(sex = "female"),
-           intercept = -53,   age = -2.3, surface_area = 758
+           intercept = -53,   age = -2.3, body_surface_area = 758
         )
 
     ),
@@ -396,50 +396,50 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "freni_00-wasbpm-m", reference = "Freni, S. C., Lewis, S. M., Mayhugh, M. A., Jairaj, K., Arani, R. B., Turturro, A., & Hart, R. W. (2000). Improved equations for estimating the resting metabolic rate. Human and Ecological Risk Assessment, 6(6), 1039-1054.",
 
         eq(name = "freni_00-wasbpm-1-m", outcome = "ree", strata = list(sex = "male", smoke = TRUE, race = "black", meal = "fasting"),
-           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*1, blood_pressure_gradient = 5.79, race = 137.93*0, hour = -67.85, meal = 163.923*0
+           intercept = 1138.2 + 228.62, weight = 11.44, age = -7.13, blood_pressure_gradient = 5.79, hour = -67.85
         ),
         eq(name = "freni_00-wasbpm-2-m", outcome = "ree", strata = list(sex = "male", smoke = TRUE, race = "white", meal = "fasting"),
-           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*1, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*0
+           intercept = 1138.2 + 137.93 + 228.62, weight = 11.44, age = -7.13, blood_pressure_gradient = 5.79, hour = -67.85
         ),
 
         eq(name = "freni_00-wasbpm-3-m", outcome = "ree", strata = list(sex = "male", smoke = TRUE, race = "white", meal = "breakfast prior to calorimetry"),
-           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*1, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*1
+           intercept = 1138.2 + 137.93 + 228.62 + 163.923, weight = 11.44, age = -7.13, blood_pressure_gradient = 5.79, hour = -67.85
         ),
 
         eq(name = "freni_00-wasbpm-4-m", outcome = "ree", strata = list(sex = "male", smoke = TRUE, race = "black", meal = "breakfast prior to calorimetry"),
-           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*1, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*1
+           intercept = 1138.2 + 228.62 + 163.923, weight = 11.44, age = -7.13, blood_pressure_gradient = 5.79, hour = -67.85
         ),
         eq(name = "freni_00-wasbpm-5-m", outcome = "ree", strata = list(sex = "male", smoke = FALSE, race = "black", meal = "fasting"),
-           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*0, blood_pressure_gradient = 5.79, race = 137.93*0, hour = -67.85, meal = 163.923*0
+           intercept = 1138.2, weight = 11.44, age = -7.13, blood_pressure_gradient = 5.79, hour = -67.85
         ),
 
         eq(name = "freni_00-wasbpm-6-m", outcome = "ree", strata = list(sex = "male", smoke = FALSE, race = "white", meal = "fasting"),
-           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*0, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*0
+           intercept = 1138.2 + 137.93, weight = 11.44, age = -7.13, blood_pressure_gradient = 5.79, hour = -67.85
         ),
 
         eq(name = "freni_00-wasbpm-7-m", outcome = "ree", strata = list(sex = "male", smoke = FALSE, race = "white", meal = "breakfast prior to calorimetry"),
-           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*0, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*1
+           intercept = 1138.2 + 137.93 + 163.923, weight = 11.44, age = -7.13, blood_pressure_gradient = 5.79, hour = -67.85
         ),
 
         eq(name = "freni_00-wasbpm-8-m", outcome = "ree", strata = list(sex = "male", smoke = FALSE, race = "black", meal = "breakfast prior to calorimetry"),
-           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*0, blood_pressure_gradient = 5.79, race = 137.93*0, hour = -67.85, meal = 163.923*1
+           intercept = 1138.2 + 163.923, weight = 11.44, age = -7.13, blood_pressure_gradient = 5.79, hour = -67.85
         )
     ),
 
     eqs(name = "freni_00-wasbpm-f", reference = "Freni, S. C., Lewis, S. M., Mayhugh, M. A., Jairaj, K., Arani, R. B., Turturro, A., & Hart, R. W. (2000). Improved equations for estimating the resting metabolic rate. Human and Ecological Risk Assessment, 6(6), 1039-1054.",
         eq(name = "freni_00-wasbpm-1-f", outcome = "ree", strata = list(sex = "female", smoke = TRUE, race = "black"),
-           intercept = -1492.0, weight = 9.58, age = -3.55, smoke = 81.00*1, blood_pressure_gradient = 1.94, race = 78.31*0, pulse = 4.19, temp = 51.93
+           intercept = -1492.0 + 81.00, weight = 9.58, age = -3.55, blood_pressure_gradient = 1.94, pulse = 4.19, body_temperature = 51.93
         ),
         eq(name = "freni_00-wasbpm-2-f", outcome = "ree", strata = list(sex = "female", smoke = TRUE, race = "white"),
-           intercept = -1492.0, weight = 9.58, age = -3.55, smoke = 81.00*1, blood_pressure_gradient = 1.94, race = 78.31*1, pulse = 4.19, temp = 51.93
+           intercept = -1492.0 + 78.31 + 81.00, weight = 9.58, age = -3.55, blood_pressure_gradient = 1.94, pulse = 4.19, body_temperature = 51.93
         ),
 
         eq(name = "freni_00-wasbpm-5-f", outcome = "ree", strata = list(sex = "female", smoke = FALSE, race = "black"),
-           intercept = -1492.0, weight = 9.58, age = -3.55, smoke = 81.00*0, blood_pressure_gradient = 1.94, race = 78.31*0, pulse = 4.19, temp = 51.93
+           intercept = -1492.0, weight = 9.58, age = -3.55, blood_pressure_gradient = 1.94, pulse = 4.19, body_temperature = 51.93
         ),
 
         eq(name = "freni_00-wasbpm-6-f", outcome = "ree", strata = list(sex = "female", smoke = FALSE, race = "white"),
-           intercept = -1492.0, weight = 9.58, age = -3.55, smoke = 81.00*0, blood_pressure_gradient = 1.94, race = 78.31*1, pulse = 4.19, temp = 51.93
+           intercept = -1492.0 + 78.31, weight = 9.58, age = -3.55, blood_pressure_gradient = 1.94, pulse = 4.19, body_temperature = 51.93
         )
     ),
 
@@ -593,21 +593,21 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "hedayati_11-b", reference = "Hedayati, K. K., & Dittmar, M. (2011). Body circumferences are predictors of weight adjusted resting energy expenditure in older people. The journal of nutrition, health & aging, 15(10), 803-808.",
 
         eq(name = "hedayati_11-f", outcome = "rmr", strata = list(sex = "female"),
-           intercept = 46.155, hip_circ = -0.273
+           intercept = 46.155, hip_circumference = -0.273
         )
     ),
 
     eqs(name = "hedayati_11-c", reference = "Hedayati, K. K., & Dittmar, M. (2011). Body circumferences are predictors of weight adjusted resting energy expenditure in older people. The journal of nutrition, health & aging, 15(10), 803-808.",
 
         eq(name = "hedayati_11-f-nd", outcome = "rmr", strata = list(sex = "female", diabetic = FALSE, bmi_class = "obese"),
-           intercept = 69.865, hip_circ = -0.229, height = -0.173 * m2cm
+           intercept = 69.865, hip_circumference = -0.229, height = -0.173 * m2cm
         )
     ),
 
     eqs(name = "hedayati_11-d", reference = "Hedayati, K. K., & Dittmar, M. (2011). Body circumferences are predictors of weight adjusted resting energy expenditure in older people. The journal of nutrition, health & aging, 15(10), 803-808.",
 
         eq(name = "hedayati_11-f-d", outcome = "rmr", strata = list(sex = "female", diabetic = TRUE, bmi_class = "obese"),
-           intercept = 68.143, hip_circ = -0.025, height = -0.210 * m2cm, bmi = -0.519
+           intercept = 68.143, hip_circumference = -0.025, height = -0.210 * m2cm, bmi = -0.519
         )
 
     ),
@@ -1327,7 +1327,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "quenoille_51", reference = "Quenouille, M. H. (1951). Statistical studies of recorded energy expenditure of man.",
 
         eq(name = "quenoille_51", outcome = "bmr", strata = list(),
-           intercept = 293.8, height = 2.975, weight = 8.90, surface_area = 11.7, air_humidity = 3.0, air_temperature = -4.0
+           intercept = 293.8, height = 2.975, weight = 8.90, body_surface_area = 11.7, air_humidity = 3.0, air_temperature = -4.0
         )
 
     ),
