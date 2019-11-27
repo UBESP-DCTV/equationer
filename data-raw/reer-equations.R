@@ -7,7 +7,7 @@ mj2kcal   <- 239.006
 kj2kcal   <- 0.239006
 mcal2kcal <- 1000
 cal2kcal  <- 1/1000
-
+m2cm      <- 100
 
 
 
@@ -32,10 +32,10 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "anjos_14", reference = "Anjos, L. A., Wahrlich, V., & Vasconcellos, M. T. (2014). BMR in a Brazilian adult probability sample: the Nutrition, Physical Activity and Health Survey. Public health nutrition, 17(4), 853-860.",
 
         eq(name = "anjos_14-a", outcome = "rmr", strata = list(sex = "male"),
-           intercept = -450.5*kj2kcal, weight = 9.99*kj2kcal, height = 7.14*1000, age = -2.79        # l'altezza è in metri, lo converto in cm
+           intercept = -450.5*kj2kcal, weight = 9.99*kj2kcal, height = 7.14*m2cm, age = -2.79        # l'altezza è in metri, lo converto in cm
         ),
         eq(name = "anjos_14-b", outcome = "rmr", strata = list(sex = "female"),
-           intercept = -814.3*kj2kcal, weight = 8.95*kj2kcal, height = 8.87*1000, age = -0.70
+           intercept = -814.3*kj2kcal, weight = 8.95*kj2kcal, height = 8.87*m2cm, age = -0.70
         )
 
     ),
@@ -69,7 +69,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "bernstein_83-a", reference = "Bernstein, R. S., Thornton, J. C., Yang, M. U., Wang, J., Redmond, A. M., Pierson Jr, R. N., ... & Van Itallie, T. B. (1983). Prediction of the resting metabolic rate in obese patients. The American journal of clinical nutrition, 37(4), 595-602.",
 
         eq(name = "bernstein_83-a-m", outcome = "rmr", strata = list(sex = "male"),
-           intercept = -1032, weight = 11.2, height = 10.23, age = -5.8
+           intercept = -1032, weight = 11.02, height = 10.23, age = -5.8
         ),
 
         eq(name = "bernstein_83-a-f", outcome = "rmr", strata = list(sex = "female"),
@@ -147,7 +147,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     # eqs(name = "cole_05", reference = "Cole, T. J., & Henry, C. J. K. (2005). The Oxford Brookes basal metabolic rate database-a reanalysis. Public health nutrition, 8(7a), 1202-1212.",
     #
     #     eq(name = "cole_05", outcome = "bmr", strata = list(sex = "male"),
-    #        intercept =
+    #        intercept = 0.73, weight =
     #     ),
     #     eq(name = "cole_05", outcome = "bmr", strata = list(sex = "female"),
     #        intercept =
@@ -256,7 +256,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
         ),
 
         eq(name = "frankenfield_f", outcome = "rmr", strata = list(sex = "female", bmi_class = "obese"),
-           intercept = 655, adjusted_weight = 9.56,  height = 1.85, age = 4.68
+           intercept = 655, adjusted_weight = 9.56,  height = 1.85, age = -4.68
         )
 
     ),
@@ -282,7 +282,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
            intercept = 440, weight = 10, height = 3, age = -5
         ),
         eq(name = "frankenfield_13-a-f-no", outcome = "rmr", strata = list(sex = "female", bmi_class = "normal weight"),
-           intercept = 454, weight = 10, height = 3, age = -5
+           intercept = 454, weight = 10, height = 3, age = -6
         )
     ),
 
@@ -342,10 +342,10 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "freni_00-wa", reference = "Freni, S. C., Lewis, S. M., Mayhugh, M. A., Jairaj, K., Arani, R. B., Turturro, A., & Hart, R. W. (2000). Improved equations for estimating the resting metabolic rate. Human and Ecological Risk Assessment, 6(6), 1039-1054.",
 
         eq(name = "freni_00-wa-m", outcome = "ree",  strata = list(sex = "male"),
-            intercept = 635.8, weight = 12.48, age = 7.84
+            intercept = 1007.5, weight = 12.48, age = -7.84
         ),
         eq(name = "freni_00-wa-f", outcome = "ree",  strata = list(sex = "female"),
-           intercept = 785.2, weight = 9.36, age = 2.48
+           intercept = 785.2, weight = 9.36, age = -2.48
         )
     ),
 
@@ -383,63 +383,65 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
         ),
 
         eq(name = "freni_00-wasbp-1-f", outcome = "ree", strata = list(sex = "female", smoke = TRUE),
-           intercept = 711.4 + 112.56, weight = 9.15, age = -3.38, blood_pressure_gradient = 3.07
+           intercept = 711.4 + 112.56, weight = 9.15, age = -3.88, blood_pressure_gradient = 3.07
         ),
         eq(name = "freni_00-wasbp-2-f", outcome = "ree", strata = list(sex = "female", smoke = FALSE),
-           intercept = 711.4, weight = 9.15, age = 3.38, blood_pressure_gradient = 3.07
+           intercept = 711.4, weight = 9.15, age = -3.88, blood_pressure_gradient = 3.07
         )
     ),
 
 
     # Freni 2000-wasbpm [CHECKED \(coef \+ udm\)] ------------------------
 
-    # eqs(name = "freni_00-wasbpm", reference = "Freni, S. C., Lewis, S. M., Mayhugh, M. A., Jairaj, K., Arani, R. B., Turturro, A., & Hart, R. W. (2000). Improved equations for estimating the resting metabolic rate. Human and Ecological Risk Assessment, 6(6), 1039-1054.",
-    #
-    #     eq(name = "freni_00-wasbpm-1-m", outcome = "ree", strata = list(sex = "male", smoke = TRUE, race = "black", meal = "fasting"),
-    #        intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*1, blood_pressure_gradient = 5.79, race = 137.93*0, hour = -67.85, meal = 163.923*0
-    #     ),
-    #     eq(name = "freni_00-wasbpm-2-m", outcome = "ree", strata = list(sex = "male", smoke = TRUE, race = "white", meal = "fasting"),
-    #        intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*1, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*0
-    #     ),
-    #
-    #     eq(name = "freni_00-wasbpm-3-m", outcome = "ree", strata = list(sex = "male", smoke = TRUE, race = "white", meal = "breakfast prior to calorimetry"),
-    #        intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*1, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*1
-    #     ),
-    #
-    #     eq(name = "freni_00-wasbpm-4-m", outcome = "ree", strata = list(sex = "male", smoke = TRUE, race = "black", meal = "breakfast prior to calorimetry"),
-    #        intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*1, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*1
-    #     ),
-    #     eq(name = "freni_00-wasbpm-5-m", outcome = "ree", strata = list(sex = "male", smoke = FALSE, race = "black", meal = "fasting"),
-    #        intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*0, blood_pressure_gradient = 5.79, race = 137.93*0, hour = -67.85, meal = 163.923*0
-    #     ),
-    #
-    #     eq(name = "freni_00-wasbpm-6-m", outcome = "ree", strata = list(sex = "male", smoke = FALSE, race = "white", meal = "fasting"),
-    #        intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*0, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*0
-    #     ),
-    #
-    #     eq(name = "freni_00-wasbpm-7-m", outcome = "ree", strata = list(sex = "male", smoke = FALSE, race = "white", meal = "breakfast prior to calorimetry"),
-    #        intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*0, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*1
-    #     ),
-    #
-    #     eq(name = "freni_00-wasbpm-8-m", outcome = "ree", strata = list(sex = "male", smoke = FALSE, race = "black", meal = "breakfast prior to calorimetry"),
-    #        intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*0, blood_pressure_gradient = 5.79, race = 137.93*0, hour = -67.85, meal = 163.923*1
-    #     ),
-    #
-    #     eq(name = "freni_00-wasbpm-1-f", outcome = "ree", strata = list(sex = "female", smoke = TRUE, race = "black"),
-    #        intercept = -1492.0, weight = 9.58, age = -3.55, smoke = 81.00*1, blood_pressure_gradient = 1.94, race = 78.31*0, pulse = 4.19, temp = 51.93
-    #     ),
-    #     eq(name = "freni_00-wasbpm-2-f", outcome = "ree", strata = list(sex = "female", smoke = TRUE, race = "white"),
-    #        intercept = -1492.0, weight = 9.58, age = -3.55, smoke = 81.00*1, blood_pressure_gradient = 1.94, race = 78.31*1, pulse = 4.19, temp = 51.93
-    #     ),
-    #
-    #     eq(name = "freni_00-wasbpm-5-f", outcome = "ree", strata = list(sex = "female", smoke = FALSE, race = "black"),
-    #        intercept = -1492.0, weight = 9.58, age = -3.55, smoke = 81.00*0, blood_pressure_gradient = 1.94, race = 78.31*0, pulse = 4.19, temp = 51.93
-    #     ),
-    #
-    #     eq(name = "freni_00-wasbpm-6-f", outcome = "ree", strata = list(sex = "female", smoke = FALSE, race = "white"),
-    #        intercept = -1492.0, weight = 9.58, age = -3.55, smoke = 81.00*0, blood_pressure_gradient = 1.94, race = 78.31*1, pulse = 4.19, temp = 51.93
-    #     )
-    # ),
+    eqs(name = "freni_00-wasbpm-m", reference = "Freni, S. C., Lewis, S. M., Mayhugh, M. A., Jairaj, K., Arani, R. B., Turturro, A., & Hart, R. W. (2000). Improved equations for estimating the resting metabolic rate. Human and Ecological Risk Assessment, 6(6), 1039-1054.",
+
+        eq(name = "freni_00-wasbpm-1-m", outcome = "ree", strata = list(sex = "male", smoke = TRUE, race = "black", meal = "fasting"),
+           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*1, blood_pressure_gradient = 5.79, race = 137.93*0, hour = -67.85, meal = 163.923*0
+        ),
+        eq(name = "freni_00-wasbpm-2-m", outcome = "ree", strata = list(sex = "male", smoke = TRUE, race = "white", meal = "fasting"),
+           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*1, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*0
+        ),
+
+        eq(name = "freni_00-wasbpm-3-m", outcome = "ree", strata = list(sex = "male", smoke = TRUE, race = "white", meal = "breakfast prior to calorimetry"),
+           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*1, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*1
+        ),
+
+        eq(name = "freni_00-wasbpm-4-m", outcome = "ree", strata = list(sex = "male", smoke = TRUE, race = "black", meal = "breakfast prior to calorimetry"),
+           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*1, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*1
+        ),
+        eq(name = "freni_00-wasbpm-5-m", outcome = "ree", strata = list(sex = "male", smoke = FALSE, race = "black", meal = "fasting"),
+           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*0, blood_pressure_gradient = 5.79, race = 137.93*0, hour = -67.85, meal = 163.923*0
+        ),
+
+        eq(name = "freni_00-wasbpm-6-m", outcome = "ree", strata = list(sex = "male", smoke = FALSE, race = "white", meal = "fasting"),
+           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*0, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*0
+        ),
+
+        eq(name = "freni_00-wasbpm-7-m", outcome = "ree", strata = list(sex = "male", smoke = FALSE, race = "white", meal = "breakfast prior to calorimetry"),
+           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*0, blood_pressure_gradient = 5.79, race = 137.93*1, hour = -67.85, meal = 163.923*1
+        ),
+
+        eq(name = "freni_00-wasbpm-8-m", outcome = "ree", strata = list(sex = "male", smoke = FALSE, race = "black", meal = "breakfast prior to calorimetry"),
+           intercept = 1138.2, weight = 11.44, age = -7.13, smoke = 228.62*0, blood_pressure_gradient = 5.79, race = 137.93*0, hour = -67.85, meal = 163.923*1
+        )
+    ),
+
+    eqs(name = "freni_00-wasbpm-f", reference = "Freni, S. C., Lewis, S. M., Mayhugh, M. A., Jairaj, K., Arani, R. B., Turturro, A., & Hart, R. W. (2000). Improved equations for estimating the resting metabolic rate. Human and Ecological Risk Assessment, 6(6), 1039-1054.",
+        eq(name = "freni_00-wasbpm-1-f", outcome = "ree", strata = list(sex = "female", smoke = TRUE, race = "black"),
+           intercept = -1492.0, weight = 9.58, age = -3.55, smoke = 81.00*1, blood_pressure_gradient = 1.94, race = 78.31*0, pulse = 4.19, temp = 51.93
+        ),
+        eq(name = "freni_00-wasbpm-2-f", outcome = "ree", strata = list(sex = "female", smoke = TRUE, race = "white"),
+           intercept = -1492.0, weight = 9.58, age = -3.55, smoke = 81.00*1, blood_pressure_gradient = 1.94, race = 78.31*1, pulse = 4.19, temp = 51.93
+        ),
+
+        eq(name = "freni_00-wasbpm-5-f", outcome = "ree", strata = list(sex = "female", smoke = FALSE, race = "black"),
+           intercept = -1492.0, weight = 9.58, age = -3.55, smoke = 81.00*0, blood_pressure_gradient = 1.94, race = 78.31*0, pulse = 4.19, temp = 51.93
+        ),
+
+        eq(name = "freni_00-wasbpm-6-f", outcome = "ree", strata = list(sex = "female", smoke = FALSE, race = "white"),
+           intercept = -1492.0, weight = 9.58, age = -3.55, smoke = 81.00*0, blood_pressure_gradient = 1.94, race = 78.31*1, pulse = 4.19, temp = 51.93
+        )
+    ),
 
 
     # Gaillard 2008-a [CHECKED \(coef \+ udm\)] ------------------------
@@ -508,10 +510,10 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "harris_benedict_918", reference = "Harris, J. A., & Benedict, F. G. (1918). A biometric study of human basal metabolism. Proceedings of the National Academy of Sciences of the United States of America, 4(12), 370.",
 
         eq(name = "harris_benedict_918-f", outcome = "rmr", strata = list(sex = "female"),
-           intercept = 655, weight = 9.6, height = 1.8, age = -4.7
+           intercept = 655.0955, weight = 9.5634, height = 1.8496, age = -4.6756
         ),
         eq(name = "harris_benedict_918-m", outcome = "rmr", strata = list(sex = "male"),
-           intercept = 66.5, weight = 13.8, height = 5, age = -6.8
+           intercept = 66.4730, weight = 13.7516, height = 5.0033, age = -6.7550
         )
     ),
 
@@ -581,26 +583,35 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
 
     # Hedayati 2011 [CHECKED \(coef \+ udm\)] -----------------------------
 
-    # eqs(name = "hedayati_11", reference = "Hedayati, K. K., & Dittmar, M. (2011). Body circumferences are predictors of weight adjusted resting energy expenditure in older people. The journal of nutrition, health & aging, 15(10), 803-808.",
-    #
-    #     eq(name = "hedayati_11-m", outcome = "rmr", strata = list(sex = "male"),
-    #        intercept = 41.567, abdomen_circ = -0.226
-    #     ),
-    #
-    #     eq(name = "hedayati_11-f", outcome = "rmr", strata = list(sex = "female"),
-    #        intercept = 46.155, hip_circ = -0.273
-    #     ),
-    #
-    #     eq(name = "hedayati_11-f-nd", outcome = "rmr", strata = list(sex = "female", diabetic = FALSE, bmi_class = "obese"),
-    #        intercept = 69.865, hip_circ = -0.229, height = 0.173 # l'altezza è in metri!è da convertire
-    #     ),
-    #
-    #     eq(name = "hedayati_11-f-d", outcome = "rmr", strata = list(sex = "female", diabetic = TRUE, bmi_class = "obese"),
-    #        intercept = 68.143, hip_circ = -0.025, height = 0.210, bmi = -0.519 # l'altezza è in metri!è da convertire
-    #     )
-    #
-    # ),
-    #
+    eqs(name = "hedayati_11-a", reference = "Hedayati, K. K., & Dittmar, M. (2011). Body circumferences are predictors of weight adjusted resting energy expenditure in older people. The journal of nutrition, health & aging, 15(10), 803-808.",
+
+        eq(name = "hedayati_11-m", outcome = "rmr", strata = list(sex = "male"),
+           intercept = 41.567, abdomen_circ = -0.226
+        )
+    ),
+
+    eqs(name = "hedayati_11-b", reference = "Hedayati, K. K., & Dittmar, M. (2011). Body circumferences are predictors of weight adjusted resting energy expenditure in older people. The journal of nutrition, health & aging, 15(10), 803-808.",
+
+        eq(name = "hedayati_11-f", outcome = "rmr", strata = list(sex = "female"),
+           intercept = 46.155, hip_circ = -0.273
+        )
+    ),
+
+    eqs(name = "hedayati_11-c", reference = "Hedayati, K. K., & Dittmar, M. (2011). Body circumferences are predictors of weight adjusted resting energy expenditure in older people. The journal of nutrition, health & aging, 15(10), 803-808.",
+
+        eq(name = "hedayati_11-f-nd", outcome = "rmr", strata = list(sex = "female", diabetic = FALSE, bmi_class = "obese"),
+           intercept = 69.865, hip_circ = -0.229, height = -0.173 * m2cm
+        )
+    ),
+
+    eqs(name = "hedayati_11-d", reference = "Hedayati, K. K., & Dittmar, M. (2011). Body circumferences are predictors of weight adjusted resting energy expenditure in older people. The journal of nutrition, health & aging, 15(10), 803-808.",
+
+        eq(name = "hedayati_11-f-d", outcome = "rmr", strata = list(sex = "female", diabetic = TRUE, bmi_class = "obese"),
+           intercept = 68.143, hip_circ = -0.025, height = -0.210 * m2cm, bmi = -0.519
+        )
+
+    ),
+
 
     # Ikeda 2013 [CHECKED \(coef \+ udm\)] -----------------------------
 
@@ -623,147 +634,153 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "iom_05-am", reference = "Institute of Medicine (U.S.), & Institute of Medicine (U.S.) (Eds.). (2005). Dietary reference intakes for energy, carbohydrate, fiber, fat, fatty acids, cholesterol, protein, and amino acids. Washington, D.C: National Academies Press.",
 
         eq(name = "iom_05-am-n-s", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight", pal = "sedentary"),
-           intercept = 661.8, age = -9.53, weight = 15.91, height = 539.6
+           intercept = 661.8, age = -9.53, weight = 15.91, height = 539.6 * m2cm
         ),
 
         eq(name = "iom_05-af-n-s", outcome = "eer", strata = list(sex = "female", bmi_class = "normal weight", pal = "sedentary"),
-           intercept = 354.1, age = -6.91, weight = 9.36, height = 72600
+           intercept = 354.1, age = -6.91, weight = 9.36, height = 726 * m2cm
         ),
 
         eq(name = "iom_05-am-ow-s", outcome = "eer", strata = list(sex = "male", bmi_class = "overweight", pal = "sedentary"),
-           intercept = 1085.6, age = -10.08, weight = 13.7, height = 41600
+           intercept = 1085.6, age = -10.08, weight = 13.7, height = 416 * m2cm
         ),
 
         eq(name = "iom_05-af-ow-s", outcome = "eer", strata = list(sex = "female", bmi_class = "overweight", pal = "sedentary"),
-           intercept = 447.6, age = -7.95, weight = 11.4, height = 61900
+           intercept = 447.6, age = -7.95, weight = 11.4, height = 619 * m2cm
         ),
 
 
         eq(name = "iom_05-am-n-l", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight", pal = "low-active"),
-           intercept = 661.8, age = -9.53, weight = 15.91 * 1.11, height = 539.6
+           intercept = 661.8, age = -9.53, weight = 15.91 * 1.11, height = 539.6 * m2cm
         ),
 
         eq(name = "iom_05-af-n-l", outcome = "eer", strata = list(sex = "female", bmi_class = "normal weight", pal = "low-active"),
-           intercept = 354.1, age = -6.91, weight = 9.36 * 1.11, height = 72600
+           intercept = 354.1, age = -6.91, weight = 9.36 * 1.12, height = 726 * m2cm
         ),
 
         eq(name = "iom_05-am-ow-l", outcome = "eer", strata = list(sex = "male", bmi_class = "overweight", pal = "low-active"),
-           intercept = 1085.6, age = -10.08, weight = 13.7 * 1.11, height = 41600
+           intercept = 1085.6, age = -10.08, weight = 13.7 * 1.11, height = 416 * m2cm
         ),
 
         eq(name = "iom_05-af-ow-l", outcome = "eer", strata = list(sex = "female", bmi_class = "overweight", pal = "low-active"),
-           intercept = 447.6, age = -7.95, weight = 11.4 * 1.11, height = 61900
+           intercept = 447.6, age = -7.95, weight = 11.4 * 1.12, height = 619 * m2cm
         ),
 
 
         eq(name = "iom_05-am-n-a", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight", pal = "active"),
-           intercept = 661.8, age = -9.53, weight = 15.91 * 1.25, height = 539.6
+           intercept = 661.8, age = -9.53, weight = 15.91 * 1.25, height = 539.6 * m2cm
         ),
 
         eq(name = "iom_05-af-n-a", outcome = "eer", strata = list(sex = "female", bmi_class = "normal weight", pal = "active"),
-           intercept = 354.1, age = -6.91, weight = 9.36 * 1.25, height = 72600
+           intercept = 354.1, age = -6.91, weight = 9.36 * 1.27, height = 726 * m2cm
         ),
 
         eq(name = "iom_05-am-ow-a", outcome = "eer", strata = list(sex = "male", bmi_class = "overweight", pal = "active"),
-           intercept = 1085.6, age = -10.08, weight = 13.7 * 1.25, height = 41600
+           intercept = 1085.6, age = -10.08, weight = 13.7 * 1.25, height = 416 * m2cm
         ),
 
         eq(name = "iom_05-af-ow-a", outcome = "eer", strata = list(sex = "female", bmi_class = "overweight", pal = "active"),
-           intercept = 447.6, age = -7.95, weight = 11.4 * 1.25, height = 6.19
+           intercept = 447.6, age = -7.95, weight = 11.4 * 1.27, height = 619 * m2cm
         ),
 
 
         eq(name = "iom_05-am-n-va", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight", pal = "very-active"),
-           intercept = 661.8, age = -9.53, weight = 15.91 * 1.48, height = 5.396
+           intercept = 661.8, age = -9.53, weight = 15.91 * 1.48, height = 539.6 * m2cm
         ),
 
         eq(name = "iom_05-af-n-va", outcome = "eer", strata = list(sex = "female", bmi_class = "normal weight", pal = "very-active"),
-           intercept = 354.1, age = -6.91, weight = 9.36 * 1.48, height = 7.26
+           intercept = 354.1, age = -6.91, weight = 9.36 * 1.45, height = 726 * m2cm
         ),
 
         eq(name = "iom_05-am-ow-va", outcome = "eer", strata = list(sex = "male", bmi_class = "overweight", pal = "very-active"),
-           intercept = 1085.6, age = -10.08, weight = 13.7 * 1.48, height = 4.16
+           intercept = 1085.6, age = -10.08, weight = 13.7 * 1.45, height = 416 * m2cm
         ),
 
         eq(name = "iom_05-af-ow-va", outcome = "eer", strata = list(sex = "female", bmi_class = "overweight", pal = "very-active"),
-           intercept = 447.6, age = -7.95, weight = 11.4 * 1.48, height = 6.19
+           intercept = 447.6, age = -7.95, weight = 11.4 * 1.45, height = 619 * m2cm
         )
 
     ),
 
     # IOM 2005-b [CHECKED \(coef \+ udm\)] -------------------------------
 
-    # eqs(name = "iom_05-bm", reference = "Institute of Medicine (U.S.), & Institute of Medicine (U.S.) (Eds.). (2005). Dietary reference intakes for energy, carbohydrate, fiber, fat, fatty acids, cholesterol, protein, and amino acids. Washington, D.C: National Academies Press.",
-    #
-    #     eq(name = "iom_05-m-n-s", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight"),
-    #        intercept = 204, age = -4, weight = 11.69, height = 45050
-    #     ),
-    #
-    #     eq(name = "iom_05-f-n-s", outcome = "eer", strata = list(sex = "female", bmi_class = "normal weight"),
-    #        intercept = 255, age = -2.35, weight = 9.69, height = 36160
-    #     ),
-    #
-    #     eq(name = "iom_05-m-ow-s", outcome = "eer", strata = list(sex = "male"),
-    #        intercept = 293, age = -3.8, weight = 10.12, height = 45640
-    #     ),
-    #
-    #     eq(name = "iom_05-f-ow-s", outcome = "eer", strata = list(sex = "female"),
-    #        intercept = 247, age = -2.67, weight = 8.6, height = 40140
-    #     ),
-    #
-    #
-    #     eq(name = "iom_05-m-n-l", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight", pal = "low-active"),
-    #        intercept = 661.8, age = -9.53, weight = 15.91 * 1.11, height = 539.6
-    #     ),
-    #
-    #     eq(name = "iom_05-f-n-l", outcome = "eer", strata = list(sex = "female", bmi_class = "normal weight", pal = "low-active"),
-    #        intercept = 354.1, age = -6.91, weight = 9.36 * 1.11, height = 72600
-    #     ),
-    #
-    #     eq(name = "iom_05-m-ow-l", outcome = "eer", strata = list(sex = "male", bmi_class = "overweight", pal = "low-active"),
-    #        intercept = 1085.6, age = -10.08, weight = 13.7 * 1.11, height = 41600
-    #     ),
-    #
-    #     eq(name = "iom_05-f-ow-l", outcome = "eer", strata = list(sex = "female", bmi_class = "overweight", pal = "low-active"),
-    #        intercept = 447.6, age = -7.95, weight = 11.4 * 1.11, height = 61900
-    #     ),
-    #
-    #
-    #     eq(name = "iom_05-m-n-a", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight", pal = "active"),
-    #        intercept = 661.8, age = -9.53, weight = 15.91 * 1.25, height = 539.6
-    #     ),
-    #
-    #     eq(name = "iom_05-f-n-a", outcome = "eer", strata = list(sex = "female", bmi_class = "normal weight", pal = "active"),
-    #        intercept = 354.1, age = -6.91, weight = 9.36 * 1.25, height = 72600
-    #     ),
-    #
-    #     eq(name = "iom_05-m-ow-a", outcome = "eer", strata = list(sex = "male", bmi_class = "overweight", pal = "active"),
-    #        intercept = 1085.6, age = -10.08, weight = 13.7 * 1.25, height = 41600
-    #     ),
-    #
-    #     eq(name = "iom_05-f-ow-a", outcome = "eer", strata = list(sex = "female", bmi_class = "overweight", pal = "active"),
-    #        intercept = 447.6, age = -7.95, weight = 11.4 * 1.25, height = 6.19
-    #     ),
-    #
-    #
-    #     eq(name = "iom_05-m-n-va", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight", pal = "very-active"),
-    #        intercept = 661.8, age = -9.53, weight = 15.91 * 1.48, height = 5.396
-    #     ),
-    #
-    #     eq(name = "iom_05-f-n-va", outcome = "eer", strata = list(sex = "female", bmi_class = "normal weight", pal = "very-active"),
-    #        intercept = 354.1, age = -6.91, weight = 9.36 * 1.48, height = 7.26
-    #     ),
-    #
-    #     eq(name = "iom_05-m-ow-va", outcome = "eer", strata = list(sex = "male", bmi_class = "overweight", pal = "very-active"),
-    #        intercept = 1085.6, age = -10.08, weight = 13.7 * 1.48, height = 4.16
-    #     ),
-    #
-    #     eq(name = "iom_05-f-ow-va", outcome = "eer", strata = list(sex = "female", bmi_class = "overweight", pal = "very-active"),
-    #        intercept = 447.6, age = -7.95, weight = 11.4 * 1.48, height = 6.19
-    #     )
-    #
-    # ),
-    #
+    eqs(name = "iom_05-bm-a", reference = "Institute of Medicine (U.S.), & Institute of Medicine (U.S.) (Eds.). (2005). Dietary reference intakes for energy, carbohydrate, fiber, fat, fatty acids, cholesterol, protein, and amino acids. Washington, D.C: National Academies Press.",
+
+        eq(name = "iom_05-m-n-s", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight"),
+           intercept = 204, age = -4, weight = 11.69, height = 45050
+        ),
+
+        eq(name = "iom_05-f-n-s", outcome = "eer", strata = list(sex = "female", bmi_class = "normal weight"),
+           intercept = 255, age = -2.35, weight = 9.69, height = 36160
+        )
+    ),
+
+    eqs(name = "iom_05-bm-b", reference = "Institute of Medicine (U.S.), & Institute of Medicine (U.S.) (Eds.). (2005). Dietary reference intakes for energy, carbohydrate, fiber, fat, fatty acids, cholesterol, protein, and amino acids. Washington, D.C: National Academies Press.",
+
+        eq(name = "iom_05-m-ow-s", outcome = "eer", strata = list(sex = "male"),
+           intercept = 293, age = -3.8, weight = 10.12, height = 45640
+        ),
+
+        eq(name = "iom_05-f-ow-s", outcome = "eer", strata = list(sex = "female"),
+           intercept = 247, age = -2.67, weight = 8.6, height = 40140
+        )
+    ),
+
+
+    eqs(name = "iom_05-bm-c", reference = "Institute of Medicine (U.S.), & Institute of Medicine (U.S.) (Eds.). (2005). Dietary reference intakes for energy, carbohydrate, fiber, fat, fatty acids, cholesterol, protein, and amino acids. Washington, D.C: National Academies Press.",
+
+        eq(name = "iom_05-m-n-l", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight", pal = "low-active"),
+           intercept = 661.8, age = -9.53, weight = 15.91 * 1.11, height = 539.6
+        ),
+
+        eq(name = "iom_05-f-n-l", outcome = "eer", strata = list(sex = "female", bmi_class = "normal weight", pal = "low-active"),
+           intercept = 354.1, age = -6.91, weight = 9.36 * 1.11, height = 72600
+        ),
+
+        eq(name = "iom_05-m-ow-l", outcome = "eer", strata = list(sex = "male", bmi_class = "overweight", pal = "low-active"),
+           intercept = 1085.6, age = -10.08, weight = 13.7 * 1.11, height = 41600
+        ),
+
+        eq(name = "iom_05-f-ow-l", outcome = "eer", strata = list(sex = "female", bmi_class = "overweight", pal = "low-active"),
+           intercept = 447.6, age = -7.95, weight = 11.4 * 1.11, height = 61900
+        ),
+
+
+        eq(name = "iom_05-m-n-a", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight", pal = "active"),
+           intercept = 661.8, age = -9.53, weight = 15.91 * 1.25, height = 539.6
+        ),
+
+        eq(name = "iom_05-f-n-a", outcome = "eer", strata = list(sex = "female", bmi_class = "normal weight", pal = "active"),
+           intercept = 354.1, age = -6.91, weight = 9.36 * 1.25, height = 72600
+        ),
+
+        eq(name = "iom_05-m-ow-a", outcome = "eer", strata = list(sex = "male", bmi_class = "overweight", pal = "active"),
+           intercept = 1085.6, age = -10.08, weight = 13.7 * 1.25, height = 41600
+        ),
+
+        eq(name = "iom_05-f-ow-a", outcome = "eer", strata = list(sex = "female", bmi_class = "overweight", pal = "active"),
+           intercept = 447.6, age = -7.95, weight = 11.4 * 1.25, height = 6.19
+        ),
+
+
+        eq(name = "iom_05-m-n-va", outcome = "eer", strata = list(sex = "male", bmi_class = "normal weight", pal = "very-active"),
+           intercept = 661.8, age = -9.53, weight = 15.91 * 1.48, height = 5.396
+        ),
+
+        eq(name = "iom_05-f-n-va", outcome = "eer", strata = list(sex = "female", bmi_class = "normal weight", pal = "very-active"),
+           intercept = 354.1, age = -6.91, weight = 9.36 * 1.48, height = 7.26
+        ),
+
+        eq(name = "iom_05-m-ow-va", outcome = "eer", strata = list(sex = "male", bmi_class = "overweight", pal = "very-active"),
+           intercept = 1085.6, age = -10.08, weight = 13.7 * 1.48, height = 4.16
+        ),
+
+        eq(name = "iom_05-f-ow-va", outcome = "eer", strata = list(sex = "female", bmi_class = "overweight", pal = "very-active"),
+           intercept = 447.6, age = -7.95, weight = 11.4 * 1.48, height = 6.19
+        )
+
+    ),
+
 
 
     # Jia 1999 [CHECKED \(coef \+ udm\)] -------------------------------
@@ -1291,7 +1308,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "pavlidou_18-m", reference = "Pavlidou, E., Petridis, D., Tolia, M., Tsoukalas, N., Poultsidi, A., Fasoulas, A., . Giaginis, C. (2018). Estimating the agreement between the metabolic rate calculated from prediction equations and from a portable indirect calorimetry device: an effort to develop a new equation for predicting resting metabolic rate. Nutrition & Metabolism, 15, 41. https://doi.org/10.1186/s12986-018-0278-7",
 
         eq(name = "pavlidou_18-b-m", outcome = "rmr", strata = list(sex = "male"),
-           intercept = 0, bmi_pavlidou_m = 21.41
+           intercept = 0, bmi_pavlidou_m = 25.41
         )
     ),
 
@@ -1433,7 +1450,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
         ),
 
         eq(name = "segura_18-b-m", outcome = "ree", strata = list(sex = "male"),
-           intercept = 316.398,  weight = 4.255,  height = 7.819
+           intercept = -316.398,  weight = 4.255,  height = 7.819
         )
 
     ),
@@ -1748,14 +1765,14 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "wright_16-b", reference = "Wright, T. G., Dawson, B., Jalleh, G., & Guelfi, K. J. (2016). Accuracy of resting metabolic rate prediction in overweight and obese Australian adults. Obesity research & clinical practice, 10, S74-S83.",
 
         eq(name = "wright_16-b-mow", outcome = "bee", strata = list(sex = "male", ethnicity = "australian", bmi_class = "overweight"),
-           intercept = 1295.89, weight = 2.91, height = -1.83, age = -11.12
+           intercept = 2372.11, weight = 2.91, height = -1.83, age = -11.12
         ),
 
         eq(name = "wright_16-b-fow", outcome = "bee", strata = list(sex = "female", ethnicity = "australian", bmi_class = "overweight"),
-           intercept = 110.76, weight = 4.28, height = 20.17, age = -7.50
+           intercept = -1295.89, weight = -4.28, height = 20.17, age = -7.50
         ),
         eq(name = "wright_16-b-mo", outcome = "bee", strata = list(sex = "male", ethnicity = "australian", bmi_class = "obese"),
-           intercept = 1233.82, weight = 9.19, height = 12.96, age = -2.34
+           intercept = -1233.82, weight = 9.19, height = 12.96, age = -2.34
         ),
 
         eq(name = "wright_16-b-fo", outcome = "bee", strata = list(sex = "female", ethnicity = "australian", bmi_class = "obese"),
@@ -1788,13 +1805,15 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     ),
 
     # Yang 2010-c [CHECKED \(coef \+ udm\)] ----------------------------
-#
-#     eqs(name = "yang_10-c", reference = "Yang, X., Li, M., Mao, D., Zeng, G., Zhuo, Q., Hu, W., . Huang, C. (2010). Basal energy expenditure in southern Chinese healthy adults: measurement and development of a new equation. The British Journal of Nutrition, 104(12), 1817-1823. https://doi.org/10.1017/S0007114510002795",
-#
-#         eq(name = "yang_10-c", outcome = "bee", strata = list(ethnicity = "chinese"),
-#            intercept = -4611 * kj2kcal, body_surface_area = 6285 * kj2kcal
-#         )
-#     ),
+
+    eqs(name = "yang_10-c", reference = "Yang, X., Li, M., Mao, D., Zeng, G., Zhuo, Q., Hu, W., . Huang, C. (2010). Basal energy expenditure in southern Chinese healthy adults: measurement and development of a new equation. The British Journal of Nutrition, 104(12), 1817-1823. https://doi.org/10.1017/S0007114510002795",
+
+        eq(name = "yang_10-c", outcome = "bee", strata = list(ethnicity = "chinese"),
+           intercept = -4611 * kj2kcal, body_surface_area = 6285 * kj2kcal
+        )
+    ),
+
+
     # Yang 2010-d [CHECKED \(coef \+ udm\)] ----------------------------
 
     eqs(name = "yang_10-d", reference = "Yang, X., Li, M., Mao, D., Zeng, G., Zhuo, Q., Hu, W., . Huang, C. (2010). Basal energy expenditure in southern Chinese healthy adults: measurement and development of a new equation. The British Journal of Nutrition, 104(12), 1817-1823. https://doi.org/10.1017/S0007114510002795",

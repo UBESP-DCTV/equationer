@@ -265,6 +265,25 @@ usethis::ui_done("Strata")
         usethis::ui_done("Metsios setup")
 
 
+        ## BSA Body surface area
+        #
+        body_surface_area <- 0
+        body_surface_area_tick <- FALSE
+
+        if (
+            input[["weight_tick"]] &&
+            input[["height_tick"]]
+        ) {
+            body_surface_area <- 0.007184 * input[["weight"]]^0.425 * input[["height"]]^0.725
+            body_surface_area_tick <- TRUE
+            showNotification(
+                glue::glue("Body Surface Area (BSA, Dubois et.al 1916) calculated to be: {round(body_surface_area, 1)}"),
+                duration = 30, type = "message"
+            )
+        }
+        usethis::ui_done("Body_surface_area setup")
+
+
 
 
 
@@ -332,6 +351,7 @@ usethis::ui_done("Strata")
             input[["menopausal"]],
             input[["midarm_circumference"]],
             input[["subscapular_skinfold"]],
+            input[["body_surface_area"]],
             input[["surface_area"]],
             var_metsios,
             input[["weight"]],
@@ -367,6 +387,7 @@ usethis::ui_done("Strata")
                 (input[["menopausal_tick"]] && menopausal_check),
                 input[["midarm_circumference_tick"]],
                 input[["subscapular_skinfold_tick"]],
+                input[["body_surface_area_tick"]],
                 input[["surface_area_tick"]],
                 var_metsios_tick,
                 input[["weight_tick"]],
