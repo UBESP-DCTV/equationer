@@ -508,7 +508,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
            intercept = 0.1238*mj2kcal,   weight = 0.0481*mj2kcal, height = 0.0234*mj2kcal, age = -0.0138*mj2kcal
         ),
         eq(name = "ganpule_07-f", outcome = "rmr", strata = list(sex = "female", ethnicity = "japanese"),
-           intercept = (0.1238 - 0.5473)*mj2kcal, weight = 0.0481*mj2kcal, height = 0.0234*mj2kcal, age = -0.1038*mj2kcal
+           intercept = (0.1238 - 0.5473)*mj2kcal, weight = 0.0481*mj2kcal, height = 0.0234*mj2kcal, age = -0.0138*mj2kcal
         )
 
     ),

@@ -1,9 +1,9 @@
 library(tidyverse)
 library(forcats)
+# library(ggExtra)
+library(DT)
 library(shinyjs)
 library(shinyBS)
-library(ggExtra)
-library(DT)
 library(equationer)
 data("reer")
 

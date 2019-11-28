@@ -199,7 +199,10 @@ shinyUI(fluidPage(
         ),
 
         mainPanel(tabsetPanel(
-            tabPanel("Plot", icon = icon("chart-bar"), shiny::plotOutput("res_plot")),
+            tabPanel("Plots", icon = icon("chart-bar"), verticalLayout(
+                shiny::plotOutput("res_plot"),
+                shiny::plotOutput("bar_plot")
+            )),
             tabPanel("Table", icon = icon("grip-horizontal"), dataTableOutput("res_tab"))
         ))
     ),

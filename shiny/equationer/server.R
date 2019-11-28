@@ -522,7 +522,7 @@ cat(str(dots))
                     forcats::fct_collapse(
                         "bee/bmr" = c("bee", "bmr"),
                         "ree/rmr" = c("ree", "rmr"),
-                        "eee/eer" = c("eee", "eer"),
+                        "eee/eer" = c("eee", "eer")
                     )
             ) %>%
             dplyr::select(outcome, estimation, dplyr::everything()) %>%
@@ -542,23 +542,75 @@ cat(str(res))
         )
 
 
-        baseplot <- res %>%
+        fun_median <- function(x){
+            data_frame(
+                y = median(x, na.rm = TRUE),
+                label = glue::glue("median = {y}")
+            )
+        }
+
+        fun_min <- function(x){
+            data_frame(
+                y = min(x, na.rm = TRUE),
+                label = glue::glue("min = {y}")
+            )
+        }
+
+        fun_max <- function(x){
+            data_frame(
+                y = max(x, na.rm = TRUE),
+                label = glue::glue("max = {y}")
+            )
+        }
+
+        resplot <- res %>%
             ggplot(aes(x = gender, y = estimation, colour = gender)) +
-            geom_boxplot(varwidth = TRUE) +
-            geom_point(size = 0, alpha = 0) +
+            geom_violin(aes(fill = gender),
+                alpha = 0.2,
+                # draw_quantiles = c(0.01, 0.1, 0.25, 0.5, 0.75, 0.9, 0.99),
+                trim = FALSE,
+                scale = "count"
+            ) +
+            geom_boxplot(varwidth = TRUE, alpha = 0.7) +
+            stat_summary(fun.data = fun_min, geom = "text",
+                vjust = 2, hjust = -0.5
+            ) +
+            stat_summary(fun.data = fun_median, geom = "text",
+                vjust = -3, hjust = -0.5) +
+            stat_summary(fun.data = fun_max, geom = "text",
+                vjust = -2, hjust = -0.5
+            ) +
             theme(axis.text.x = element_blank()) +
             ggtitle(
                 "Distributions of the estimated energy outcomes",
                 subtitle = "'not-considered' are the estimations from the equations which do not consider the gender."
             )
 
-        resplot <- ggMarginal(baseplot,
-                type = "density",
-                margins = "y",
-                groupColour = TRUE
-            )
+
+
+
+        bplot <- res %>%
+            ggplot(aes(x = reorder(eq_group, -estimation), y = estimation, color = gender, fill = gender)) +
+            geom_bar(stat = "identity", position = "dodge") +
+            facet_grid(vars(gender)) +
+            theme(
+                axis.text.x = element_text(angle = 90, hjust = 0.95, vjust = 0.2)
+            ) +
+            ggtitle(
+                "Barplot of the estimated energy outcomes",
+                subtitle = "'not-considered' are the estimations from the equations which do not consider the gender."
+            ) +
+            xlab("Equation groups (format: [Author_year_additional-spec])")
+
+
+        # resplot <- ggMarginal(baseplot,
+        #         type = "density",
+        #         margins = "y",
+        #         groupColour = TRUE
+        #     )
 
         output[["res_plot"]] <- renderPlot(resplot)
+        output[["bar_plot"]] <- renderPlot(bplot)
 
 
     })
