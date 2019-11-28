@@ -496,10 +496,10 @@ cat("\ndots\n")
 cat(str(dots))
 
         outcomes <- c(
-            "bee", "bmr", "eee", "ree", "rmr", "eer")[c(
-            input[["bee_tick"]], input[["bmr_tick"]],
-            input[["eee_tick"]], input[["ree_tick"]],
-            input[["rmr_tick"]], input[["eer_tick"]]
+            "bee", "bmr", "ree", "rmr", "eee", "eer")[c(
+            input[["beebmr_tick"]], input[["beebmr_tick"]],
+            input[["reermr_tick"]], input[["reermr_tick"]],
+            input[["eeeeer_tick"]], input[["eeeeer_tick"]]
         )]
 
 
@@ -516,7 +516,15 @@ cat(str(dots))
 
 
         res <- evaluate_at(reer, dots, .outcome = outcomes) %>%
-            dplyr::mutate(estimation = round(estimation, 2)) %>%
+            dplyr::mutate(
+                estimation = round(estimation, 2),
+                outcome =  outcome %>%
+                    forcats::fct_collapse(
+                        "bee/bmr" = c("bee", "bmr"),
+                        "ree/rmr" = c("ree", "rmr"),
+                        "eee/eer" = c("eee", "eer"),
+                    )
+            ) %>%
             dplyr::select(outcome, estimation, dplyr::everything()) %>%
             dplyr::mutate_if(is.character, ~tidyr::replace_na(., "not-considered") %>% as.factor()) %>%
             dplyr::rename(gender = sex)
@@ -534,13 +542,20 @@ cat(str(res))
         )
 
 
-        resplot <- res %>%
+        baseplot <- res %>%
             ggplot(aes(x = gender, y = estimation, colour = gender)) +
             geom_boxplot(varwidth = TRUE) +
+            geom_point(size = 0, alpha = 0) +
             theme(axis.text.x = element_blank()) +
             ggtitle(
-                "Distribution of the Estimated Energy Requirements by Gender",
+                "Distributions of the estimated energy outcomes",
                 subtitle = "'not-considered' are the estimations from the equations which do not consider the gender."
+            )
+
+        resplot <- ggMarginal(baseplot,
+                type = "density",
+                margins = "y",
+                groupColour = TRUE
             )
 
         output[["res_plot"]] <- renderPlot(resplot)

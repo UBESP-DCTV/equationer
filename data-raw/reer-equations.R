@@ -474,10 +474,14 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
 
 
     # Gaillard 2008-b [CHECKED \(coef \+ udm\)] ------------------------
+    #
+    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    # NOTA: IL WEIGHT ERA CON SEGNO "MENO" MA PORTA A RISULTATI INVEROSIMILI (OLTRE CHE CONTRARI SIA ALL'INTUIZIONE CHE A TUTTE LE LORO ALTRE STESSE EQUAZIONI... ABBIAMO MESSO IL PIÙ E I RISULTATI SEMBRANO RAGIONEVOLI, DA COPNTATTARE gAILLARD PER CONFERMA)
+    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     eqs(name = "gaillard_08-b", reference = "Gaillard, C., Alix, E., Sallé, A., Berrut, G., & Ritz, P. (2008). A practical approach to estimate resting energy expenditure in frail elderly people. The Journal of Nutrition Health and Aging, 12(4), 277.",
 
         eq(name = "gaillard_08-b", outcome = "ree", strata = list(),
-           intercept = 82.6, weight = -9.5, height = 6.5, age = -6.1
+           intercept = 82.6, weight = 9.5, height = 6.5, age = -6.1
         )
 
     ),
@@ -501,10 +505,10 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "ganpule_07", reference = "Ganpule, A. A., Tanaka, S., Ishikawa-Takata, K., & Tabata, I. (2007). Interindividual variability in sleeping metabolic rate in Japanese subjects. European Journal of Clinical Nutrition, 61(11), 1256.",
 
         eq(name = "ganpule_07-m", outcome = "rmr", strata = list(sex = "male", ethnicity = "japanese"),
-           intercept = 0.1238,   weight = 0.0481, height = 0.0234, age = -0.0138
+           intercept = 0.1238*mj2kcal,   weight = 0.0481*mj2kcal, height = 0.0234*mj2kcal, age = -0.0138*mj2kcal
         ),
         eq(name = "ganpule_07-f", outcome = "rmr", strata = list(sex = "female", ethnicity = "japanese"),
-           intercept = (0.1238 - 0.5473), weight = 0.0481, height = 0.0234, age = -0.1038
+           intercept = (0.1238 - 0.5473)*mj2kcal, weight = 0.0481*mj2kcal, height = 0.0234*mj2kcal, age = -0.1038*mj2kcal
         )
 
     ),
@@ -1551,10 +1555,10 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     ),
 
     # Sridhar 1994 [CHECKED \(coef \+ udm\)] ----------------------------
-    eqs(name = "shridhar_93 -a", reference = "Sridhar, M. K., Banham, S. W., & Lean, M. E. J. (1994). Predicting resting energy expenditure in patients with musculoskeletal deformities. Clinical Nutrition, 13(5), 286-290. https://doi.org/10.1016/0261-5614(94)90051-5",
+    eqs(name = "shridhar_93-a", reference = "Sridhar, M. K., Banham, S. W., & Lean, M. E. J. (1994). Predicting resting energy expenditure in patients with musculoskeletal deformities. Clinical Nutrition, 13(5), 286-290. https://doi.org/10.1016/0261-5614(94)90051-5",
 
         eq(name = "shridhar_93-a", outcome = "ree", strata = list(),
-           intercept = -6.25*mj2kcal, age = -0.0324*mj2kcal, midarm_circumference = 0.295, arm_span = 0.0483 # MAC = midarm circunference, MAMC = midarm muscle circumference, AS = armspan. MAMC = MAC -3.14 TSF (Triceps skinfold thickness)
+           intercept = -6.25*mj2kcal, age = -0.0324*mj2kcal, midarm_circumference = 0.295*mj2kcal, arm_span = 0.0483*mj2kcal # MAC = midarm circunference, MAMC = midarm muscle circumference, AS = armspan. MAMC = MAC -3.14 TSF (Triceps skinfold thickness)
         )
 
     ),
@@ -1563,7 +1567,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "shridhar_93-b", reference = "Sridhar, M. K., Banham, S. W., & Lean, M. E. J. (1994). Predicting resting energy expenditure in patients with musculoskeletal deformities. Clinical Nutrition, 13(5), 286-290. https://doi.org/10.1016/0261-5614(94)90051-5",
 
         eq(name = "shridhar_93-b", outcome = "ree", strata = list(),
-           intercept = 2.38*mj2kcal, weight = 0.0553
+           intercept = 2.38*mj2kcal, weight = 0.0553*mj2kcal
         )
 
     ),
@@ -1572,7 +1576,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "shridhar_93-c", reference = "Sridhar, M. K., Banham, S. W., & Lean, M. E. J. (1994). Predicting resting energy expenditure in patients with musculoskeletal deformities. Clinical Nutrition, 13(5), 286-290. https://doi.org/10.1016/0261-5614(94)90051-5",
 
         eq(name = "shridhar_93-c", outcome = "ree", strata = list(),
-           intercept = 4.1*mj2kcal, weight = 0.0554, age = -0.029
+           intercept = 4.1*mj2kcal, weight = 0.0554*mj2kcal, age = -0.029*mj2kcal
         )
 
     ),
@@ -1582,7 +1586,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "shridhar_93-d", reference = "Sridhar, M. K., Banham, S. W., & Lean, M. E. J. (1994). Predicting resting energy expenditure in patients with musculoskeletal deformities. Clinical Nutrition, 13(5), 286-290. https://doi.org/10.1016/0261-5614(94)90051-5",
 
         eq(name = "shridhar_93-d", outcome = "ree", strata = list(),
-           intercept = -0.26*mj2kcal, weight = 0.0436, age = -0.0275, arm_span = 0.0304
+           intercept = -0.26*mj2kcal, weight = 0.0436*mj2kcal, age = -0.0275*mj2kcal, arm_span = 0.0304*mj2kcal
         )
 
     ),
@@ -1591,7 +1595,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "shridhar_93-e", reference = "Sridhar, M. K., Banham, S. W., & Lean, M. E. J. (1994). Predicting resting energy expenditure in patients with musculoskeletal deformities. Clinical Nutrition, 13(5), 286-290. https://doi.org/10.1016/0261-5614(94)90051-5",
 
         eq(name = "shridhar_93-e", outcome = "ree", strata = list(),
-           intercept = -4.88*mj2kcal, weight = 0.0102, age = -0.0318, arm_span = 0.0427, mean_chest_skinfold = 0.241
+           intercept = -4.88*mj2kcal, weight = 0.0102*mj2kcal, age = -0.0318*mj2kcal, arm_span = 0.0427*mj2kcal, mean_chest_skinfold = 0.241*mj2kcal
         )
 
     ),
@@ -1600,7 +1604,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "shridhar_93-f", reference = "Sridhar, M. K., Banham, S. W., & Lean, M. E. J. (1994). Predicting resting energy expenditure in patients with musculoskeletal deformities. Clinical Nutrition, 13(5), 286-290. https://doi.org/10.1016/0261-5614(94)90051-5",
 
         eq(name = "shridhar_93-f", outcome = "ree", strata = list(),
-           intercept = -2.27*mj2kcal, midarm_circumference = 0.399
+           intercept = -2.27*mj2kcal, midarm_circumference = 0.399*mj2kcal
         )
 
     ),
@@ -1609,7 +1613,7 @@ reer <- eqs_bag(name = "reer", reference = "Gregori et.al 2019",
     eqs(name = "shridhar_93-g", reference = "Sridhar, M. K., Banham, S. W., & Lean, M. E. J. (1994). Predicting resting energy expenditure in patients with musculoskeletal deformities. Clinical Nutrition, 13(5), 286-290. https://doi.org/10.1016/0261-5614(94)90051-5",
 
         eq(name = "shridhar_93-g", outcome = "ree", strata = list(),
-           intercept = -170*mj2kcal, midarm_circumference = 0.393, age = -0.247
+           intercept = -170*mj2kcal, midarm_circumference = 0.393*mj2kcal, age = -0.247*mj2kcal
         )
 
     ),
