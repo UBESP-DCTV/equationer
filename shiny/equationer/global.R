@@ -1,4 +1,5 @@
 library(tidyverse)
+library(forcats)
 library(shinyjs)
 library(shinyBS)
 library(ggExtra)
