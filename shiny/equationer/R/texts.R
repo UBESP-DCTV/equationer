@@ -1,5 +1,19 @@
+title_text <- function() {
+  tags$html(
+    title = "equationer",
+    titlePanel("Equationer: Calculator for energy requirements in elderly patients"),
+    glue::glue("Last update (data): {get_last_update(reer)}"),
+    p(),
+    glue::glue("Last update (interface): {as.Date(file.info('ui.R')[['mtime']])}"),
+    hr()
+  )
+}
+
+
+
+
 instructions_text <- function() {
-  p(
+  tags$html(
     p("Equationer is a graphical tool to estimate distributions of daily energy requirement per day according to the characteristics of a subject."),
     p("Equationer will show all the equations available in literature for elderly patients according to the values provided too."),
     hr(),
