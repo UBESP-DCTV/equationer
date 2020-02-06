@@ -582,9 +582,10 @@ cat(str(res))
             ) +
             theme(axis.text.x = element_blank()) +
             ggtitle(
-                "Distributions of the estimated energy outcomes",
-                subtitle = "'not-considered' are the estimations from the equations which do not consider the gender."
-            )
+                "Distributions for all the equations calculated according to the value provided.",
+                subtitle = 'Label "Not considered" refers to the distributions of the equations that do not distinguish between male and female. For each distribution are provided, minum, median and maximum value.'
+            ) +
+            ylab("Estimation (Kcal/day)")
 
 
 
@@ -594,13 +595,14 @@ cat(str(res))
             geom_bar(stat = "identity", position = "dodge") +
             facet_grid(vars(gender)) +
             theme(
-                axis.text.x = element_text(angle = 90, hjust = 0.95, vjust = 0.2)
+                axis.text.x = element_text(angle = 30, hjust = 0.95, vjust = 1)
             ) +
             ggtitle(
                 "Barplot of the estimated energy outcomes",
-                subtitle = "'not-considered' are the estimations from the equations which do not consider the gender."
+                subtitle = "Distinct bars correspond to distinct equations."
             ) +
-            xlab("Equation groups (format: [Author_year_additional-spec])")
+            xlab("Equation groups (format: [Author_year_additional-spec])") +
+            ylab("Estimation (Kcal/day)")
 
 
         # resplot <- ggMarginal(baseplot,
