@@ -4,7 +4,7 @@ title_text <- function() {
     titlePanel("Equationer: Calculator for energy requirements in elderly patients"),
     glue::glue("Last update (data): {get_last_update(reer)}"),
     p(),
-    glue::glue("Last update (interface): {as.Date(file.info('ui.R')[['mtime']])}"),
+    glue::glue("Last update (interface): {as.Date(file.info('app.R')[['mtime']])}"),
     hr()
   )
 }
