@@ -1,7 +1,4 @@
 # Setup -----------------------------------------------------------
-
-
-
 options(shiny.reactlog = TRUE)
 
 library(shiny)
@@ -16,6 +13,10 @@ library(shinyjs)
 library(shinyBS)
 library(equationer)
   data("reer")
+
+reer_covs_no_intercept <- get_covariates(reer) %>%
+  .[!stringr::str_detect(., "intercept")] %>%
+  sort()
 
 
 
@@ -348,48 +349,43 @@ server <- function(input, output, session) {
     }
 
 
-    reer_covs_no_intercept <- get_covariates(reer) %>%
-      .[!stringr::str_detect(., "intercept")] %>%
-      sort()
-
-
-    cov <- list(
-      input[["abdomen_circ"]],
-      adj_weight,
-      input[["age"]],
-      input[["air_humidity"]],
-      input[["air_temperature"]],
-      input[["albumin_mg_dl"]],
-      input[["arm_span"]],
-      input[["blood_pressure_gradient"]],
-      bmi,
-      bmi_pavlidou,
-      bmi_pavlidou_f,
-      bmi_pavlidou_m,
-      input[["body_surface_area"]],
-      input[["body_temperature"]],
-      input[["fasting_plasma_glucose"]],
-      input[["glucose_g_dl"]],
-      input[["height"]],
-      input[["hip_circumference"]],
-      input[["hour"]],
-      lbm,
-      livingston_weight_age,
-      livingston_weight_alone,
-      livingston_weight_f,
-      livingston_weight_f_alone,
-      livingston_weight_m,
-      livingston_weight_m_alone,
-      input[["lta"]],
-      input[["mean_chest_skinfold"]],
-      input[["menopausal"]],
-      input[["midarm_circumference"]],
-      input[["pulse"]],
-      input[["subscapular_skinfold"]],
-      var_metsios,
-      input[["weight"]],
-      input[["wrist_circumference"]]
-    ) %>%
+   cov <- list(
+        input[["abdomen_circ"]],
+        adj_weight,
+        input[["age"]],
+        input[["air_humidity"]],
+        input[["air_temperature"]],
+        input[["albumin_mg_dl"]],
+        input[["arm_span"]],
+        input[["blood_pressure_gradient"]],
+        bmi,
+        bmi_pavlidou,
+        bmi_pavlidou_f,
+        bmi_pavlidou_m,
+        input[["body_surface_area"]],
+        input[["body_temperature"]],
+        input[["fasting_plasma_glucose"]],
+        input[["glucose_g_dl"]],
+        input[["height"]],
+        input[["hip_circumference"]],
+        input[["hour"]],
+        lbm,
+        livingston_weight_age,
+        livingston_weight_alone,
+        livingston_weight_f,
+        livingston_weight_f_alone,
+        livingston_weight_m,
+        livingston_weight_m_alone,
+        input[["lta"]],
+        input[["mean_chest_skinfold"]],
+        input[["menopausal"]],
+        input[["midarm_circumference"]],
+        input[["pulse"]],
+        input[["subscapular_skinfold"]],
+        var_metsios,
+        input[["weight"]],
+        input[["wrist_circumference"]]
+      ) %>%
       setNames(reer_covs_no_intercept) %>%
       .[c(
         input[["abdomen_circ_tick"]],
@@ -429,46 +425,47 @@ server <- function(input, output, session) {
         input[["wrist_circumference_tick"]]
       )]
 
-    if (input[["menopausal_tick"]] && menopausal_check) {
-      cov[["menopausal"]] <- dplyr::case_when(
-        cov[["menopausal"]] == "pre-menopausal" ~ 1,
-        cov[["menopausal"]] == "perimenopausal" ~ 2,
-        cov[["menopausal"]] == "post-menopausal" ~ 3,
-        TRUE ~ 0
-      )
-    }
+      if (input[["menopausal_tick"]] && menopausal_check) {
+        cov[["menopausal"]] <- dplyr::case_when(
+          cov[["menopausal"]] == "pre-menopausal" ~ 1,
+          cov[["menopausal"]] == "perimenopausal" ~ 2,
+          cov[["menopausal"]] == "post-menopausal" ~ 3,
+          TRUE ~ 0
+        )
+      }
+
 
     cat("\nCOV\n")
     cat(str(cov))
 
     strata <- list(
-      input[["activity_intensity"]],
-      age_18_65,
-      age_18_74,
-      age_50_69,
-      age_60_70,
-      age_60_74,
-      input[["athletic"]],
-      bmi_class,
-      bmi_greater_21,
-      input[["copd"]],
-      input[["diabetic"]],
-      input[["ethnicity"]],
-      input[["hf"]],
-      input[["inpatients"]],
-      input[["meal"]],
-      # older_18,
-      older_29,
-      # older_59,
-      older_60,
-      older_70,
-      older_74,
-      input[["pal"]],
-      input[["race"]],
-      input[["rheumatoid_arthritis"]],
-      input[["sex"]],
-      input[["smoke"]]
-    ) %>%
+        input[["activity_intensity"]],
+        age_18_65,
+        age_18_74,
+        age_50_69,
+        age_60_70,
+        age_60_74,
+        input[["athletic"]],
+        bmi_class,
+        bmi_greater_21,
+        input[["copd"]],
+        input[["diabetic"]],
+        input[["ethnicity"]],
+        input[["hf"]],
+        input[["inpatients"]],
+        input[["meal"]],
+        # older_18,
+        older_29,
+        # older_59,
+        older_60,
+        older_70,
+        older_74,
+        input[["pal"]],
+        input[["race"]],
+        input[["rheumatoid_arthritis"]],
+        input[["sex"]],
+        input[["smoke"]]
+      ) %>%
       setNames(c(
         'activity_intensity', 'age_18_65', 'age_18_74',
         'age_50_69', 'age_60_70', 'age_60_74', 'athletic',
@@ -514,15 +511,7 @@ server <- function(input, output, session) {
     cat(str(strata))
 
 
-
-    dots <- as.data.frame(c(cov, strata)) %>%
-      dplyr::mutate_if(is.factor, as.character)
-
-    cat("\ndots\n")
-    cat(str(dots))
-
-    outcomes <- c(
-      "bee", "bmr", "ree", "rmr", "eee", "eer")[c(
+    outcomes <- c("bee", "bmr", "ree", "rmr", "eee", "eer")[c(
         input[["beebmr_tick"]], input[["beebmr_tick"]],
         input[["reermr_tick"]], input[["reermr_tick"]],
         input[["eeeeer_tick"]], input[["eeeeer_tick"]]
@@ -532,115 +521,82 @@ server <- function(input, output, session) {
     cat("\noutcomes\n")
     cat(str(outcomes))
 
-    if (!length(cov)) {
-      showNotification("Please, supply information about more covariates.", duration = 30, type = "error")
-      dots <- data.frame(foo = 0, stringsAsFactors = FALSE)
-    }
+    dots <- if (length(cov)) {
+        as.data.frame(c(cov, strata)) %>%
+          dplyr::mutate_if(is.factor, as.character)
+      } else {
+        showNotification("Please, supply information about more covariates.", duration = 30, type = "error")
+        data.frame(foo = 0, stringsAsFactors = FALSE)
+      }
+
 
     cat("\ndots\n")
     cat(str(dots))
 
-
     res <- evaluate_at(reer, dots, .outcome = outcomes) %>%
-      dplyr::mutate(
-        estimation = round(estimation, 2),
-        outcome =  outcome %>%
-          forcats::fct_collapse(
-            "bee/bmr" = c("bee", "bmr"),
-            "ree/rmr" = c("ree", "rmr"),
-            "eee/eer" = c("eee", "eer")
-          )
-      ) %>%
-      dplyr::select(outcome, estimation, dplyr::everything()) %>%
-      dplyr::mutate_if(is.character, ~tidyr::replace_na(., "not-considered") %>% as.factor()) %>%
-      dplyr::rename(gender = sex)
-
-    cat(str(res))
+        dplyr::mutate(
+          estimation = round(.data[["estimation"]], 2),
+          outcome =  .data[["outcome"]] %>%
+            forcats::fct_collapse(
+              "bee/bmr" = c("bee", "bmr"),
+              "ree/rmr" = c("ree", "rmr"),
+              "eee/eer" = c("eee", "eer")
+            )
+        ) %>%
+        dplyr::select("outcome", "estimation", dplyr::everything()) %>%
+        dplyr::mutate_if(is.character,
+                         ~ tidyr::replace_na(., "not-considered") %>% as.factor()
+        ) %>%
+        dplyr::rename(gender = sex)
 
     output[["res_tab"]] <- renderDT(res,
                                     rownames = FALSE,
                                     filter = "top",
-                                    selection = list(
-                                      mode = "single",
-                                      selected = 1L,
-                                      target = "column"
-                                    )
+                                    selection = list(mode = "single", selected = 1L, target = "column")
     )
 
 
-    fun_median <- function(x){
-      tibble(
-        y = median(x, na.rm = TRUE),
-        label = glue::glue("median = {y}")
-      )
-    }
-
-    fun_min <- function(x){
-      tibble(
-        y = min(x, na.rm = TRUE),
-        label = glue::glue("min = {y}")
-      )
-    }
-
-    fun_max <- function(x){
-      tibble(
-        y = max(x, na.rm = TRUE),
-        label = glue::glue("max = {y}")
-      )
-    }
-
     resplot <- res %>%
-      ggplot(aes(x = gender, y = estimation, colour = gender)) +
-      geom_violin(aes(fill = gender),
-                  alpha = 0.2,
-                  # draw_quantiles = c(0.01, 0.1, 0.25, 0.5, 0.75, 0.9, 0.99),
-                  trim = FALSE,
-                  scale = "count"
-      ) +
-      geom_boxplot(varwidth = TRUE, alpha = 0.7) +
-      stat_summary(fun.data = fun_min, geom = "text",
-                   vjust = 2, hjust = -0.5
-      ) +
-      stat_summary(fun.data = fun_median, geom = "text",
-                   vjust = -3, hjust = -0.5) +
-      stat_summary(fun.data = fun_max, geom = "text",
-                   vjust = -2, hjust = -0.5
-      ) +
-      theme(axis.text.x = element_blank()) +
-      ggtitle(
-        "Distributions for all the equations calculated according to the value provided.",
-        subtitle = 'Label "Not considered" refers to the distributions of the equations that do not distinguish between male and female. For each distribution are provided, minum, median and maximum value.'
-      ) +
-      ylab("Estimation (Kcal/day)")
-
-
-
+        ggplot(aes(x = gender, y = estimation, colour = gender)) +
+        geom_violin(aes(fill = gender),
+                    alpha = 0.2,
+                    # draw_quantiles = c(0.01, 0.1, 0.25, 0.5, 0.75, 0.9, 0.99),
+                    trim = FALSE,
+                    scale = "count"
+        ) +
+        geom_boxplot(varwidth = TRUE, alpha = 0.7) +
+        stat_summary(fun.data = fun_min, geom = "text",
+                     vjust = 2, hjust = -0.5
+        ) +
+        stat_summary(fun.data = fun_median, geom = "text",
+                     vjust = -3, hjust = -0.5) +
+        stat_summary(fun.data = fun_max, geom = "text",
+                     vjust = -2, hjust = -0.5
+        ) +
+        theme(axis.text.x = element_blank()) +
+        ggtitle(
+          "Distributions for all the equations calculated according to the value provided.",
+          subtitle = 'Label "Not considered" refers to the distributions of the equations that do not distinguish between male and female. For each distribution are provided, minum, median and maximum value.'
+        ) +
+        ylab("Estimation (Kcal/day)")
 
     bplot <- res %>%
-      ggplot(aes(x = reorder(eq_group, -estimation), y = estimation, color = gender, fill = gender)) +
-      geom_bar(stat = "identity", position = "dodge") +
-      facet_grid(vars(gender)) +
-      theme(
-        axis.text.x = element_text(angle = 30, hjust = 0.95, vjust = 1)
-      ) +
-      ggtitle(
-        "Barplot of the estimated energy outcomes",
-        subtitle = "Distinct bars correspond to distinct equations."
-      ) +
-      xlab("Equation groups (format: [Author_year_additional-spec])") +
-      ylab("Estimation (Kcal/day)")
+        ggplot(aes(x = reorder(eq_group, -estimation), y = estimation, color = gender, fill = gender)) +
+        geom_bar(stat = "identity", position = "dodge") +
+        facet_grid(vars(gender)) +
+        theme(
+          axis.text.x = element_text(angle = 30, hjust = 0.95, vjust = 1)
+        ) +
+        ggtitle(
+          "Barplot of the estimated energy outcomes",
+          subtitle = "Distinct bars correspond to distinct equations."
+        ) +
+        xlab("Equation groups [Author_year_additional-spec]") +
+        ylab("Estimation (Kcal/day)")
 
-
-    # resplot <- ggMarginal(baseplot,
-    #         type = "density",
-    #         margins = "y",
-    #         groupColour = TRUE
-    #     )
 
     output[["res_plot"]] <- renderPlot(resplot)
     output[["bar_plot"]] <- renderPlot(bplot)
-
-
   })
 
 }
