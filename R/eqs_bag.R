@@ -7,7 +7,7 @@
 #' @param name (chr) the name of the \code{\link{eqs}}(s)' bag
 #' @param reference (chr, default NA) an optional reference for the
 #'     bag of \code{\link{eqs}}(s) in the bag.
-#' @param last_update (Date, dafault today) the date of the last bag
+#' @param last_update (Date, default today) the date of the last bag
 #'     update.
 #'
 #' @return an \code{\link{eqs_bag}} object

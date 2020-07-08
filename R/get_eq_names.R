@@ -12,7 +12,7 @@ get_eq_names <- function(x) {
 }
 
 
-#' @describeIn get_eq_names Extract the equations's names of the given
+#' @describeIn get_eq_names Extract the equations' names of the given
 #'     \code{eqs} object.
 #' @export
 #'

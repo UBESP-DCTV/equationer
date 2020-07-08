@@ -58,7 +58,7 @@ test_that("correct evaluation for eq", {
     expect_equal(evaluated[["age"]], 38)
     expect_equal(evaluated[["bmi"]], 18)
     expect_equal(evaluated[["outcome"]], "kcal/day")
-    expect_equal(evaluated[["estimation"]], 13.6)
+    expect_equal(evaluated[["estimation"]], c(`kcal/day` = 13.6))
     expect_equal(evaluated[["eq_name"]], "eq_test")
 
 
@@ -94,11 +94,11 @@ test_that("error works for eq", {
 
 
 test_that("correct evaluation for eqs", {
-    expect_equal(evaluateds[["estimation"]],  c(2.4, 13.6, -2.4, -13.6))
-    expect_equal(evaluateds1[["estimation"]], c(2.4, 13.6, -2.4, -13.6))
-    expect_equal(evaluateds2[["estimation"]], c(13.6, -13.6))
-    expect_equal(evaluateds3[["estimation"]], c(2.4, 13.6, -2.4, -13.6))
-    expect_equal(evaluateds4[["estimation"]], c(13.6, -13.6))
+    expect_equal(unname(evaluateds[["estimation"]]),  c(2.4, 13.6, -2.4, -13.6))
+    expect_equal(unname(evaluateds1[["estimation"]]), c(2.4, 13.6, -2.4, -13.6))
+    expect_equal(unname(evaluateds2[["estimation"]]), c(13.6, -13.6))
+    expect_equal(unname(evaluateds3[["estimation"]]), c(2.4, 13.6, -2.4, -13.6))
+    expect_equal(unname(evaluateds4[["estimation"]]), c(13.6, -13.6))
 
     expect_equal(evaluateds[["age"]],  rep(38, 4))
     expect_equal(evaluateds[["bmi"]],  rep(18, 4))
@@ -154,46 +154,46 @@ test_that("correct evaluation for eqs_bag", {
 
     expect_equal(
         suppressWarnings(
-            evaluate_at(eqs_bag_test, age = 35, bmi = 18)[["estimation"]]
+            unname(evaluate_at(eqs_bag_test, age = 35, bmi = 18)[["estimation"]])
         ),
         c(1.5, 12.1, -1.5, -12.1)
     )
 
     expect_equal(
         suppressWarnings(
-            evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81)[["estimation"]]
+            unname(evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81)[["estimation"]])
         ),
         c(1.5, 12.1, -1.5, -12.1, 12.7, 1.1, -12.7, -9.2)
     )
 
     expect_equal(
         suppressWarnings(
-            evaluate_at(eqs_bag_test, age = 35, bmi = 18, sex = "female")[["estimation"]]
+            unname(evaluate_at(eqs_bag_test, age = 35, bmi = 18, sex = "female")[["estimation"]])
         ),
         c(12.1, -12.1)
     )
 
     expect_equal(
         suppressWarnings(
-            evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female")[["estimation"]]
+            unname(evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female")[["estimation"]])
         ),
         c(12.1, -12.1,  12.7, -12.7)
     )
 
     expect_equal(
         suppressWarnings(
-            evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, nyha = 1)[["estimation"]]
+            unname(evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, nyha = 1)[["estimation"]])
         ),
         c(1.5, 12.1, 12.7, 1.1, -12.7, -9.2)
     )
 
     expect_equal(
-        evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, .outcome = "kcal/day")[["estimation"]],
+        unname(evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, .outcome = "kcal/day")[["estimation"]]),
         c(1.5, 12.1, -1.5, -12.1, -12.7, -9.2)
     )
 
     expect_equal(
-        evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female", .outcome = "kcal/day")[["estimation"]],
+        unname(evaluate_at(eqs_bag_test, age = 35, bmi = 18, weight = 81, sex = "female", .outcome = "kcal/day")[["estimation"]]),
         c(12.1, -12.1, -12.7)
     )
 })
@@ -240,13 +240,13 @@ test_that("works with data frames", {
 
     expect_equal(
         suppressWarnings(
-            evaluate_at(eqs_bag_test, one_patient)[["estimation"]]
+            unname(evaluate_at(eqs_bag_test, one_patient)[["estimation"]])
         ),
         c(12.1, -12.1, 12.7, -12.7)
     )
     expect_equal(
         suppressWarnings(
-            evaluate_at(eqs_bag_test, more_patients)[["estimation"]]
+            unname(evaluate_at(eqs_bag_test, more_patients)[["estimation"]])
         ),
         c(12.1, -12.1, 12.7, -12.7, -1.9, 1.9, 3.9, -13.2)
     )

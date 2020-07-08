@@ -21,7 +21,7 @@ class \code{\link{eqs}})
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{eqs}: Extract the equations's names of the given
+\item \code{eqs}: Extract the equations' names of the given
 \code{eqs} object.
 }}
 

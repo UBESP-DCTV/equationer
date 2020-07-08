@@ -6,7 +6,7 @@
 \alias{equationer-package}
 \title{equationer: Equations of Energy Requirements}
 \description{
-\if{html}{\figure{logo.png}{options: align='right'}}
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
 The goal of the package `equationer` is to
     implement an environment to consistently generate the estimations from

@@ -13,7 +13,7 @@
 #'   livingston_weight_f, livingston_weight_f_alone,
 #'   livingston_weight_m, livingston_weight_m_alone, lta,
 #'   mean_chest_skinfold, menopausal, subscapular_skinfold,
-#'   surface_area, var_metsios, weight, wrist_circumferenc }
+#'   surface_area, var_metsios, weight, wrist_circumference }
 #'   \item{Strata included}{age_18_74, age_60_70, age_60_74,
 #'   rheumatoid_arthritis, bmi_class, bmi_greater_21, copd, diabetic,
 #'   ethnicity, hf, inpatients, older_18, older_29, older_59, older_60,
@@ -23,3 +23,6 @@
 #'
 #' @source "Gregori et.al. 2019, Review of Equations of Energy Requirements"
 "reer"
+
+#' data from CaloricEstimationEqu_DATA_2019-04-12_1408.csv
+"data_20190412"

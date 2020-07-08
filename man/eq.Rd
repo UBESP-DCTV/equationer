@@ -17,7 +17,7 @@ eq(..., name, outcome, strata = vector("list"))
 \item{outcome}{(chr) the outcome produced by the equation}
 
 \item{strata}{(list, default = empty list) if the equation is one of
-a set of equations defined each one for a compbination of
+a set of equations defined each one for a combination of
 level of some strata variables, \code{strata} is a list for those
 levels (named with strata names)}
 

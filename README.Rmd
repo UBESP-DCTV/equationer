@@ -51,7 +51,7 @@ Moreover, you have to supply strata as a named list defining in
 each equation which level of the strata it consider. Note that strata
 levels can be of different class inside an equation (e.g. character,
 numeric, ...) but, obviously, you cannot provide multiple strata with
-the same name or a strata with more thn one level in each equation.
+the same name or a strata with more than one level in each equation.
 
 
 ```{r}
@@ -83,7 +83,7 @@ eq12 <- eq(age = 0.2, weight = -0.2, name = "eq-12", outcome = "kcal/day",
 )
 ```
 
-When you visualize an equation the manin characteristics will be 
+When you visualize an equation the main characteristics will be 
 highlighted
 
 ```{r}
@@ -95,8 +95,8 @@ eq9
 ```
 
 
-We can evaluate an equation providing (in a nutral non quoted language)
-the values for each covariates. Please note that we have to provide "at
+We can evaluate an equation providing (in a natural non quoted language)
+the values for each . Please note that we have to provide "at
 least" the covariate included in the equation (or we get an error that
 tell us which ones we have missed). If we provide more covariates
 than the ones included in the equation it does not matter for the
@@ -112,11 +112,11 @@ evaluate_at(eq9, age = 35, bmi = 18, weight = 84)
 
 
 
-Equations must be aggregated in group, basicaly because the strata which
+Equations must be aggregated in group, basically because the strata which
 cannot suit well in maths: i.e. each different combination of strata
-(i.e. cathegorical level) there is an equation. For consistency, even
-single equation with no strat must be grouped in a group (singleton).
-Even for the grous of equations we have to provide (distinct) names
+(i.e. categorical level) there is an equation. For consistency, even
+single equation with no strata must be grouped in a group (singleton).
+Even for the groups of equations we have to provide (distinct) names
 for each group. Moreover, you can optionally associate a reference 
 (i.e. a single character string) to groups.
 
@@ -130,16 +130,16 @@ eqs2 <- eqs(eq9, eq10, eq11, eq12, name = "eqs-b", reference = "ref-b")
 eqs1
 ```
 
-We can evaluate a group of equation all togeter as it is a single one.
+We can evaluate a group of equation all together as it is a single one.
 We will get a data frame of results with one row each possible equation.
 Possible equation were decided with respect to the outcome requested
 (default all the possible one), i.e. if some equation in a group cannot
 provide an outcome, clearly those equation will not evaluate it.
-At the same time we can considered for the evaluation only eqautions
-which assume particoular level of some strata. In this case if 
-we ask for a statum to assume a level it does not have nothing will 
+At the same time we can considered for the evaluation only equations
+which assume particular level of some strata. In this case if 
+we ask for a stratum to assume a level it does not have nothing will 
 be computed (anyway the resulting object still a data frame of zero
-rows, for consistency of the outut class). On the other hand if we
+rows, for consistency of the output class). On the other hand if we
 ask for a strata that does not exist at all in the equation in the 
 group it will be ignored in the computation and the level selected
 will be reported in the output data frame.
@@ -157,13 +157,13 @@ evaluate_at(eqs1, age = 38, bmi = 18, weight = 81, height = 184)
 # filter by a strata level
 evaluate_at(eqs1, age = 38, bmi = 18, sex = "female")
 
-# filter by a strata inexistent level
+# filter by a strata nonexistent level
 evaluate_at(eqs1, age = 38, bmi = 18, sex = "unknown")
 
 # Ask only for a specific outcome (please note the DOT)
 evaluate_at(eqs2, age = 38, weight = 81, .outcome = "kcal/day")
 
-# Ask only for a specific inexistent outcome
+# Ask only for a specific nonexistent outcome
 evaluate_at(eqs2, age = 38, weight = 81, .outcome = "kcal")
 ```
 
