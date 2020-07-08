@@ -620,7 +620,7 @@ server <- function(input, output, session) {
           ggsave(file, device = input$bxFormat, plot = resplot,
             width = input$bxWidth,
             height = input$bxHeight,
-            scale = 4,
+            scale = 2^(22/input$bxWidth),
             units = "cm"
           )
         }
@@ -640,7 +640,7 @@ server <- function(input, output, session) {
           ggsave(file, device = input$brFormat, plot = bplot,
                  width = input$brWidth,
                  height = input$brHeight,
-                 scale = 4,
+                 scale = 2^(22/input$brWidth),
                  units = "cm"
           )
         }
