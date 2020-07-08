@@ -47,16 +47,16 @@ ui <- fluidPage(
           verticalLayout(
             shiny::plotOutput("res_plot"),
             fluidRow(
-              column(2, numericInput("bxWidth", "Width (cm)", value = 14, min = 1, max = 14)),
-              column(2, numericInput("bxHeight", "Height (cm)", value = 22, min = 1, max = 14)),
+              column(2, numericInput("bxWidth", "Width (cm)", value = 22, min = 1, max = 22)),
+              column(2, numericInput("bxHeight", "Height (cm)", value = 14, min = 1, max = 14)),
               column(2, selectInput("bxFormat", "Format", choices = c("png", "tiff", "pdf", "jpeg", "svg", "bmp"), selected = "png")),
               column(6, downloadButton('downloadBoxPlot','Download Boxplot'))
             ),
             hr(),
             shiny::plotOutput("bar_plot"),
             fluidRow(
-              column(2, numericInput("brWidth", "Width (cm)", value = 14, min = 1, max = 14)),
-              column(2, numericInput("brHeight", "Height (cm)", value = 22, min = 1, max = 14)),
+              column(2, numericInput("brWidth", "Width (cm)", value = 22, min = 1, max = 22)),
+              column(2, numericInput("brHeight", "Height (cm)", value = 14, min = 1, max = 14)),
               column(2, selectInput("brFormat", "Format", choices = c("png", "tiff", "pdf", "jpeg", "svg", "bmp"), selected = "png")),
               column(6, downloadButton('downloadBarPlot','Download Barplot'))
             )
@@ -620,8 +620,8 @@ server <- function(input, output, session) {
           ggsave(file, device = input$bxFormat, plot = resplot,
             width = input$bxWidth,
             height = input$bxHeight,
-            units = "cm",
-            dpi = 600
+            scale = 2,
+            units = "cm"
           )
         }
       )
@@ -640,8 +640,8 @@ server <- function(input, output, session) {
           ggsave(file, device = input$brFormat, plot = bplot,
                  width = input$brWidth,
                  height = input$brHeight,
-                 units = "cm",
-                 dpi = 600
+                 scale = 2,
+                 units = "cm"
           )
         }
       )
