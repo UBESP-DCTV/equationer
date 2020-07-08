@@ -46,8 +46,20 @@ ui <- fluidPage(
           icon = icon("chart-bar"),
           verticalLayout(
             shiny::plotOutput("res_plot"),
+            fluidRow(
+              column(2, numericInput("bxWidth", "Width (cm)", value = 14, min = 1, max = 14)),
+              column(2, numericInput("bxHeight", "Height (cm)", value = 22, min = 1, max = 14)),
+              column(2, selectInput("bxFormat", "Format", choices = c("png", "tiff", "pdf", "jpeg", "svg", "bmp"), selected = "png")),
+              column(6, downloadButton('downloadBoxPlot','Download Boxplot'))
+            ),
             hr(),
-            shiny::plotOutput("bar_plot")
+            shiny::plotOutput("bar_plot"),
+            fluidRow(
+              column(2, numericInput("brWidth", "Width (cm)", value = 14, min = 1, max = 14)),
+              column(2, numericInput("brHeight", "Height (cm)", value = 22, min = 1, max = 14)),
+              column(2, selectInput("brFormat", "Format", choices = c("png", "tiff", "pdf", "jpeg", "svg", "bmp"), selected = "png")),
+              column(6, downloadButton('downloadBarPlot','Download Barplot'))
+            )
           )
         ),
         tabPanel("Table",
@@ -593,6 +605,48 @@ server <- function(input, output, session) {
         ) +
         xlab("Equation groups [Author_year_additional-spec]") +
         ylab("Estimation (Kcal/day)")
+
+
+    observeEvent({
+      input$eval
+      input$bxWidth
+      input$bxHeight
+      input$bxFormat
+    }, {
+
+      output$downloadBoxPlot <- downloadHandler(
+        filename = paste0(Sys.Date(), "-eq_boxplot", ".", input$bxFormat),
+        content = function(file){
+          ggsave(file, device = input$bxFormat, plot = resplot,
+            width = input$bxWidth,
+            height = input$bxHeight,
+            units = "cm",
+            dpi = 600
+          )
+        }
+      )
+    })
+
+    observeEvent({
+      input$eval
+      input$brWidth
+      input$brHeight
+      input$brFormat
+    }, {
+
+      output$downloadBarPlot <- downloadHandler(
+        filename = paste0(Sys.Date(), "-eq_barplot", ".", input$brFormat),
+        content = function(file){
+          ggsave(file, device = input$brFormat, plot = bplot,
+                 width = input$brWidth,
+                 height = input$brHeight,
+                 units = "cm",
+                 dpi = 600
+          )
+        }
+      )
+    })
+
 
 
     output[["res_plot"]] <- renderPlot(resplot)

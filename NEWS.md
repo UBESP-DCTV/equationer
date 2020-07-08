@@ -12,12 +12,12 @@
 
 # equationer 0.3.3
 
-* Hot fix ibw calculatiobn
+* Hot fix ibw calculation
 * Adjusted weight calculated automatically in the shiny app
 
 # equationer (development version)
 
-* Hot-fix a sign erorr in a eqaution (#17)
+* Hot-fix a sign error in a equation (#17)
 
 # equationer 0.3.2
 
@@ -38,7 +38,7 @@
 * removed computable covariates from shiny (and internally compute and
   use them showing output value if useful)
 * bugfix for intercept considered internally as strata 
-* implemented and checked all the equaitons (#5)
+* implemented and checked all the equations (#5)
 
 # equationer (development version)
 
@@ -92,13 +92,13 @@
 * Added `eqs` class including constructor, extractors and main methods,
   to collect equations from the same "reference" and evaluate them
   together;
-* Changed strata atributes to list of factors;
+* Changed strata attributes to list of factors;
 * Added support for tidy evaluation (`rlang` pkg main utilities).
 
 # equationer 0.0.0.9001
 
 * Added basic methods for class `eq`; 
-* Added extractrs for class `eq`;
+* Added extractors for class `eq`;
 * Added `eq()` constructor for object of class `eq`;
 * Added ui and utils functions;
 * Insert Logo;

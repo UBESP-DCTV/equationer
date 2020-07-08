@@ -18,7 +18,7 @@ evaluate_at(x, ...)
 \arguments{
 \item{x}{equation(s set/bag) object}
 
-\item{...}{sequence of named coefficients's values}
+\item{...}{sequence of named coefficients' values}
 
 \item{.outcome}{(chr, default NULL) an optional declaration of which
 outcome(s) the computation has to consider}
@@ -29,7 +29,7 @@ each covariate supplied, one column for possible strata
 considered, one column with the outcome, one column with
 the value of the outcome that solve the equation when
 its the covariates assume the values supplied, and one last
-column wiht the name of the eqaution used
+column with the name of the equation used
 }
 \description{
 Evaluate (i.e., solve for the outcome) the supplied equation at the

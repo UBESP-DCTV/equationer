@@ -5,8 +5,7 @@
 \alias{print.eqs_bag}
 \title{Bag of multiple equation object}
 \usage{
-eqs_bag(..., name, reference = NA_character_,
-  last_update = lubridate::today())
+eqs_bag(..., name, reference = NA_character_, last_update = lubridate::today())
 
 \method{print}{eqs_bag}(x, ...)
 }
@@ -18,7 +17,7 @@ eqs_bag(..., name, reference = NA_character_,
 \item{reference}{(chr, default NA) an optional reference for the
 bag of \code{\link{eqs}}(s) in the bag.}
 
-\item{last_update}{(Date, dafault today) the date of the last bag
+\item{last_update}{(Date, default today) the date of the last bag
 update.}
 
 \item{x}{an object used to select a method}

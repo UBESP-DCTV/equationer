@@ -4,14 +4,14 @@
 #' supplied values of the covariates
 #'
 #' @param x equation(s set/bag) object
-#' @param ... sequence of named coefficients's values
+#' @param ... sequence of named coefficients' values
 #'
 #' @return a one row [tibble][tibble::tibble-package] with one column
 #'     each covariate supplied, one column for possible strata
 #'     considered, one column with the outcome, one column with
 #'     the value of the outcome that solve the equation when
 #'     its the covariates assume the values supplied, and one last
-#'     column wiht the name of the eqaution used
+#'     column with the name of the equation used
 #' @export
 evaluate_at <- function(x, ...) {
     UseMethod("evaluate_at", x)

@@ -46,22 +46,22 @@ add_bmi_class <- function(x) {
     if (is.null(x[["bmi"]])) {
         res <- res %>%
             dplyr::mutate(
-                bmi = weight / (height/100)^2
+                bmi = .data$weight / (.data$height/100)^2
             )
     }
 
     res %>%
         dplyr::mutate(
-            bmi_greater_21 = as.character(bmi > 21),
+            bmi_greater_21 = as.character(.data$bmi > 21),
             bmi_class = dplyr::case_when(
-                bmi < 18.5 ~ "underweight",
-                bmi < 25   ~ "normal weight",
-                bmi < 30   ~ "overweight",
+                .data$bmi < 18.5 ~ "underweight",
+                .data$bmi < 25   ~ "normal weight",
+                .data$bmi < 30   ~ "overweight",
                 TRUE       ~ "obese"
             ),
-            bmi_pavlidou   = weight * bmi^(-0.152),
-            bmi_pavlidou_m = weight * bmi^(-0.1786),
-            bmi_pavlidou_f = weight * bmi^(-0.2115)
+            bmi_pavlidou   = .data$weight * .data$bmi^(-0.152),
+            bmi_pavlidou_m = .data$weight * .data$bmi^(-0.1786),
+            bmi_pavlidou_f = .data$weight * .data$bmi^(-0.2115)
         )
 }
 
@@ -74,14 +74,14 @@ add_adj_weight <- function(x) {
     x %>%
         dplyr::mutate(
 
-            height_feet = height * 0.0328084,
+            height_feet = .data$height * 0.0328084,
 
-            ibw = ifelse(sex == "male",
-                52 + 1.9 * ((height_feet - 5)*12),
-                49 + 1.7 * ((height_feet - 5)*12)
+            ibw = ifelse(.data$sex == "male",
+                52 + 1.9 * ((.data$height_feet - 5)*12),
+                49 + 1.7 * ((.data$height_feet - 5)*12)
             ),
 
-            adj_weight = 0.25*(weight - ibw) + ibw
+            adj_weight = 0.25*(.data$weight - .data$ibw) + .data$ibw
 
         )
 }
@@ -95,9 +95,9 @@ add_lbm <- function(x) {
 
     x %>%
         dplyr::mutate(
-            lbm = ifelse(sex == "male",
-                (79.5 - 0.24*weight - 0.15*age)*weight/73.2,
-                (69.8 - 0.26*weight - 0.12*age)*weight/73.2
+            lbm = ifelse(.data$sex == "male",
+                (79.5 - 0.24*.data$weight - 0.15*.data$age)*.data$weight/73.2,
+                (69.8 - 0.26*.data$weight - 0.12*.data$age)*.data$weight/73.2
             )
         )
 }
@@ -110,11 +110,11 @@ add_livingston_weight <- function(x) {
 
     x %>%
         dplyr::mutate(
-            livingston_weight_f       = weight^0.4330,
-            livingston_weight_m       = weight^0.4356,
-            livingston_weight_f_alone = weight^0.4613,
-            livingston_weight_m_alone = weight^0.4473,
-            livingston_weight_alone   = weight^0.4722,
-            livingston_weight_age     = weight^0.4456
+            livingston_weight_f       = .data$weight^0.4330,
+            livingston_weight_m       = .data$weight^0.4356,
+            livingston_weight_f_alone = .data$weight^0.4613,
+            livingston_weight_m_alone = .data$weight^0.4473,
+            livingston_weight_alone   = .data$weight^0.4722,
+            livingston_weight_age     = .data$weight^0.4456
         )
 }
