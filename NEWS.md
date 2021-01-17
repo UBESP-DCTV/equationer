@@ -1,6 +1,6 @@
-# equationer 0.4.3
+# equationer 0.6.1
 
-# equationer 0.4.2
+* changed Anthropometric to Demographic (#22)
 
 # equationer 0.4.1
 

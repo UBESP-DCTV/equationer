@@ -1,5 +1,5 @@
 anthropometric_tab <- function() {
-  tabPanel(strong("Anthropometric"), icon = icon("file-medical"),
+  tabPanel(strong("Demographic"), icon = icon("file-medical"),
     flowLayout(
       checked_input("age", "num", "years", c(18, 122)),
       checked_input("sex", "fct"),
