@@ -41,7 +41,7 @@ test_that("list the last update", {
 })
 
 test_that("error if without name", {
-    expect_error(eqs_bag(eqs1, eqs2), "is missing"
+    expect_error(eqs_bag(eqs1, eqs2), "name"
     )
 })
 
