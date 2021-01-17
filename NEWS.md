@@ -1,5 +1,6 @@
 # equationer 0.6.1
 
+* fix locale-specific error message in tests
 * changed Anthropometric to Demographic (#22)
 
 # equationer 0.4.1
